@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cazador de clientes — Andrés Mendoza</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#100E0C">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --film:#100E0C; --film-2:#17140F; --card:#1C1813;
+    --light:#F3EEE4; --dim:#A2988A; --dimmer:#6E675C;
+    --edge:rgba(243,238,228,.13); --edge-soft:rgba(243,238,228,.07);
+    --beam:#E4A93F; --ok:#6FAE7D; --wait:#D08A3C; --no:#A8574A;
+    --display:"Bodoni Moda",Georgia,serif;
+    --body:"Hanken Grotesk","Segoe UI",Helvetica,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--film); color:var(--light); font-family:var(--body);
+    font-weight:300; font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+    padding:0 0 90px;
+  }
+  button, input, select, textarea{ font:inherit; color:inherit; }
+  button{ cursor:pointer; }
+  a{ color:var(--beam); }
+  .wrap{ max-width:900px; margin-inline:auto; padding-inline:16px; }
+  h1,h2{ font-family:var(--display); font-weight:400; }
+  .mono{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dimmer); }
+  :focus-visible{ outline:2px solid var(--beam); outline-offset:2px; }
+
+  header{ border-bottom:1px solid var(--edge-soft); padding-block:18px; background:var(--film-2); }
+  header h1{ font-size:1.6rem; line-height:1.1; }
+  header p{ color:var(--dim); font-size:.86rem; margin-top:4px; }
+
+  /* marcador */
+  .marcador{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:18px; }
+  .m{ background:var(--card); border:1px solid var(--edge); padding:10px 10px 12px; }
+  .m b{ display:block; font-family:var(--display); font-size:1.7rem; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .m span{ font-family:var(--mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; color:var(--dimmer); }
+  .m.ok b{ color:var(--ok); } .m.wait b{ color:var(--wait); } .m.beam b{ color:var(--beam); }
+
+  section{ margin-top:26px; }
+  h2{ font-size:1.25rem; margin-bottom:12px; }
+
+  /* alta */
+  form{ background:var(--card); border:1px solid var(--edge); padding:16px; display:grid; gap:12px; }
+  .fila{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  label{ display:flex; flex-direction:column; gap:5px; }
+  label .mono{ color:var(--dimmer); }
+  input, select, textarea{
+    background:var(--film); border:1px solid var(--edge); padding:11px 12px; font-size:.95rem; font-weight:300;
+  }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--beam); }
+  .btn{
+    background:var(--beam); border:1px solid var(--beam); color:#14100A; padding:12px 18px;
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+  }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn.line{ background:transparent; color:var(--light); border-color:var(--edge); }
+  .btn.line:hover{ border-color:var(--beam); color:var(--beam); filter:none; }
+  .btn.mini{ padding:7px 11px; font-size:.62rem; }
+
+  /* filtros */
+  .filtros{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:12px; }
+  .chip{
+    background:transparent; border:1px solid var(--edge); padding:7px 13px;
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--dim);
+  }
+  .chip[aria-pressed="true"]{ background:var(--light); color:var(--film); border-color:var(--light); }
+
+  /* tarjetas */
+  .lista{ display:flex; flex-direction:column; gap:10px; }
+  .p{
+    background:var(--card); border:1px solid var(--edge); border-left:3px solid var(--dimmer);
+    padding:14px 15px; display:flex; flex-direction:column; gap:9px;
+  }
+  .p[data-estado="Dio WhatsApp"]{ border-left-color:var(--wait); }
+  .p[data-estado="Cotizado"]{ border-left-color:var(--beam); }
+  .p[data-estado="CLIENTE"]{ border-left-color:var(--ok); background:rgba(111,174,125,.07); }
+  .p[data-estado="No le interesó"]{ border-left-color:var(--no); opacity:.6; }
+  .p .top{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+  .p b{ font-weight:500; font-size:1.02rem; }
+  .p .meta{ font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; color:var(--dimmer); margin-top:2px; }
+  .p .nota{ font-size:.86rem; color:var(--dim); }
+  .p .acciones{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+  .p select{ padding:7px 9px; font-size:.78rem; }
+  .borrar{ background:none; border:0; color:var(--dimmer); font-size:.7rem; text-decoration:underline; padding:0; margin-left:auto; }
+  .borrar:hover{ color:var(--no); }
+  .vacio{ color:var(--dimmer); font-size:.9rem; padding:22px 0; text-align:center; border:1px dashed var(--edge); }
+
+  /* guion */
+  .guion{ background:var(--film-2); border:1px solid var(--edge); padding:16px; margin-top:10px; }
+  .guion p{ font-size:.92rem; color:var(--dim); }
+  .guion p.dice{ color:var(--light); border-left:2px solid var(--beam); padding-left:14px; margin-block:10px; }
+
+  details{ background:var(--card); border:1px solid var(--edge); padding:14px 16px; margin-top:10px; }
+  summary{ cursor:pointer; font-weight:500; }
+  details ol{ margin:12px 0 0 18px; display:flex; flex-direction:column; gap:8px; font-size:.92rem; color:var(--dim); }
+  details ol b{ color:var(--light); font-weight:500; }
+  .busquedas{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .busquedas button{
+    background:var(--film); border:1px solid var(--edge); color:var(--dim);
+    font-family:var(--mono); font-size:.66rem; padding:6px 10px; text-align:left;
+  }
+  .busquedas button:hover{ border-color:var(--beam); color:var(--beam); }
+
+  .barra{
+    position:fixed; left:0; right:0; bottom:0; background:var(--film-2); border-top:1px solid var(--edge);
+    padding:10px 16px; display:flex; gap:10px; align-items:center; justify-content:space-between;
+  }
+  .barra .mono{ color:var(--dim); }
+  .aviso{ font-size:.78rem; color:var(--dimmer); margin-top:10px; }
+
+  @media (max-width:620px){
+    .marcador{ grid-template-columns:repeat(2,1fr); }
+    .fila{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="mono">Herramienta interna · no se comparte con clientes</p>
+    <h1>Cazador de clientes</h1>
+    <p>Todo se guarda en este teléfono o computadora. Nadie más lo ve.</p>
+    <div class="marcador">
+      <div class="m"><b id="mTotal">0</b><span>en la lista</span></div>
+      <div class="m wait"><b id="mVisitados">0</b><span>visitados</span></div>
+      <div class="m beam"><b id="mNumeros">0</b><span>dieron WhatsApp</span></div>
+      <div class="m ok"><b id="mClientes">0</b><span>clientes</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>Cómo encontrarlos en Google Maps</h2>
+    <details open>
+      <summary>La receta (2 minutos de lectura, léela una vez)</summary>
+      <ol>
+        <li>Abre <b>Google Maps</b> y escribe una de las búsquedas de abajo. Se copia sola al picarle.</li>
+        <li>Maps te muestra una <b>lista a la izquierda</b> (en compu) o tarjetas abajo (en celular). Ve una por una.</li>
+        <li><b>Pícale al negocio para abrir su ficha.</b> Ahí está la señal que importa:
+          si ves un botón que dice <b>"Sitio web"</b>, sáltatelo — ya tiene página.
+          Si solo ves <b>"Cómo llegar", "Llamar" y "Guardar"</b>, ese es tu cliente.</li>
+        <li>Si el botón de sitio web lo manda a <b>Facebook o Instagram</b>, es todavía mejor prospecto:
+          cree que ya tiene página y no tiene.</li>
+        <li>Checa las reseñas: <b>más de 30 reseñas y 4.3 estrellas o más</b> = el negocio ya gana dinero.
+          Menos de 10 reseñas, sáltatelo por ahora.</li>
+        <li>Anótalo aquí abajo con su teléfono. <b>Meta de hoy: 25 negocios en la lista.</b></li>
+      </ol>
+      <p class="aviso">Truco: en la compu se ve mucho más rápido que en el celular, porque la lista y el mapa salen juntos.</p>
+      <p class="mono" style="margin-top:14px">Búsquedas listas — pícale a una y se copia</p>
+      <div class="busquedas" id="busquedas"></div>
+    </details>
+  </section>
+
+  <section>
+    <h2>Anotar un negocio</h2>
+    <form id="form">
+      <div class="fila">
+        <label><span class="mono">Nombre del negocio</span>
+          <input type="text" id="nombre" required placeholder="Hotel Casa Verde"></label>
+        <label><span class="mono">Giro</span>
+          <select id="giro">
+            <option value="hotel">Hotel / hostal</option>
+            <option value="comedor">Comedor / fonda</option>
+            <option value="restaurante">Restaurante / bar</option>
+            <option value="dental">Dentista / clínica</option>
+            <option value="ferreteria">Ferretería / abarrotes</option>
+            <option value="boutique">Boutique / artesanías</option>
+            <option value="otro">Otro</option>
+          </select></label>
+      </div>
+      <div class="fila">
+        <label><span class="mono">Localidad</span>
+          <input type="text" id="lugar" placeholder="Centro, Tlacolula, Etla…"></label>
+        <label><span class="mono">Teléfono (10 dígitos)</span>
+          <input type="tel" id="tel" placeholder="9511234567"></label>
+      </div>
+      <div class="fila">
+        <label><span class="mono">Qué tiene hoy</span>
+          <select id="web">
+            <option>Nada, solo teléfono</option>
+            <option>Solo Facebook o Instagram</option>
+            <option>Página vieja o rota</option>
+          </select></label>
+        <label><span class="mono">Reseñas en Google</span>
+          <input type="text" id="resenas" placeholder="86 reseñas · 4.6"></label>
+      </div>
+      <label><span class="mono">Nota</span>
+        <input type="text" id="nota" placeholder="Preguntar por la dueña después de las 4"></label>
+      <button class="btn" type="submit">Agregar a la lista</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Mi lista</h2>
+    <div class="filtros" id="filtros"></div>
+    <div class="lista" id="lista"></div>
+  </section>
+
+  <section>
+    <h2>Qué digo cuando entro</h2>
+    <div class="guion" id="guion"></div>
+  </section>
+
+</div>
+
+<div class="barra">
+  <span class="mono" id="pie">Guardado en este dispositivo</span>
+  <span style="display:flex; gap:8px">
+    <button class="btn line mini" type="button" id="exportar">Exportar</button>
+    <button class="btn mini" type="button" id="hoy">Pendientes de hoy</button>
+  </span>
+</div>
+
+<script>
+  const CLAVE = "prospectos-am-v1";
+  const ESTADOS = ["Por visitar","Visitado","Dio WhatsApp","Cotizado","CLIENTE","No le interesó"];
+
+  const BUSQUEDAS = [
+    "hotel Oaxaca de Juárez centro","hostal Oaxaca","hotel Tlacolula de Matamoros",
+    "hotel Ocotlán de Morelos","cabañas San José del Pacífico","hotel Zaachila",
+    "comedor Oaxaca centro","fonda Tlacolula","cocina económica Oaxaca",
+    "marisquería Oaxaca","taquería Santa Lucía del Camino","restaurante Etla",
+    "dentista Oaxaca de Juárez","consultorio dental Xoxocotlán","veterinaria Oaxaca",
+    "ferretería Zaachila","ferretería Etla","abarrotes mayoreo Ocotlán",
+    "boutique ropa Oaxaca centro","artesanías San Bartolo Coyotepec","joyería Oaxaca",
+    "gimnasio Santa Cruz Xoxocotlán","estética Oaxaca","taller mecánico Oaxaca",
+    "mueblería Ocotlán","farmacia Zimatlán","papelería Oaxaca centro"
+  ];
+
+  const GUIONES = {
+    hotel: {
+      abre: "Cada reserva que le entra por plataforma le cuesta como el 17%. Un cuarto de $1,800 se le va en $306 de comisión. Si el huésped reserva directo en su página, ese dinero se queda con usted. Con seis reservas directas al mes ya pagó el sitio.",
+      demo: "hotel.html", precio: "$15,000 a $18,000"
+    },
+    comedor: {
+      abre: "¿Cuántos pedidos pierde en la hora pico porque nadie alcanza a contestar el teléfono? Con esto el cliente arma su pedido solo y a usted le llega ya escrito al WhatsApp, con dirección y total.",
+      demo: "comedor.html", precio: "$5,000 a $6,500"
+    },
+    restaurante: {
+      abre: "Su carta está en fotos de Instagram de hace meses. Aquí la gente ve la carta actual y reserva mesa sin que usted conteste nada.",
+      demo: "copal.html", precio: "$8,000 a $14,000"
+    },
+    dental: {
+      abre: "Sus pacientes agendarían solos, a la hora que sea, hasta a las once de la noche. Y usted ve toda la agenda del día en un panel.",
+      demo: "consultorio.html", precio: "$14,000 a $18,000"
+    },
+    ferreteria: {
+      abre: "¿Cómo sabe hoy qué se le está acabando? Con esto lo ve en la pantalla y le llega aviso al WhatsApp cuando algo baja del mínimo.",
+      demo: "inventario.html", precio: "$22,000 en adelante"
+    },
+    boutique: {
+      abre: "Vende en línea sin pagarle comisión a ninguna plataforma. El pedido le llega directo a su WhatsApp.",
+      demo: "boutique.html", precio: "$19,000 en adelante"
+    },
+    otro: {
+      abre: "Busqué su negocio en Google antes de venir y vi que no tiene página. Esto es lo que yo hago —déjeme enseñárselo en treinta segundos.",
+      demo: "index.html", precio: "desde $6,500"
+    }
+  };
+
+  const NOMBRE_GIRO = {
+    hotel:"Hotel/hostal", comedor:"Comedor/fonda", restaurante:"Restaurante",
+    dental:"Dentista/clínica", ferreteria:"Ferretería/abarrotes", boutique:"Boutique", otro:"Otro"
+  };
+
+  let datos = [];
+  try { datos = JSON.parse(localStorage.getItem(CLAVE)) || []; } catch(e){ datos = []; }
+  let filtro = "Todos";
+
+  const $ = id => document.getElementById(id);
+  const guardar = () => { try { localStorage.setItem(CLAVE, JSON.stringify(datos)); } catch(e){
+    $("pie").textContent = "No se pudo guardar (modo privado)"; } };
+
+  // búsquedas copiables
+  const cajaBus = $("busquedas");
+  BUSQUEDAS.forEach(b => {
+    const bt = document.createElement("button");
+    bt.type = "button";
+    bt.textContent = b;
+    bt.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(b); bt.textContent = "copiado ✓";
+        setTimeout(() => bt.textContent = b, 1200); } catch(e){
+        window.open("https://www.google.com/maps/search/" + encodeURIComponent(b), "_blank", "noopener"); }
+    });
+    cajaBus.appendChild(bt);
+  });
+
+  // filtros
+  const cajaFil = $("filtros");
+  ["Todos"].concat(ESTADOS).forEach(e => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = e;
+    b.setAttribute("aria-pressed", e === filtro ? "true" : "false");
+    b.addEventListener("click", () => {
+      [...cajaFil.children].forEach(c => c.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed","true");
+      filtro = e; pintar();
+    });
+    cajaFil.appendChild(b);
+  });
+
+  $("form").addEventListener("submit", e => {
+    e.preventDefault();
+    datos.unshift({
+      id: Date.now(),
+      nombre: $("nombre").value.trim(),
+      giro: $("giro").value,
+      lugar: $("lugar").value.trim(),
+      tel: $("tel").value.replace(/\D/g,""),
+      web: $("web").value,
+      resenas: $("resenas").value.trim(),
+      nota: $("nota").value.trim(),
+      estado: "Por visitar"
+    });
+    guardar(); pintar();
+    e.target.reset();
+    $("nombre").focus();
+  });
+
+  function pintar(){
+    const lista = $("lista");
+    lista.innerHTML = "";
+    const ver = datos.filter(d => filtro === "Todos" || d.estado === filtro);
+
+    if (!ver.length) {
+      lista.innerHTML = '<p class="vacio">' +
+        (datos.length ? "Ninguno en este estado." : "Todavía no anotas ninguno. Abre Maps, busca una de las frases de arriba y empieza.") +
+        '</p>';
+    }
+
+    ver.forEach(d => {
+      const g = GUIONES[d.giro] || GUIONES.otro;
+      const art = document.createElement("article");
+      art.className = "p";
+      art.dataset.estado = d.estado;
+
+      const msg = "Buenas tardes, ¿hablo con el encargado de " + d.nombre + "? " +
+        "Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Vi su negocio en Google pero noté que no aparece con página propia. " +
+        "Le comparto algo que hice para que vea a qué me refiero: https://andresmendoza30.github.io/PORTAFOLIO/" + g.demo + " " +
+        "Ábralo y pruébelo, todo funciona. Si le interesa, le hago sin costo una revisión de cómo se está viendo su negocio en internet hoy. ¿Se la mando?";
+
+      art.innerHTML =
+        '<div class="top"><div><b>' + d.nombre + '</b>' +
+        '<p class="meta">' + NOMBRE_GIRO[d.giro] + (d.lugar ? " · " + d.lugar : "") +
+        (d.resenas ? " · " + d.resenas : "") + " · " + d.web + '</p></div></div>' +
+        (d.nota ? '<p class="nota">' + d.nota + '</p>' : "") +
+        '<div class="acciones">' +
+          '<select aria-label="Estado"></select>' +
+          '<a class="btn mini line" href="' + g.demo + '" target="_blank" rel="noopener">Ver su demo</a>' +
+          (d.tel ? '<a class="btn mini" href="https://wa.me/52' + d.tel + '?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">WhatsApp</a>' : "") +
+          (d.tel ? '<a class="btn mini line" href="tel:+52' + d.tel + '">Llamar</a>' : "") +
+          '<button class="borrar" type="button">Borrar</button>' +
+        '</div>';
+
+      const sel = art.querySelector("select");
+      ESTADOS.forEach(e => {
+        const o = document.createElement("option");
+        o.value = e; o.textContent = e;
+        if (e === d.estado) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.addEventListener("change", () => { d.estado = sel.value; guardar(); pintar(); });
+
+      art.querySelector(".borrar").addEventListener("click", () => {
+        datos = datos.filter(x => x.id !== d.id); guardar(); pintar();
+      });
+
+      lista.appendChild(art);
+    });
+
+    $("mTotal").textContent = datos.length;
+    $("mVisitados").textContent = datos.filter(d => d.estado !== "Por visitar").length;
+    $("mNumeros").textContent = datos.filter(d => ["Dio WhatsApp","Cotizado","CLIENTE"].includes(d.estado)).length;
+    $("mClientes").textContent = datos.filter(d => d.estado === "CLIENTE").length;
+
+    pintarGuion();
+  }
+
+  function pintarGuion(){
+    const giro = $("giro").value;
+    const g = GUIONES[giro] || GUIONES.otro;
+    $("guion").innerHTML =
+      '<p class="mono">Giro seleccionado arriba: ' + NOMBRE_GIRO[giro] + '</p>' +
+      '<p class="dice">"Buenas tardes, ¿es usted el dueño? Soy Andrés, hago páginas web aquí en Oaxaca. Le robo dos minutos. Busqué su negocio en Google y vi que no tiene página, ¿verdad?"</p>' +
+      '<p class="dice">"' + g.abre + '"</p>' +
+      '<p class="dice">"Mire, esto es lo que hago —" (le pasas el celular con el demo abierto) "— pruébelo usted mismo."</p>' +
+      '<p class="dice">Cierre: "¿Me pasa su WhatsApp y mañana le mando la revisión sin costo?"</p>' +
+      '<p>Rango de precio para este giro: <b>' + g.precio + '</b>. Descuento de primer cliente solo a cambio de testimonio. Siempre 50% de anticipo.</p>' +
+      '<p style="margin-top:10px"><a href="' + g.demo + '" target="_blank" rel="noopener">Abrir el demo de este giro ↗</a></p>';
+  }
+  $("giro").addEventListener("change", pintarGuion);
+
+  $("hoy").addEventListener("click", () => {
+    filtro = "Por visitar";
+    [...cajaFil.children].forEach(c => c.setAttribute("aria-pressed", c.textContent === "Por visitar" ? "true" : "false"));
+    pintar();
+    document.getElementById("lista").scrollIntoView({ behavior:"smooth" });
+  });
+
+  $("exportar").addEventListener("click", async () => {
+    if (!datos.length) return;
+    const txt = datos.map(d =>
+      [d.nombre, NOMBRE_GIRO[d.giro], d.lugar, d.tel, d.web, d.resenas, d.estado, d.nota].join(" | ")
+    ).join("\n");
+    try {
+      await navigator.clipboard.writeText(txt);
+      $("pie").textContent = "Lista copiada — pégala donde quieras";
+      setTimeout(() => $("pie").textContent = "Guardado en este dispositivo", 2500);
+    } catch(e){
+      window.prompt("Copia tu lista:", txt);
+    }
+  });
+
+  pintar();
+</script>
+</body>
+</html>
