@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Tule — Hotel boutique en el centro de Oaxaca</title>
+<meta name="description" content="Hotel boutique de nueve habitaciones en el centro de Oaxaca. Reserva directa sin comisiones, con desayuno incluido y tarifa mejor que en las plataformas.">
+<meta name="theme-color" content="#F6F3EA">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cal:#F6F3EA;
+    --cal-2:#EDE8DA;
+    --cantera:#3F6152;
+    --cantera-2:#2C4539;
+    --tinta:#1D2A25;
+    --suave:#6B7873;
+    --ocre:#C08A2E;
+    --linea:rgba(29,42,37,.14);
+    --linea-suave:rgba(29,42,37,.07);
+    --max:1160px;
+    --pad:clamp(18px,4.5vw,54px);
+    --band:clamp(58px,8vw,110px);
+    --titulo:"Marcellus",Georgia,serif;
+    --texto:"Karla","Segoe UI",Helvetica,sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--cal); color:var(--tinta); font-family:var(--texto);
+    font-weight:300; font-size:16px; line-height:1.68; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--titulo); font-weight:400; text-wrap:balance; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:var(--pad); }
+  .eyebrow{ font-size:.7rem; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--ocre); }
+  .lede{ color:var(--suave); max-width:56ch; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+    font-size:.78rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+    padding:14px 24px; border:1px solid var(--cantera); background:var(--cantera); color:var(--cal);
+    transition:transform .18s ease, background .2s ease, color .2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); background:var(--cantera-2); }
+  .btn.line{ background:transparent; color:var(--cantera); }
+  .btn.line:hover{ background:var(--cal-2); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--ocre); outline-offset:3px;
+  }
+
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(246,243,234,.94);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--linea-suave);
+  }
+  .bar{ display:flex; align-items:center; gap:22px; height:72px; }
+  .marca{ margin-right:auto; text-decoration:none; display:flex; align-items:baseline; gap:9px; }
+  .marca b{ font-family:var(--titulo); font-size:1.5rem; font-weight:400; letter-spacing:.06em; }
+  .marca span{ font-size:.64rem; letter-spacing:.24em; text-transform:uppercase; color:var(--suave); }
+  nav{ display:flex; gap:24px; }
+  nav a{ font-size:.85rem; text-decoration:none; color:var(--suave); transition:color .2s ease; }
+  nav a:hover{ color:var(--cantera); }
+
+  /* portada */
+  .hero{ position:relative; overflow:hidden; }
+  .hero-art{ position:absolute; inset:0; z-index:0; }
+  .hero-art svg{ width:100%; height:100%; object-fit:cover; }
+  .hero-in{ position:relative; z-index:1; padding-block:clamp(52px,8vw,104px) clamp(40px,6vw,72px); }
+  .hero h1{ font-size:clamp(2.6rem,1.4rem + 4.4vw,4.5rem); line-height:1.04; margin-block:16px 18px; max-width:14ch; }
+  .hero .lede{ font-size:1.05rem; }
+
+  /* buscador */
+  .buscador{
+    background:var(--cal); border:1px solid var(--linea); margin-top:34px;
+    box-shadow:0 20px 50px rgba(29,42,37,.10);
+  }
+  .campos{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .campo{ padding:16px 18px; border-right:1px solid var(--linea-suave); display:flex; flex-direction:column; gap:5px; }
+  .campo:last-of-type{ border-right:0; }
+  .campo label{ font-size:.66rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--suave); }
+  .campo input, .campo select{
+    border:0; background:transparent; font-family:var(--texto); font-size:1rem; color:var(--tinta); padding:0;
+  }
+  .campo input:focus, .campo select:focus{ outline:none; }
+  .buscador > button{ width:100%; border:0; padding:16px; background:var(--cantera); color:var(--cal);
+    font-size:.78rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; }
+  .buscador > button:hover{ background:var(--cantera-2); }
+
+  .ahorro{
+    display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center;
+    background:var(--cantera); color:var(--cal); padding:14px 18px; font-size:.88rem;
+  }
+  .ahorro b{ font-weight:600; }
+  .ahorro .tache{ text-decoration:line-through; opacity:.65; }
+
+  section{ border-top:1px solid var(--linea-suave); }
+  .band{ padding-block:var(--band); }
+  .head{ max-width:58ch; margin-bottom:clamp(30px,4vw,52px); }
+  .head h2{ font-size:clamp(1.9rem,1.2rem + 2.3vw,3rem); line-height:1.1; margin-block:14px 12px; }
+
+  /* habitaciones */
+  .cuartos{ display:flex; flex-direction:column; gap:22px; }
+  .cuarto{
+    display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+    border:1px solid var(--linea); background:var(--cal);
+  }
+  .cuarto .img{ background:var(--cal-2); min-height:100%; }
+  .cuarto .img svg{ display:block; width:100%; height:100%; }
+  .cuarto .info{ padding:clamp(20px,3vw,32px); display:flex; flex-direction:column; gap:10px; }
+  .cuarto h3{ font-size:1.6rem; }
+  .cuarto .meta{ font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--suave); }
+  .cuarto p{ color:var(--suave); font-size:.94rem; }
+  .amen{ display:flex; flex-wrap:wrap; gap:7px; margin-top:4px; }
+  .amen span{ font-size:.74rem; border:1px solid var(--linea); padding:4px 10px; color:var(--suave); }
+  .cuarto .pie{
+    margin-top:auto; padding-top:16px; border-top:1px solid var(--linea-suave);
+    display:flex; flex-wrap:wrap; gap:14px; align-items:end; justify-content:space-between;
+  }
+  .tarifa b{ font-family:var(--titulo); font-size:1.9rem; font-variant-numeric:tabular-nums; }
+  .tarifa small{ display:block; font-size:.76rem; color:var(--suave); }
+  .tarifa .plataforma{ font-size:.76rem; color:var(--suave); }
+  .tarifa .plataforma s{ opacity:.7; }
+  .agotado{ font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:#A3492F; border:1px solid #A3492F; padding:6px 12px; }
+
+  /* experiencias */
+  .exp{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:22px; }
+  .exp article{ display:flex; flex-direction:column; gap:8px; border-top:2px solid var(--cantera); padding-top:16px; }
+  .exp h3{ font-size:1.2rem; }
+  .exp p{ font-size:.9rem; color:var(--suave); }
+  .exp .costo{ margin-top:auto; padding-top:10px; font-size:.82rem; color:var(--ocre); font-weight:600; }
+
+  /* por qué directo */
+  .directo{ background:var(--cantera); color:var(--cal); border-top:0; }
+  .directo h2{ color:var(--cal); }
+  .directo .eyebrow{ color:#E3C88A; }
+  .directo .lede{ color:rgba(246,243,234,.78); }
+  .razones{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:rgba(246,243,234,.18); border:1px solid rgba(246,243,234,.18); margin-top:34px; }
+  .razones div{ background:var(--cantera); padding:24px 20px; }
+  .razones b{ display:block; font-family:var(--titulo); font-size:1.7rem; color:#E3C88A; }
+  .razones span{ font-size:.86rem; color:rgba(246,243,234,.8); }
+
+  /* reseñas */
+  .resenas{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px; }
+  .resena{ border-left:2px solid var(--ocre); padding-left:20px; }
+  .resena p{ font-family:var(--titulo); font-size:1.08rem; line-height:1.5; }
+  .resena .quien{ font-size:.8rem; color:var(--suave); margin-top:10px; }
+  .estrellas{ color:var(--ocre); letter-spacing:.14em; font-size:.85rem; }
+
+  /* ubicación */
+  .ubica{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,64px); align-items:start; }
+  .lista{ display:flex; flex-direction:column; }
+  .lista div{ display:flex; justify-content:space-between; gap:18px; padding-block:13px; border-bottom:1px solid var(--linea-suave); }
+  .lista .k{ font-size:.7rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--suave); }
+  .lista .v{ text-align:right; font-size:.94rem; }
+
+  footer.pie{ padding-block:38px 50px; border-top:1px solid var(--linea-suave); }
+  .pie-in{ display:flex; flex-wrap:wrap; gap:14px 36px; justify-content:space-between; align-items:center; font-size:.85rem; color:var(--suave); }
+
+  .demo-bar{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:80;
+    display:flex; align-items:center; gap:14px; background:var(--tinta); color:var(--cal);
+    padding:9px 18px; font-size:.74rem; max-width:calc(100vw - 24px);
+  }
+  .demo-bar a{ color:#E3C88A; text-decoration:none; font-weight:600; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  @media (max-width:900px){
+    .campos{ grid-template-columns:1fr 1fr; }
+    .campo:nth-child(2){ border-right:0; }
+    .cuarto{ grid-template-columns:1fr; }
+    .cuarto .img svg{ height:220px; }
+    .ubica{ grid-template-columns:1fr; }
+  }
+  @media (max-width:640px){
+    nav{ display:none; }
+    .campos{ grid-template-columns:1fr; }
+    .campo{ border-right:0; border-bottom:1px solid var(--linea-suave); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="marca" href="#top"><b>Casa Tule</b><span>Oaxaca</span></a>
+    <nav>
+      <a href="#habitaciones">Habitaciones</a>
+      <a href="#experiencias">Experiencias</a>
+      <a href="#directo">Reserva directa</a>
+      <a href="#ubicacion">Cómo llegar</a>
+    </nav>
+    <a class="btn" href="#habitaciones">Reservar</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none">
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice">
+        <rect width="1440" height="620" fill="#EDE8DA"/>
+        <rect y="430" width="1440" height="190" fill="#E3DCCA"/>
+        <g fill="#DCD3BE">
+          <rect x="70" y="150" width="300" height="300"/>
+          <rect x="1070" y="120" width="320" height="330"/>
+        </g>
+        <g fill="#3F6152" opacity=".22">
+          <path d="M120 450V250h60v200zM220 450V250h60v200zM1120 450V220h60v230zM1220 450V220h60v230z"/>
+        </g>
+        <g fill="none" stroke="#3F6152" stroke-width="2" opacity=".3">
+          <path d="M110 250h180M110 300h180M110 350h180M1110 220h180M1110 280h180M1110 340h180"/>
+        </g>
+        <circle cx="1290" cy="120" r="46" fill="#C08A2E" opacity=".25"/>
+        <g fill="#3F6152" opacity=".16">
+          <ellipse cx="700" cy="470" rx="120" ry="26"/>
+          <path d="M700 470c-8-70-30-120-70-170 46 30 74 84 84 150zM700 470c8-70 30-120 70-170-46 30-74 84-84 150zM700 470c-4-90-4-160 0-250 6 90 6 160 4 250z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap hero-in">
+      <p class="eyebrow">Hotel boutique · Nueve habitaciones · Centro de Oaxaca</p>
+      <h1>Una casa de 1890 a cuatro cuadras del zócalo.</h1>
+      <p class="lede">Patio con buganvilias, desayuno oaxaqueño incluido y nueve habitaciones que no se parecen entre sí. Reserva aquí y pagas menos que en cualquier plataforma.</p>
+
+      <div class="buscador">
+        <div class="campos">
+          <div class="campo">
+            <label for="entrada">Llegada</label>
+            <input type="date" id="entrada">
+          </div>
+          <div class="campo">
+            <label for="salida">Salida</label>
+            <input type="date" id="salida">
+          </div>
+          <div class="campo">
+            <label for="huespedes">Huéspedes</label>
+            <select id="huespedes">
+              <option value="1">1 persona</option>
+              <option value="2" selected>2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="motivo">Motivo</label>
+            <select id="motivo">
+              <option>Vacaciones</option>
+              <option>Trabajo</option>
+              <option>Boda o evento</option>
+              <option>Guelaguetza</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" id="buscar">Ver disponibilidad</button>
+      </div>
+      <div class="ahorro" id="ahorro">
+        <span><b id="noches">2 noches</b> para <span id="pers">2 personas</span></span>
+        <span>Reservando aquí: <b id="total">$3,600</b></span>
+        <span>En plataformas: <span class="tache" id="totalOta">$4,320</span> · <b id="ahorras">te ahorras $720</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="habitaciones">
+    <div class="wrap band">
+      <div class="head">
+        <p class="eyebrow">Habitaciones</p>
+        <h2>Nueve cuartos, ninguno igual al otro</h2>
+        <p class="lede">Todas dan al patio o a la azotea, con desayuno incluido y agua de la casa. Los precios de abajo ya son la tarifa directa, sin comisión de plataforma.</p>
+      </div>
+      <div class="cuartos" id="cuartos"></div>
+    </div>
+  </section>
+
+  <section class="directo" id="directo">
+    <div class="wrap band">
+      <p class="eyebrow">Por qué reservar aquí</p>
+      <h2 style="font-size:clamp(1.9rem,1.2rem + 2.3vw,2.9rem); line-height:1.1; margin-block:14px 14px">Cada reserva por plataforma nos cuesta 17%. Ese descuento preferimos dártelo a ti.</h2>
+      <p class="lede">Cuando reservas directo, ese porcentaje no se va en comisión: se queda en tu tarifa, en tu desayuno y en la gente que trabaja aquí.</p>
+      <div class="razones">
+        <div><b>−17%</b><span>Siempre más barato que en cualquier plataforma, garantizado</span></div>
+        <div><b>Gratis</b><span>Cancelación hasta 48 horas antes, sin penalización</span></div>
+        <div><b>2 pm</b><span>Salida tardía sin costo cuando hay disponibilidad</span></div>
+        <div><b>Directo</b><span>Hablas con Rocío, la dueña, no con un centro de atención</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencias">
+    <div class="wrap band">
+      <div class="head">
+        <p class="eyebrow">Experiencias de la casa</p>
+        <h2>Lo que organizamos para nuestros huéspedes</h2>
+        <p class="lede">Con guías y cocineras de aquí. Se apartan en la recepción o por WhatsApp un día antes.</p>
+      </div>
+      <div class="exp">
+        <article>
+          <h3>Ruta del mezcal</h3>
+          <p>Dos palenques familiares en Matatlán, con cata y comida. Salimos 9:00, regresamos 17:00.</p>
+          <p class="costo">$950 por persona</p>
+        </article>
+        <article>
+          <h3>Clase de mole en el patio</h3>
+          <p>Con doña Rocío, la mamá de la dueña. Se muele en metate y te llevas la receta.</p>
+          <p class="costo">$680 por persona</p>
+        </article>
+        <article>
+          <h3>Mercados a pie</h3>
+          <p>Benito Juárez y 20 de Noviembre a las 8 de la mañana, cuando todavía es de los locales.</p>
+          <p class="costo">Sin costo para huéspedes</p>
+        </article>
+        <article>
+          <h3>Temazcal en Etla</h3>
+          <p>Ceremonia de dos horas con temazcalera tradicional. Máximo seis personas.</p>
+          <p class="costo">$800 por persona</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap band">
+      <div class="head">
+        <p class="eyebrow">Lo que dicen</p>
+        <h2>4.8 de 5 en 214 reseñas</h2>
+      </div>
+      <div class="resenas">
+        <article class="resena">
+          <p class="estrellas">★★★★★</p>
+          <p>«Reservamos directo y salió mil pesos más barato que en la app. El desayuno en el patio vale el viaje solo.»</p>
+          <p class="quien">Marcela G. · Ciudad de México · agosto</p>
+        </article>
+        <article class="resena">
+          <p class="estrellas">★★★★★</p>
+          <p>«Rocío nos consiguió mesa en un restaurante que llevaba semanas lleno. Eso no te lo da un hotel de cadena.»</p>
+          <p class="quien">Daniel R. · Monterrey · julio</p>
+        </article>
+        <article class="resena">
+          <p class="estrellas">★★★★☆</p>
+          <p>«La casa es preciosa y está a cuatro cuadras de todo. El cuarto del patio se oye un poco por las mañanas, pero valió la pena.»</p>
+          <p class="quien">Anne L. · Vancouver · junio</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="ubicacion">
+    <div class="wrap band">
+      <div class="ubica">
+        <div>
+          <p class="eyebrow">Cómo llegar</p>
+          <h2 style="font-size:clamp(1.8rem,1.1rem + 2.2vw,2.7rem); line-height:1.1; margin-block:14px 16px">Calle de Tinoco y Palacios 408, Centro</h2>
+          <p class="lede">A cuatro cuadras del zócalo y a dos de Santo Domingo. Del aeropuerto son 25 minutos; te podemos mandar transporte por $350.</p>
+          <a class="btn" href="#habitaciones" style="margin-top:24px">Ver habitaciones</a>
+        </div>
+        <div class="lista">
+          <div><span class="k">Registro</span><span class="v">Entrada 15:00 · Salida 12:00</span></div>
+          <div><span class="k">Desayuno</span><span class="v">Incluido, 8:00 a 10:30 en el patio</span></div>
+          <div><span class="k">Estacionamiento</span><span class="v">Convenio a media cuadra, $120 la noche</span></div>
+          <div><span class="k">Mascotas</span><span class="v">Bienvenidas, sin costo extra</span></div>
+          <div><span class="k">Teléfono</span><span class="v">951 441 8403</span></div>
+          <div><span class="k">Cancelación</span><span class="v">Gratis hasta 48 horas antes</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap pie-in">
+    <p style="font-family:var(--titulo); font-size:1.3rem; color:var(--tinta)">Casa Tule</p>
+    <p>Tinoco y Palacios 408, Centro · Oaxaca de Juárez</p>
+    <p>951 441 8403 · Reserva directa sin comisiones</p>
+  </div>
+</footer>
+
+<div class="demo-bar">
+  <span>Proyecto conceptual de Andrés Mendoza</span>
+  <a href="index.html">← Volver al portafolio</a>
+</div>
+
+<script>
+  const habitaciones = [
+    { nombre:"Buganvilia", cama:"Cama king", vista:"Vista al patio", m2:28, max:2, precio:1800,
+      texto:"La más pedida. Techo de viga original, baño con talavera de Atzompa y una ventana que da directo a la buganvilia del patio.",
+      amen:["Desayuno incluido","Baño privado","Aire acondicionado","Wi-Fi de fibra"], tonos:["#3F6152","#C08A2E"], libre:true },
+    { nombre:"Cantera", cama:"Dos camas matrimoniales", vista:"Vista a la calle", m2:34, max:4, precio:2400,
+      texto:"La más grande de la casa, con muros de cantera verde a la vista. Ideal para familias o dos parejas que viajan juntas.",
+      amen:["Desayuno incluido","Baño privado","Escritorio","Wi-Fi de fibra"], tonos:["#54705F","#8FA595"], libre:true },
+    { nombre:"Azotea", cama:"Cama queen", vista:"Terraza privada", m2:24, max:2, precio:2100,
+      texto:"Sube por la escalera de caracol. Terraza propia con hamaca y la mejor vista de Santo Domingo al atardecer.",
+      amen:["Desayuno incluido","Terraza privada","Hamaca","Wi-Fi de fibra"], tonos:["#C08A2E","#E3C88A"], libre:false },
+    { nombre:"Metate", cama:"Cama matrimonial", vista:"Interior", m2:18, max:2, precio:1350,
+      texto:"La más sencilla y la más económica. Sin ventana a la calle, por eso es la más silenciosa de la casa.",
+      amen:["Desayuno incluido","Baño privado","Wi-Fi de fibra"], tonos:["#6B7873","#B4BCB6"], libre:true }
+  ];
+
+  const mx = n => "$" + n.toLocaleString("es-MX");
+  const COMISION = 0.17;
+
+  const entrada = document.getElementById("entrada");
+  const salida = document.getElementById("salida");
+  const huespedes = document.getElementById("huespedes");
+  const cont = document.getElementById("cuartos");
+
+  const hoy = new Date();
+  const f = d => d.toISOString().slice(0,10);
+  entrada.value = f(new Date(hoy.getTime() + 86400000 * 7));
+  salida.value = f(new Date(hoy.getTime() + 86400000 * 9));
+
+  function noches(){
+    const a = new Date(entrada.value), b = new Date(salida.value);
+    const n = Math.round((b - a) / 86400000);
+    return n > 0 ? n : 1;
+  }
+
+  function ilustra(t){
+    return '<svg viewBox="0 0 400 300" role="img" aria-label="Ilustración de la habitación">' +
+      '<rect width="400" height="300" fill="' + t[1] + '" opacity=".28"/>' +
+      '<rect x="0" y="205" width="400" height="95" fill="' + t[0] + '" opacity=".18"/>' +
+      '<rect x="60" y="150" width="200" height="70" rx="6" fill="' + t[0] + '" opacity=".55"/>' +
+      '<rect x="72" y="128" width="70" height="30" rx="8" fill="#F6F3EA"/>' +
+      '<rect x="152" y="128" width="70" height="30" rx="8" fill="#F6F3EA"/>' +
+      '<rect x="292" y="60" width="70" height="110" fill="' + t[0] + '" opacity=".35"/>' +
+      '<path d="M292 60h70v110h-70z" fill="none" stroke="' + t[0] + '" stroke-width="3"/>' +
+      '<path d="M327 60v110M292 115h70" stroke="' + t[0] + '" stroke-width="3"/>' +
+      '<circle cx="45" cy="96" r="16" fill="' + t[0] + '" opacity=".5"/>' +
+      '<path d="M45 112v38" stroke="' + t[0] + '" stroke-width="3" opacity=".5"/>' +
+      '</svg>';
+  }
+
+  function pintar(){
+    const n = noches();
+    const pers = Number(huespedes.value);
+    cont.innerHTML = "";
+    let masBarato = null;
+
+    habitaciones.forEach(h => {
+      const cabe = h.max >= pers;
+      const disponible = h.libre && cabe;
+      const total = h.precio * n;
+      const ota = Math.round(total / (1 - COMISION));
+      if (disponible && (!masBarato || total < masBarato)) masBarato = total;
+
+      const art = document.createElement("article");
+      art.className = "cuarto";
+      art.innerHTML =
+        '<div class="img">' + ilustra(h.tonos) + '</div>' +
+        '<div class="info">' +
+          '<h3>' + h.nombre + '</h3>' +
+          '<p class="meta">' + h.cama + ' · ' + h.vista + ' · ' + h.m2 + ' m² · hasta ' + h.max + '</p>' +
+          '<p>' + h.texto + '</p>' +
+          '<div class="amen">' + h.amen.map(a => "<span>" + a + "</span>").join("") + '</div>' +
+          '<div class="pie">' +
+            '<div class="tarifa">' +
+              '<b>' + mx(h.precio) + '</b>' +
+              '<small>por noche · ' + n + (n === 1 ? " noche" : " noches") + " = " + mx(total) + '</small>' +
+              '<span class="plataforma">En plataformas: <s>' + mx(ota) + '</s> — aquí ahorras ' + mx(ota - total) + '</span>' +
+            '</div>' +
+            (disponible
+              ? '<button class="btn" type="button" data-cuarto="' + h.nombre + '" data-total="' + total + '">Reservar directo</button>'
+              : '<span class="agotado">' + (cabe ? "No disponible en esas fechas" : "No cabe " + pers + " personas") + '</span>') +
+          '</div>' +
+        '</div>';
+      cont.appendChild(art);
+    });
+
+    const base = masBarato || habitaciones[0].precio * n;
+    const ota = Math.round(base / (1 - COMISION));
+    document.getElementById("noches").textContent = n + (n === 1 ? " noche" : " noches");
+    document.getElementById("pers").textContent = pers + (pers === 1 ? " persona" : " personas");
+    document.getElementById("total").textContent = "desde " + mx(base);
+    document.getElementById("totalOta").textContent = mx(ota);
+    document.getElementById("ahorras").textContent = "te ahorras " + mx(ota - base);
+  }
+
+  cont.addEventListener("click", e => {
+    const b = e.target.closest("[data-cuarto]");
+    if (!b) return;
+    const texto = "Hola Casa Tule, quiero reservar la habitación " + b.dataset.cuarto +
+      " del " + entrada.value + " al " + salida.value +
+      " para " + huespedes.value + " persona(s). Total directo: " + mx(Number(b.dataset.total)) + ".";
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  [entrada, salida, huespedes].forEach(el => el.addEventListener("change", pintar));
+  document.getElementById("buscar").addEventListener("click", () => {
+    pintar();
+    document.getElementById("habitaciones").scrollIntoView({ behavior:"smooth" });
+  });
+
+  pintar();
+</script>
+</body>
+</html>

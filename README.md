@@ -10,10 +10,12 @@ Sitios, paneles de gestión y automatizaciones para negocios. HTML/CSS/JS estát
 |---|---|
 | `index.html` | Portafolio principal. Concepto "sala de proyección": cada proyecto se muestra en una pantalla con vista previa en vivo (iframe) que se recorre sola al pasar el cursor |
 | `copal.html` | Proyecto 01 — mezcalería y cocina, sitio de una página con reservaciones |
-| `consultorio.html` | Proyecto 02 — consultorio dental con agenda en línea funcional |
-| `consultorio-panel.html` | Proyecto 02b — panel interno del consultorio (agenda, ocupación, cobros) |
-| `inventario.html` | Proyecto 03 — panel de inventario para ferretería (stock, alertas, resurtido) |
-| `boutique.html` | Proyecto 04 — tienda en línea con filtros, carrito y pedido por WhatsApp |
+| `consultorio.html` | Proyecto 03 — consultorio dental con agenda en línea funcional |
+| `consultorio-panel.html` | Proyecto 03b — panel interno del consultorio (agenda, ocupación, cobros) |
+| `inventario.html` | Proyecto 04 — panel de inventario para ferretería (stock, alertas, resurtido) |
+| `boutique.html` | Proyecto 05 — tienda en línea con filtros, carrito y pedido por WhatsApp |
+| `hotel.html` | Proyecto 02 — hotel boutique con buscador de disponibilidad y comparativa contra plataformas |
+| `comedor.html` | Proyecto 06 — comida corrida con menú por día de la semana y pedido a domicilio |
 | `404.html` | Página de error con la identidad del sitio |
 | `favicon.svg` | Ícono de pestaña (monograma AM) |
 | `robots.txt` / `sitemap.xml` | SEO básico |

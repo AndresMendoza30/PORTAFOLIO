@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cocina Lupita — Comida corrida y pedidos a domicilio</title>
+<meta name="description" content="Comida corrida casera en Oaxaca. Menú del día, pedidos a domicilio por WhatsApp y paquetes para oficinas.">
+<meta name="theme-color" content="#FFFBF2">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Rubik:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#FFFBF2;
+    --papel-2:#FDF3DF;
+    --tinta:#221C17;
+    --suave:#6E635A;
+    --maiz:#F2B22E;
+    --anil:#22467F;
+    --tomate:#C6412F;
+    --verde:#4C7A45;
+    --linea:rgba(34,28,23,.16);
+    --linea-suave:rgba(34,28,23,.08);
+    --max:1120px;
+    --pad:clamp(16px,4.5vw,50px);
+    --band:clamp(50px,7vw,92px);
+    --titulo:"Bricolage Grotesque","Segoe UI",sans-serif;
+    --texto:"Rubik","Segoe UI",Helvetica,sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--papel); color:var(--tinta); font-family:var(--texto);
+    font-weight:300; font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--titulo); font-weight:800; text-wrap:balance; letter-spacing:-.02em; line-height:1.05; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:var(--pad); }
+  .sello{
+    display:inline-block; font-family:var(--titulo); font-weight:600; font-size:.74rem;
+    letter-spacing:.1em; text-transform:uppercase; background:var(--maiz); color:var(--tinta);
+    padding:5px 12px; transform:rotate(-1.2deg);
+  }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+    font-family:var(--titulo); font-weight:600; font-size:.88rem; letter-spacing:.02em;
+    padding:14px 24px; border:2px solid var(--tinta); background:var(--tomate); color:#fff;
+    box-shadow:4px 4px 0 var(--tinta);
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .btn:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--tinta); }
+  .btn:active{ transform:translate(2px,2px); box-shadow:1px 1px 0 var(--tinta); }
+  .btn.verde{ background:var(--verde); }
+  .btn.blanco{ background:var(--papel); color:var(--tinta); }
+  a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{
+    outline:3px solid var(--anil); outline-offset:3px;
+  }
+
+  /* papel picado */
+  .picado{ height:26px; display:flex; }
+  .picado span{ flex:1; height:100%; clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%); }
+
+  header{ position:sticky; top:0; z-index:50; background:var(--papel); border-bottom:2px solid var(--tinta); }
+  .bar{ display:flex; align-items:center; gap:18px; height:68px; }
+  .marca{ margin-right:auto; text-decoration:none; display:flex; align-items:center; gap:10px; }
+  .marca i{
+    width:34px; height:34px; background:var(--tomate); color:#fff; display:grid; place-items:center;
+    font-family:var(--titulo); font-weight:800; font-style:normal; border:2px solid var(--tinta);
+  }
+  .marca b{ font-family:var(--titulo); font-weight:800; font-size:1.25rem; }
+  nav{ display:flex; gap:20px; }
+  nav a{ font-size:.88rem; font-weight:400; text-decoration:none; color:var(--suave); }
+  nav a:hover{ color:var(--tomate); }
+  .bolsa{
+    background:var(--maiz); border:2px solid var(--tinta); padding:8px 14px;
+    font-family:var(--titulo); font-weight:600; font-size:.82rem; display:flex; gap:8px; align-items:center;
+  }
+  .bolsa b{ background:var(--tinta); color:var(--maiz); border-radius:999px; padding:0 7px; font-size:.78rem; }
+
+  .hero{ background:var(--papel-2); border-bottom:2px solid var(--tinta); }
+  .hero-in{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(24px,4vw,48px); align-items:center; padding-block:clamp(34px,5vw,64px); }
+  .hero h1{ font-size:clamp(2.3rem,1.3rem + 4vw,4rem); margin-block:14px 14px; }
+  .hero h1 em{ font-style:normal; color:var(--tomate); }
+  .hero p{ color:var(--suave); max-width:46ch; }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
+  .horario{ display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:22px; font-size:.86rem; font-weight:500; }
+  .horario span{ display:flex; align-items:center; gap:7px; }
+  .punto{ width:9px; height:9px; border-radius:50%; background:var(--verde); }
+  .cerrado .punto{ background:var(--tomate); }
+
+  .plato{ width:100%; height:auto; }
+
+  section{ padding-block:var(--band); }
+  .head{ margin-bottom:26px; }
+  .head h2{ font-size:clamp(1.7rem,1.1rem + 2.2vw,2.6rem); margin-top:10px; }
+  .head p{ color:var(--suave); max-width:56ch; margin-top:8px; }
+
+  /* menú del día */
+  #menu{ border-bottom:2px solid var(--tinta); }
+  .dias{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+  .dia{
+    border:2px solid var(--tinta); background:var(--papel); padding:8px 16px;
+    font-family:var(--titulo); font-weight:600; font-size:.86rem;
+  }
+  .dia[aria-pressed="true"]{ background:var(--anil); color:#fff; }
+  .dia:hover{ background:var(--maiz); }
+  .dia[aria-pressed="true"]:hover{ background:var(--anil); }
+
+  .pizarra{ border:2px solid var(--tinta); background:var(--papel); box-shadow:6px 6px 0 var(--maiz); }
+  .pizarra-top{
+    display:flex; flex-wrap:wrap; gap:10px 18px; justify-content:space-between; align-items:center;
+    padding:16px 20px; border-bottom:2px dashed var(--linea); background:var(--papel-2);
+  }
+  .pizarra-top h3{ font-size:1.5rem; }
+  .pizarra-top .precio{ font-family:var(--titulo); font-weight:800; font-size:1.9rem; color:var(--tomate); }
+  .pizarra-top .precio small{ display:block; font-size:.72rem; font-weight:600; color:var(--suave); letter-spacing:.08em; text-transform:uppercase; }
+  .tiempos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); }
+  .tiempo{ padding:18px 20px; border-right:1px dashed var(--linea); }
+  .tiempo:last-child{ border-right:0; }
+  .tiempo .n{ font-family:var(--titulo); font-weight:600; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--anil); }
+  .tiempo ul{ list-style:none; margin-top:8px; display:flex; flex-direction:column; gap:6px; }
+  .tiempo li{ font-size:.95rem; }
+  .tiempo li::before{ content:"— "; color:var(--maiz); font-weight:700; }
+  .pizarra-pie{ padding:16px 20px; border-top:2px dashed var(--linea); display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; }
+  .pizarra-pie span{ font-size:.86rem; color:var(--suave); }
+
+  /* guisados a domicilio */
+  .guisados{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
+  .guiso{
+    border:2px solid var(--tinta); background:var(--papel); padding:16px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .guiso .top{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+  .guiso h3{ font-size:1.1rem; font-weight:600; }
+  .guiso .p{ font-family:var(--titulo); font-weight:800; color:var(--tomate); white-space:nowrap; }
+  .guiso small{ color:var(--suave); font-size:.84rem; }
+  .guiso .etq{ font-size:.68rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); }
+  .guiso .etq.picoso{ color:var(--tomate); }
+  .agregar{
+    margin-top:auto; border:2px solid var(--tinta); background:var(--maiz); color:var(--tinta);
+    font-family:var(--titulo); font-weight:600; font-size:.82rem; padding:9px;
+  }
+  .agregar:hover{ background:var(--tinta); color:var(--maiz); }
+
+  /* oficinas */
+  .oficinas{ background:var(--anil); color:#fff; border-block:2px solid var(--tinta); }
+  .oficinas h2{ color:#fff; }
+  .oficinas p{ color:rgba(255,255,255,.82); }
+  .paquetes{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:16px; margin-top:26px; }
+  .paq{ background:var(--papel); color:var(--tinta); border:2px solid var(--tinta); padding:20px; box-shadow:5px 5px 0 var(--maiz); }
+  .paq b{ display:block; font-family:var(--titulo); font-weight:800; font-size:1.7rem; color:var(--tomate); }
+  .paq span{ font-size:.88rem; color:var(--suave); }
+  .paq h3{ font-size:1.05rem; font-weight:600; margin-bottom:6px; }
+
+  /* pedido */
+  .barra-pedido{
+    position:fixed; left:0; right:0; bottom:0; z-index:70; background:var(--tinta); color:var(--papel);
+    display:none; align-items:center; gap:14px; padding:12px clamp(16px,4vw,40px);
+    box-shadow:0 -6px 20px rgba(34,28,23,.22);
+  }
+  .barra-pedido.on{ display:flex; }
+  .barra-pedido .cuenta{ flex:1; min-width:0; font-size:.88rem; }
+  .barra-pedido .cuenta b{ font-family:var(--titulo); font-weight:800; font-size:1.15rem; }
+  .barra-pedido .lista{ display:block; font-size:.78rem; color:rgba(255,251,242,.7); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .barra-pedido .btn{ box-shadow:3px 3px 0 var(--maiz); }
+  .vaciar{ background:none; border:0; color:rgba(255,251,242,.65); font-size:.78rem; text-decoration:underline; }
+
+  .datos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+  .datos div{ border-top:3px solid var(--maiz); padding-top:12px; }
+  .datos .k{ font-family:var(--titulo); font-weight:600; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--suave); }
+  .datos .v{ font-size:.98rem; margin-top:4px; }
+
+  footer.pie{ border-top:2px solid var(--tinta); padding-block:30px 90px; }
+  .pie-in{ display:flex; flex-wrap:wrap; gap:12px 30px; justify-content:space-between; align-items:center; font-size:.86rem; color:var(--suave); }
+
+  .demo-bar{
+    position:fixed; left:12px; top:78px; z-index:60;
+    background:var(--tinta); color:var(--papel); padding:8px 14px; font-size:.72rem;
+    display:flex; gap:10px; align-items:center; max-width:calc(100vw - 24px);
+  }
+  .demo-bar a{ color:var(--maiz); font-weight:600; text-decoration:none; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  @media (max-width:860px){
+    .hero-in{ grid-template-columns:1fr; }
+    .plato{ max-width:300px; margin-inline:auto; }
+    nav{ display:none; }
+    .tiempo{ border-right:0; border-bottom:1px dashed var(--linea); }
+  }
+</style>
+</head>
+<body>
+
+<div class="picado" aria-hidden="true">
+  <span style="background:#C6412F"></span><span style="background:#F2B22E"></span>
+  <span style="background:#4C7A45"></span><span style="background:#22467F"></span>
+  <span style="background:#C6412F"></span><span style="background:#F2B22E"></span>
+  <span style="background:#4C7A45"></span><span style="background:#22467F"></span>
+</div>
+
+<header>
+  <div class="wrap bar">
+    <a class="marca" href="#top"><i>L</i><b>Cocina Lupita</b></a>
+    <nav>
+      <a href="#menu">Menú del día</a>
+      <a href="#domicilio">A domicilio</a>
+      <a href="#oficinas">Oficinas</a>
+      <a href="#donde">Dónde estamos</a>
+    </nav>
+    <span class="bolsa">Pedido <b id="conteo">0</b></span>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding-block:0">
+    <div class="wrap hero-in">
+      <div>
+        <span class="sello">Comida casera desde 1998</span>
+        <h1>De la olla a tu mesa, <em>o hasta tu oficina</em>.</h1>
+        <p>Comida corrida de tres tiempos por $95, hecha diario por doña Lupe y sus dos hijas. Pide a domicilio antes de las 2 y llega calientita en 25 minutos.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#menu">Ver el menú de hoy</a>
+          <a class="btn blanco" href="#domicilio">Pedir a domicilio</a>
+        </div>
+        <div class="horario" id="horario">
+          <span><i class="punto"></i> <b id="estado">Abierto ahora</b></span>
+          <span>Lun a sáb · 13:00 – 18:00</span>
+          <span>Domingo cerrado</span>
+        </div>
+      </div>
+      <svg class="plato" viewBox="0 0 400 340" role="img" aria-label="Ilustración de un plato de comida corrida.">
+        <circle cx="200" cy="180" r="146" fill="#EFE4CD"/>
+        <circle cx="200" cy="180" r="126" fill="#FFFBF2" stroke="#221C17" stroke-width="3"/>
+        <path d="M200 180m-96 0a96 96 0 0 1 96-96 96 96 0 0 1 0 192 96 96 0 0 1-96-96" fill="none"/>
+        <path d="M104 180a96 96 0 0 1 96-96v192a96 96 0 0 1-96-96Z" fill="#C6412F" opacity=".85"/>
+        <path d="M296 180a96 96 0 0 0-96-96v96Z" fill="#F2B22E"/>
+        <path d="M296 180a96 96 0 0 1-96 96v-96Z" fill="#4C7A45" opacity=".85"/>
+        <circle cx="152" cy="150" r="9" fill="#FFFBF2" opacity=".85"/>
+        <circle cx="168" cy="196" r="7" fill="#FFFBF2" opacity=".7"/>
+        <circle cx="140" cy="214" r="6" fill="#FFFBF2" opacity=".7"/>
+        <circle cx="240" cy="140" r="8" fill="#221C17" opacity=".25"/>
+        <circle cx="252" cy="220" r="7" fill="#FFFBF2" opacity=".6"/>
+        <g stroke="#221C17" stroke-width="3" fill="none">
+          <path d="M330 96v88M322 96v34M338 96v34"/>
+          <path d="M70 96c-10 0-16 12-16 30s6 26 16 26v32"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="head">
+        <span class="sello">Menú del día</span>
+        <h2>Cambia diario, se cocina en la mañana</h2>
+        <p>Elige el día para ver qué se sirve. La comida corrida incluye sopa, guisado, arroz, tortillas hechas a mano y agua del día.</p>
+      </div>
+
+      <div class="dias" id="dias" role="group" aria-label="Día de la semana"></div>
+
+      <div class="pizarra">
+        <div class="pizarra-top">
+          <h3 id="tituloDia">Menú de hoy</h3>
+          <p class="precio">$95<small>Comida completa</small></p>
+        </div>
+        <div class="tiempos" id="tiempos"></div>
+        <div class="pizarra-pie">
+          <span>Para llevar, el mismo precio. Con envío a domicilio, $25 más.</span>
+          <button class="btn verde" type="button" id="pedirCorrida">Apartar comida del día</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="domicilio">
+    <div class="wrap">
+      <div class="head">
+        <span class="sello">A domicilio</span>
+        <h2>Guisados sueltos, por si nada más quieres uno</h2>
+        <p>Se venden por porción, con arroz y tortillas. Pide antes de las 17:30 y llega en 25 minutos dentro del centro.</p>
+      </div>
+      <div class="guisados" id="guisados"></div>
+    </div>
+  </section>
+
+  <section class="oficinas" id="oficinas">
+    <div class="wrap">
+      <span class="sello">Para oficinas y obras</span>
+      <h2 style="font-size:clamp(1.7rem,1.1rem + 2.2vw,2.6rem); margin-block:12px 10px">Comida para tu equipo, todos los días, a precio cerrado</h2>
+      <p style="max-width:56ch">Llevamos a oficinas, obras y consultorios del centro. Se factura al mes y el reparto llega a la misma hora todos los días.</p>
+      <div class="paquetes">
+        <article class="paq">
+          <h3>Paquete chico</h3>
+          <b>$85</b><span>por comida · desde 5 personas</span>
+        </article>
+        <article class="paq">
+          <h3>Paquete mediano</h3>
+          <b>$78</b><span>por comida · desde 12 personas</span>
+        </article>
+        <article class="paq">
+          <h3>Paquete de obra</h3>
+          <b>$70</b><span>por comida · desde 25 personas</span>
+        </article>
+        <article class="paq">
+          <h3>Evento o junta</h3>
+          <b>A tratar</b><span>Menú especial con dos días de aviso</span>
+        </article>
+      </div>
+      <a class="btn" href="https://wa.me/529514418403?text=Hola%20Cocina%20Lupita%2C%20quiero%20cotizar%20comida%20para%20mi%20oficina." target="_blank" rel="noopener" style="margin-top:26px">Cotizar para mi equipo</a>
+    </div>
+  </section>
+
+  <section id="donde">
+    <div class="wrap">
+      <div class="head">
+        <span class="sello">Dónde estamos</span>
+        <h2>Calle Aldama 219, casi esquina con Bustamante</h2>
+      </div>
+      <div class="datos">
+        <div><p class="k">Horario</p><p class="v">Lunes a sábado, 13:00 a 18:00<br>Domingo cerrado</p></div>
+        <div><p class="k">Pedidos</p><p class="v">951 441 8403<br>WhatsApp o llamada</p></div>
+        <div><p class="k">Envío</p><p class="v">$25 en el centro<br>Gratis en pedidos de 4 comidas o más</p></div>
+        <div><p class="k">Pago</p><p class="v">Efectivo, transferencia<br>o tarjeta al entregar</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap pie-in">
+    <p style="font-family:var(--titulo); font-weight:800; font-size:1.2rem; color:var(--tinta)">Cocina Lupita</p>
+    <p>Aldama 219, Centro · Oaxaca de Juárez</p>
+    <p>Desde 1998 · 951 441 8403</p>
+  </div>
+</footer>
+
+<div class="barra-pedido" id="barra">
+  <span class="cuenta">
+    <b id="total">$0</b>
+    <span class="lista" id="lista"></span>
+  </span>
+  <button class="vaciar" type="button" id="vaciar">Vaciar</button>
+  <button class="btn verde" type="button" id="enviar">Pedir por WhatsApp</button>
+</div>
+
+<div class="demo-bar">
+  <span>Sitio conceptual de Andrés Mendoza</span>
+  <a href="index.html">← Portafolio</a>
+</div>
+
+<script>
+  const menus = {
+    lun: { sopa:["Sopa de fideo seco","Crema de calabaza"], fuerte:["Milanesa de res empanizada","Pollo en salsa verde","Chiles rellenos de queso"], postre:["Gelatina de leche","Plátano al horno"] },
+    mar: { sopa:["Caldo de pollo con verduras","Sopa de pasta con jitomate"], fuerte:["Albóndigas al chipotle","Tinga de pollo","Nopales con huevo"], postre:["Arroz con leche","Fruta de temporada"] },
+    mié: { sopa:["Sopa de habas","Consomé de pollo"], fuerte:["Mole rojo con pollo","Bistec encebollado","Calabacitas con elote"], postre:["Flan napolitano","Gelatina de mosaico"] },
+    jue: { sopa:["Crema de champiñón","Sopa aguada de estrellitas"], fuerte:["Chiles rellenos de picadillo","Pechuga a la plancha","Frijoles con chorizo"], postre:["Pastel de tres leches","Fruta de temporada"] },
+    vie: { sopa:["Caldo de camarón","Sopa de tortilla"], fuerte:["Pescado empapelado","Tortitas de camarón en romerito","Chiles jalapeños rellenos de atún"], postre:["Arroz con leche","Gelatina de piña"] },
+    sáb: { sopa:["Menudo (medio litro)","Caldo de res"], fuerte:["Barbacoa de borrego","Enchiladas de mole","Cecina con quesillo"], postre:["Buñuelos","Nieve de tuna"] }
+  };
+  const nombres = { lun:"Lunes", mar:"Martes", "mié":"Miércoles", jue:"Jueves", vie:"Viernes", "sáb":"Sábado" };
+  const claves = ["lun","mar","mié","jue","vie","sáb"];
+
+  const guisados = [
+    { n:"Mole rojo con pollo", p:110, d:"Con arroz, frijoles y tortillas hechas a mano", e:"El más pedido" },
+    { n:"Tinga de pollo", p:95, d:"Con arroz y tortillas. Alcanza para dos tacos grandes", e:"" },
+    { n:"Chiles rellenos", p:105, d:"De queso o de picadillo, capeados al momento", e:"" },
+    { n:"Albóndigas al chipotle", p:100, d:"Tres albóndigas con arroz y caldillo", e:"Picosito", pic:true },
+    { n:"Milanesa de res", p:120, d:"Empanizada, con ensalada y frijoles", e:"" },
+    { n:"Nopales con huevo", p:80, d:"Con frijoles de la olla y tortillas", e:"Vegetariano" },
+    { n:"Cecina enchilada", p:135, d:"Con quesillo, aguacate y salsa de la casa", e:"Picosito", pic:true },
+    { n:"Frijoles con chorizo", p:75, d:"Porción grande con tortillas", e:"" }
+  ];
+
+  const mx = n => "$" + n.toLocaleString("es-MX");
+  const pedido = [];
+
+  // menú del día
+  const elDias = document.getElementById("dias");
+  const elTiempos = document.getElementById("tiempos");
+  const tituloDia = document.getElementById("tituloDia");
+  const hoyIdx = new Date().getDay();
+  let diaSel = claves[Math.min(Math.max(hoyIdx - 1, 0), 5)];
+
+  claves.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dia";
+    b.textContent = nombres[c];
+    b.setAttribute("aria-pressed", c === diaSel ? "true" : "false");
+    b.addEventListener("click", () => {
+      [...elDias.children].forEach(o => o.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed","true");
+      diaSel = c;
+      pintarMenu();
+    });
+    elDias.appendChild(b);
+  });
+
+  function pintarMenu(){
+    const m = menus[diaSel];
+    const esHoy = claves[Math.min(Math.max(hoyIdx - 1, 0), 5)] === diaSel && hoyIdx !== 0;
+    tituloDia.textContent = esHoy ? "Menú de hoy · " + nombres[diaSel] : "Menú del " + nombres[diaSel].toLowerCase();
+    elTiempos.innerHTML =
+      bloque("Primer tiempo · elige una", m.sopa) +
+      bloque("Plato fuerte · elige uno", m.fuerte) +
+      bloque("Postre y bebida", m.postre.concat(["Agua del día: jamaica o horchata"]));
+  }
+  function bloque(titulo, items){
+    return '<div class="tiempo"><p class="n">' + titulo + '</p><ul>' +
+      items.map(i => "<li>" + i + "</li>").join("") + "</ul></div>";
+  }
+
+  // guisados
+  const cont = document.getElementById("guisados");
+  guisados.forEach(g => {
+    const art = document.createElement("article");
+    art.className = "guiso";
+    art.innerHTML =
+      '<div class="top"><h3>' + g.n + '</h3><span class="p">' + mx(g.p) + '</span></div>' +
+      (g.e ? '<span class="etq' + (g.pic ? " picoso" : "") + '">' + g.e + '</span>' : "") +
+      '<small>' + g.d + '</small>' +
+      '<button class="agregar" type="button">Agregar al pedido</button>';
+    art.querySelector(".agregar").addEventListener("click", e => {
+      pedido.push({ n:g.n, p:g.p });
+      e.target.textContent = "Agregado ✓";
+      setTimeout(() => e.target.textContent = "Agregar al pedido", 1200);
+      pintarPedido();
+    });
+    cont.appendChild(art);
+  });
+
+  document.getElementById("pedirCorrida").addEventListener("click", () => {
+    pedido.push({ n:"Comida corrida del " + nombres[diaSel].toLowerCase(), p:95 });
+    pintarPedido();
+  });
+
+  const barra = document.getElementById("barra");
+  const lista = document.getElementById("lista");
+  const totalEl = document.getElementById("total");
+  const conteo = document.getElementById("conteo");
+
+  function pintarPedido(){
+    const total = pedido.reduce((s,i) => s + i.p, 0);
+    conteo.textContent = pedido.length;
+    totalEl.textContent = mx(total);
+    lista.textContent = pedido.map(i => i.n).join(" · ");
+    barra.classList.toggle("on", pedido.length > 0);
+  }
+
+  document.getElementById("vaciar").addEventListener("click", () => {
+    pedido.length = 0;
+    pintarPedido();
+  });
+
+  document.getElementById("enviar").addEventListener("click", () => {
+    if (!pedido.length) return;
+    const total = pedido.reduce((s,i) => s + i.p, 0);
+    const envio = pedido.length >= 4 ? 0 : 25;
+    const texto = "Hola Cocina Lupita, quiero pedir:\n" +
+      pedido.map(i => "• " + i.n + " — " + mx(i.p)).join("\n") +
+      "\nEnvío: " + (envio ? mx(envio) : "gratis") +
+      "\nTotal: " + mx(total + envio) + "\nMi dirección es: ";
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  // abierto o cerrado ahora
+  (function estadoActual(){
+    const ahora = new Date();
+    const d = ahora.getDay(), h = ahora.getHours();
+    const abierto = d !== 0 && h >= 13 && h < 18;
+    const cont = document.getElementById("horario");
+    document.getElementById("estado").textContent = abierto ? "Abierto ahora" : "Cerrado ahora";
+    cont.classList.toggle("cerrado", !abierto);
+  })();
+
+  pintarMenu();
+  pintarPedido();
+</script>
+</body>
+</html>
