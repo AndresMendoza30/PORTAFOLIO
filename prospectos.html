@@ -105,6 +105,11 @@
   .guion{ background:var(--film-2); border:1px solid var(--edge); padding:16px; margin-top:10px; }
   .guion p{ font-size:.92rem; color:var(--dim); }
   .guion p.dice{ color:var(--light); border-left:2px solid var(--beam); padding-left:14px; margin-block:10px; }
+  .wa{
+    background:var(--film); border:1px solid var(--edge); padding:13px 14px; margin-block:8px 12px;
+    font-family:var(--body); font-weight:300; font-size:.88rem; line-height:1.5; color:var(--dim);
+    white-space:pre-wrap; word-break:break-word;
+  }
 
   details{ background:var(--card); border:1px solid var(--edge); padding:14px 16px; margin-top:10px; }
   summary{ cursor:pointer; font-weight:500; }
@@ -248,36 +253,52 @@
     "mueblería Ocotlán","farmacia Zimatlán","papelería Oaxaca centro"
   ];
 
+  const LINK = "https://andresmendoza30.github.io/PORTAFOLIO/";
+
+  // Cada giro ataca su dolor real, no "vi que no tiene página".
   const GUIONES = {
     hotel: {
       abre: "Cada reserva que le entra por plataforma le cuesta como el 17%. Un cuarto de $1,800 se le va en $306 de comisión. Si el huésped reserva directo en su página, ese dinero se queda con usted. Con seis reservas directas al mes ya pagó el sitio.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Le hago una pregunta rápida: de cada reserva que les entra por Booking o las plataformas, se les va como el 17% en comisión. En un cuarto de $1,800 son $306 que no se quedan con ustedes.\n\nLo que hago es que el huésped pueda reservar directo con ustedes. Aquí puede verlo funcionando, cambie las fechas y ahí mismo aparece cuánto se ahorra el huésped:",
       demo: "hotel.html", precio: "$15,000 a $18,000"
     },
     comedor: {
       abre: "¿Cuántos pedidos pierde en la hora pico porque nadie alcanza a contestar el teléfono? Con esto el cliente arma su pedido solo y a usted le llega ya escrito al WhatsApp, con dirección y total.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: en plena hora de la comida, ¿cuántos pedidos se les pierden porque nadie alcanza a contestar el teléfono?\n\nLo que hago es que el cliente arme su pedido solo y a ustedes les llegue ya escrito al WhatsApp, con dirección y total. Aquí lo puede probar, el menú cambia según el día:",
       demo: "comedor.html", precio: "$5,000 a $6,500"
     },
     restaurante: {
       abre: "Su carta está en fotos de Instagram de hace meses. Aquí la gente ve la carta actual y reserva mesa sin que usted conteste nada.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: ¿cuántas veces al día les preguntan por mensaje la carta, los precios o si hay lugar?\n\nLo que hago es que la gente vea la carta actualizada y aparte su mesa sin que ustedes contesten nada. Así se ve funcionando:",
       demo: "copal.html", precio: "$8,000 a $14,000"
     },
     dental: {
       abre: "Sus pacientes agendarían solos, a la hora que sea, hasta a las once de la noche. Y usted ve toda la agenda del día en un panel.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta rápida: ¿cuánto tiempo del día se les va agendando citas por teléfono y WhatsApp, y cuántos pacientes se pierden cuando escriben en la noche y nadie contesta?\n\nLo que hago es que el paciente agende solo, a cualquier hora, y ustedes vean la agenda del día en un panel. Aquí puede probar cómo agendaría un paciente:",
       demo: "consultorio.html", precio: "$14,000 a $18,000"
     },
     ferreteria: {
       abre: "¿Cómo sabe hoy qué se le está acabando? Con esto lo ve en la pantalla y le llega aviso al WhatsApp cuando algo baja del mínimo.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago sistemas y páginas web aquí en Oaxaca. Una pregunta: ¿cómo saben hoy qué producto se les está acabando, antes de que llegue el cliente y ya no haya?\n\nLo que hago es un tablero donde ven las existencias en vivo y les llega aviso al WhatsApp cuando algo baja del mínimo. Aquí lo puede ver funcionando con datos de ejemplo:",
       demo: "inventario.html", precio: "$22,000 en adelante"
     },
     boutique: {
-      abre: "Vende en línea sin pagarle comisión a ninguna plataforma. El pedido le llega directo a su WhatsApp.",
-      demo: "boutique.html", precio: "$19,000 en adelante"
+      abre: "¿Cuánto tiempo se le va contestando 'cuánto cuesta' y '¿todavía la tienes?' por Instagram? Le hago un aparador de lo que hay hoy: la clienta ve talla y precio, y llega sabiendo qué quiere.",
+      wa: "Buenas tardes, ¿hablo con la encargada de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: ¿cuánto tiempo se le va al día contestando \"cuánto cuesta\", \"qué tallas hay\" y \"¿todavía la tienes?\" por mensaje?\n\nLo que hago es un aparador de lo que hay hoy: la clienta ve la prenda con su talla y su precio, y le escribe ya sabiendo qué quiere. Lo que se vende usted lo marca desde su celular en dos toques. Aquí lo puede probar:",
+      demo: "boutique.html", precio: "$8,000 a $12,000"
     },
     otro: {
-      abre: "Busqué su negocio en Google antes de venir y vi que no tiene página. Esto es lo que yo hago —déjeme enseñárselo en treinta segundos.",
+      abre: "¿Qué es lo que más tiempo le quita en el día? Casi siempre es contestar lo mismo una y otra vez por mensaje. Eso es justo lo que le quito.",
+      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web y automatizaciones aquí en Oaxaca. Una pregunta: ¿qué es lo que más tiempo les quita en el día? Casi siempre es contestar lo mismo una y otra vez por mensaje o por teléfono.\n\nEso es justo lo que les quito. Aquí puede ver trabajos que he hecho para otros negocios:",
       demo: "index.html", precio: "desde $6,500"
     }
   };
+
+  function mensajeWA(d){
+    const g = GUIONES[d.giro] || GUIONES.otro;
+    return g.wa.replace(/\{N\}/g, d.nombre) + "\n" + LINK + g.demo +
+      "\n\nÁbralo y pruébelo, todo funciona. Si le interesa, le hago sin costo una revisión de cómo se está viendo su negocio en internet hoy. ¿Se la mando?";
+  }
 
   const NOMBRE_GIRO = {
     hotel:"Hotel/hostal", comedor:"Comedor/fonda", restaurante:"Restaurante",
@@ -355,10 +376,7 @@
       art.className = "p";
       art.dataset.estado = d.estado;
 
-      const msg = "Buenas tardes, ¿hablo con el encargado de " + d.nombre + "? " +
-        "Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Vi su negocio en Google pero noté que no aparece con página propia. " +
-        "Le comparto algo que hice para que vea a qué me refiero: https://andresmendoza30.github.io/PORTAFOLIO/" + g.demo + " " +
-        "Ábralo y pruébelo, todo funciona. Si le interesa, le hago sin costo una revisión de cómo se está viendo su negocio en internet hoy. ¿Se la mando?";
+      const msg = mensajeWA(d);
 
       art.innerHTML =
         '<div class="top"><div><b>' + d.nombre + '</b>' +
@@ -407,7 +425,19 @@
       '<p class="dice">"Mire, esto es lo que hago —" (le pasas el celular con el demo abierto) "— pruébelo usted mismo."</p>' +
       '<p class="dice">Cierre: "¿Me pasa su WhatsApp y mañana le mando la revisión sin costo?"</p>' +
       '<p>Rango de precio para este giro: <b>' + g.precio + '</b>. Descuento de primer cliente solo a cambio de testimonio. Siempre 50% de anticipo.</p>' +
-      '<p style="margin-top:10px"><a href="' + g.demo + '" target="_blank" rel="noopener">Abrir el demo de este giro ↗</a></p>';
+      '<p style="margin-top:10px"><a href="' + g.demo + '" target="_blank" rel="noopener">Abrir el demo de este giro ↗</a></p>' +
+      '<p class="mono" style="margin-top:20px">Mensaje que se manda por WhatsApp en este giro</p>' +
+      '<pre class="wa" id="waPreview">' + mensajeWA({ giro: giro, nombre: "[nombre del negocio]" }) + '</pre>' +
+      '<button class="btn line mini" type="button" id="copiarWA">Copiar este mensaje</button>';
+
+    const cop = $("copiarWA");
+    if (cop) cop.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText($("waPreview").textContent);
+        cop.textContent = "Copiado ✓";
+        setTimeout(() => cop.textContent = "Copiar este mensaje", 1500);
+      } catch(e){ window.prompt("Copia el mensaje:", $("waPreview").textContent); }
+    });
   }
   $("giro").addEventListener("change", pintarGuion);
 
