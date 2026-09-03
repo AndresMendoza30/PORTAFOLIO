@@ -57,6 +57,12 @@
     background:var(--film); border:1px solid var(--edge); padding:11px 12px; font-size:.95rem; font-weight:300;
   }
   input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--beam); }
+  input::placeholder{ color:rgba(110,103,92,.7); font-style:italic; font-size:.88rem; }
+  .pista{
+    background:rgba(228,169,63,.10); border:1px solid rgba(228,169,63,.35);
+    padding:10px 12px; font-size:.85rem; color:var(--dim);
+  }
+  .pista b{ color:var(--beam); font-weight:500; }
   .btn{
     background:var(--beam); border:1px solid var(--beam); color:#14100A; padding:12px 18px;
     font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
@@ -167,9 +173,10 @@
   <section>
     <h2>Anotar un negocio</h2>
     <form id="form">
+      <p class="pista">El texto gris en cursiva de cada recuadro es <b>solo un ejemplo</b>. Pícale al recuadro y escribe encima los datos del negocio que encontraste. Al final, el botón amarillo.</p>
       <div class="fila">
         <label><span class="mono">Nombre del negocio</span>
-          <input type="text" id="nombre" required placeholder="Hotel Casa Verde"></label>
+          <input type="text" id="nombre" required placeholder="ej. Hotel Casa Verde"></label>
         <label><span class="mono">Giro</span>
           <select id="giro">
             <option value="hotel">Hotel / hostal</option>
@@ -183,9 +190,9 @@
       </div>
       <div class="fila">
         <label><span class="mono">Localidad</span>
-          <input type="text" id="lugar" placeholder="Centro, Tlacolula, Etla…"></label>
+          <input type="text" id="lugar" placeholder="ej. Centro, Tlacolula, Etla…"></label>
         <label><span class="mono">Teléfono (10 dígitos)</span>
-          <input type="tel" id="tel" placeholder="9511234567"></label>
+          <input type="tel" id="tel" placeholder="ej. 9511234567"></label>
       </div>
       <div class="fila">
         <label><span class="mono">Qué tiene hoy</span>
@@ -195,10 +202,10 @@
             <option>Página vieja o rota</option>
           </select></label>
         <label><span class="mono">Reseñas en Google</span>
-          <input type="text" id="resenas" placeholder="86 reseñas · 4.6"></label>
+          <input type="text" id="resenas" placeholder="ej. 86 reseñas · 4.6"></label>
       </div>
       <label><span class="mono">Nota</span>
-        <input type="text" id="nota" placeholder="Preguntar por la dueña después de las 4"></label>
+        <input type="text" id="nota" placeholder="ej. Preguntar por la dueña después de las 4"></label>
       <button class="btn" type="submit">Agregar a la lista</button>
     </form>
   </section>
