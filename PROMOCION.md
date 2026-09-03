@@ -142,6 +142,99 @@ Enciéndelos cuando tengas:
 
 ---
 
+---
+
+## PLAN DE ANUNCIOS — prueba de 7 días con $700
+
+### Antes de poder anunciar (30 minutos, una sola vez)
+
+1. **Página de Facebook** (no sirve el perfil personal para anunciar).
+   Nombre: `Andrés Mendoza — Páginas web Oaxaca`. Categoría: Diseñador de sitios web.
+   Foto de perfil: mi foto de cara, no un logo.
+2. **WhatsApp Business** en el celular, con el mismo número, y enlazado a la página.
+   En WhatsApp Business pongo:
+   - Mensaje de bienvenida automático (abajo está el texto).
+   - Catálogo con mis 4 paquetes y precios.
+3. **Administrador de anuncios** (adsmanager.facebook.com) con tarjeta dada de alta.
+
+### Configuración exacta de la campaña
+
+| Ajuste | Qué pongo | Por qué |
+|---|---|---|
+| Objetivo | **Mensajes → WhatsApp** | Nunca "Interacción": trae likes, no clientes |
+| Presupuesto | **$100 al día, 7 días** | Menos de eso el algoritmo no aprende |
+| Ubicación | Oaxaca de Juárez + 25 km | Cubre Xoxo, Santa Lucía, Etla, Zaachila |
+| Edad | 28 a 58 | Abajo de 28 casi nadie es dueño |
+| Detallada | Propietarios de pequeñas empresas, Emprendimiento, Administración de empresas | |
+| Ubicaciones | Automáticas | Deja que Facebook reparta |
+| Creativo | **Video de pantalla del demo** | Una imagen bonita no vende esto; verlo funcionando sí |
+
+### Anuncio 1 — el que probaría primero
+
+**Video:** grabación de pantalla agendando una cita en el demo dental (20 seg).
+
+> ¿Todavía agendas las citas por teléfono y WhatsApp? 📞
+>
+> Mira lo que le hice a un consultorio: el paciente elige tratamiento, día y hora él solo, a la hora que sea. Y el doctor ve toda su agenda del día en un panel.
+>
+> Hago páginas y sistemas para negocios de Oaxaca. Sin plantillas, todo a la medida y con precio cerrado antes de empezar.
+>
+> Escríbeme y te digo qué haría para tu negocio, sin costo. 👇
+
+### Anuncio 2 — para hoteles y hospedaje
+
+**Video:** el buscador de Casa Tule cambiando fechas y mostrando el ahorro.
+
+> Cada reserva que te entra por Booking te cuesta el 17% 💸
+>
+> En un cuarto de $1,800 son $306 que no se quedan contigo. Mira cómo se ve una página donde el huésped reserva directo y ese dinero se queda en tu hotel.
+>
+> Páginas y sistemas para negocios de Oaxaca. Escríbeme y lo vemos.
+
+### Anuncio 3 — para tiendas y boutiques
+
+**Video:** el catálogo de Aurelia, eligiendo talla y armando el pedido.
+
+> ¿Cuántas veces al día contestas "cuánto cuesta" y "¿qué tallas hay?" 😮‍💨
+>
+> Mira esto: tu clienta ve la prenda con su talla y su precio, arma su pedido y te llega ya escrito a tu WhatsApp. Tú nada más confirmas.
+>
+> Sin comisiones de plataforma. Escríbeme y te enseño cómo quedaría tu tienda.
+
+### Mensaje de bienvenida automático de WhatsApp Business
+
+> ¡Hola! Gracias por escribir 🙌 Soy Andrés Mendoza, hago páginas web y sistemas para negocios de Oaxaca.
+>
+> Para irte preparando una propuesta, cuéntame:
+> 1. ¿A qué se dedica tu negocio?
+> 2. ¿Qué es lo que más tiempo te quita hoy?
+>
+> Mientras, aquí puedes ver mis proyectos funcionando: https://andresmendoza30.github.io/PORTAFOLIO/
+>
+> Te contesto en menos de 24 horas.
+
+### Qué números vigilar (revisar al día 3, no antes)
+
+| Número | Bien | Mal | Qué hago si sale mal |
+|---|---|---|---|
+| Costo por conversación | menos de $150 | más de $300 | Cambio el video, no el texto |
+| Conversaciones en 7 días | 8 o más | menos de 4 | El público está mal, achico el radio |
+| Del chat a cotización | 1 de cada 4 | 1 de cada 10 | Mi respuesta en WhatsApp es el problema |
+
+**Regla:** no le muevo nada los primeros 3 días. Facebook necesita ese tiempo para aprender.
+Cambiar el anuncio a diario es la forma más rápida de tirar el dinero.
+
+### Expectativa realista de los $700
+
+De 7 días con $100 diarios, lo normal es: **5 a 15 conversaciones**, de ahí **2 o 3 prospectos reales**,
+y con suerte **1 venta**. Si sale una venta de $8,000, ya pagó los anuncios diez veces.
+Si salen 0 ventas pero 3 prospectos, **no fue fracaso**: son 3 personas que no tenía el lunes.
+
+Lo que sí es fracaso: gastar $700 y no haber contestado rápido los mensajes que llegaron.
+**Contestar en menos de 10 minutos multiplica el cierre.** Trae las notificaciones prendidas.
+
+---
+
 ## El orden en que hago las cosas
 
 1. Estado de WhatsApp — hoy mismo, 2 minutos.
