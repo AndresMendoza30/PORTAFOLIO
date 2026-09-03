@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praxis — Panel del consultorio</title>
+<meta name="description" content="Panel de gestión de citas para el consultorio: agenda del día, pacientes, ocupación.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F5; --panel:#fff; --ink:#101F1E; --teal:#14524F; --teal-soft:#E6EEEC;
+    --gold:#C8A46B; --line:rgba(16,31,30,.11); --muted:#5A6968; --danger:#B3452F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-weight:700;letter-spacing:-0.02em;line-height:1.2}
+  button{font-family:inherit;cursor:pointer;border:none}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+  .shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  /* Sidebar */
+  .side{background:var(--ink);color:#fff;padding:24px 18px;display:flex;flex-direction:column;gap:28px}
+  @media(max-width:900px){.side{flex-direction:row;align-items:center;justify-content:space-between;padding:14px 18px;gap:14px}}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
+  .logo .m{width:28px;height:28px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center}
+  .logo .m svg{width:15px;height:15px}
+  .menu{list-style:none;display:flex;flex-direction:column;gap:3px}
+  @media(max-width:900px){.menu{flex-direction:row;gap:6px;overflow-x:auto}}
+  .menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;text-decoration:none;color:#9FB0AE;font-size:.9rem;white-space:nowrap;transition:background .2s,color .2s}
+  .menu a.on,.menu a:hover{background:rgba(255,255,255,.09);color:#fff}
+  .side .foot{margin-top:auto;font-size:.75rem;color:#7C8B8A}
+  @media(max-width:900px){.side .foot{display:none}}
+
+  /* Main */
+  .main{padding:28px 30px 60px}
+  @media(max-width:640px){.main{padding:20px 18px 50px}}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:26px}
+  .top h1{font-size:1.6rem}
+  .top .sub{color:var(--muted);font-size:.92rem;margin-top:4px}
+  .btn-add{background:var(--teal);color:#fff;padding:11px 20px;border-radius:100px;font-weight:600;font-size:.9rem;transition:background .2s}
+  .btn-add:hover{background:#0e3d3b}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  @media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .stat .l{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:8px}
+  .stat .v{font-size:1.9rem;font-weight:800;letter-spacing:-0.03em;line-height:1}
+  .stat .d{font-size:.8rem;margin-top:7px;color:var(--teal);font-weight:600}
+  .stat .d.warn{color:var(--gold)}
+
+  .cols{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+  @media(max-width:980px){.cols{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .card-h{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .card-h h2{font-size:1.02rem}
+  .card-h .note{font-size:.8rem;color:var(--muted)}
+  .card-b{padding:8px 0}
+
+  /* Appointment rows */
+  .appt{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid var(--line);transition:background .15s}
+  .appt:last-child{border-bottom:none}
+  .appt:hover{background:#FAFBFB}
+  .appt .hr{font-weight:800;font-size:.95rem;color:var(--teal)}
+  .appt .who{font-weight:700;font-size:.95rem}
+  .appt .what{font-size:.83rem;color:var(--muted)}
+  .tag{font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:100px;white-space:nowrap}
+  .tag.conf{background:var(--teal-soft);color:var(--teal)}
+  .tag.pend{background:#FBF3E3;color:#8A6A22}
+  .tag.new{background:#EAF3EF;color:#1F6B4E}
+  .appt.done{opacity:.5}
+  .appt.done .hr{color:var(--muted)}
+
+  .empty{padding:26px 22px;color:var(--muted);font-size:.9rem}
+
+  /* Occupancy chart */
+  .chart{padding:20px 22px}
+  .bar-row{display:grid;grid-template-columns:42px 1fr 42px;gap:12px;align-items:center;margin-bottom:11px;font-size:.83rem}
+  .bar-row .lab{color:var(--muted);font-weight:600}
+  .bar-track{height:9px;background:#EDF0EF;border-radius:100px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--teal);border-radius:100px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .bar-fill.low{background:var(--gold)}
+  .bar-row .pct{text-align:right;font-weight:700;font-size:.8rem}
+
+  .list-simple{padding:6px 0}
+  .li{padding:13px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .li:last-child{border-bottom:none}
+  .li .n{font-weight:600;font-size:.9rem}
+  .li .s{font-size:.79rem;color:var(--muted)}
+  .li .v{font-size:.82rem;font-weight:700;color:var(--teal);white-space:nowrap}
+
+  .demo-flag{position:fixed;bottom:14px;right:14px;z-index:60;background:var(--ink);color:#fff;font-size:.74rem;padding:8px 14px;border-radius:100px;opacity:.9}
+  .back-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);text-decoration:none;margin-top:24px}
+  .back-link:hover{color:var(--teal)}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="side">
+    <div class="logo">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4c-3 0-5 2.2-5 5.5 0 4.4 2.2 7.3 2.9 10.1.4 1.5 1 2.4 2.1 2.4s1.7-.9 2.1-2.4c.7-2.8 2.9-5.7 2.9-10.1C17 6.2 15 4 12 4Z" stroke="#fff" stroke-width="1.7"/></svg></span>
+      Praxis
+    </div>
+    <ul class="menu">
+      <li><a class="on" href="#">📅 Agenda</a></li>
+      <li><a href="#">👤 Pacientes</a></li>
+      <li><a href="#">🦷 Tratamientos</a></li>
+      <li><a href="#">📊 Reportes</a></li>
+      <li><a href="#">⚙️ Ajustes</a></li>
+    </ul>
+    <div class="foot">Dra. Renata Solís<br>Sesión iniciada</div>
+  </aside>
+
+  <main class="main">
+
+    <div class="top">
+      <div>
+        <h1>Agenda de hoy</h1>
+        <div class="sub" id="fechaHoy">—</div>
+      </div>
+      <button class="btn-add">+ Agendar manualmente</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="l">Citas hoy</div>
+        <div class="v">8</div>
+        <div class="d">2 más que ayer</div>
+      </div>
+      <div class="stat">
+        <div class="l">Agendadas en línea</div>
+        <div class="v">6</div>
+        <div class="d">75% del total</div>
+      </div>
+      <div class="stat">
+        <div class="l">Ocupación semana</div>
+        <div class="v">78%</div>
+        <div class="d warn">3 espacios libres mañana</div>
+      </div>
+      <div class="stat">
+        <div class="l">Fuera de horario</div>
+        <div class="v">4</div>
+        <div class="d">Reservadas de noche o fin de semana</div>
+      </div>
+    </div>
+
+    <div class="cols">
+
+      <div class="card">
+        <div class="card-h">
+          <h2>Citas del día</h2>
+          <span class="note">Se actualiza sola cuando alguien reserva en línea</span>
+        </div>
+        <div class="card-b">
+          <div class="appt done">
+            <span class="hr">09:00</span>
+            <span><span class="who">Mariana Ruiz</span><br><span class="what">Limpieza y prevención · 45 min</span></span>
+            <span class="tag conf">Atendida</span>
+          </div>
+          <div class="appt done">
+            <span class="hr">09:45</span>
+            <span><span class="who">Jorge Palacios</span><br><span class="what">Ortodoncia — ajuste · 30 min</span></span>
+            <span class="tag conf">Atendida</span>
+          </div>
+          <div class="appt">
+            <span class="hr">10:30</span>
+            <span><span class="who">Lucía Hernández</span><br><span class="what">Estética dental · 90 min</span></span>
+            <span class="tag conf">Confirmada</span>
+          </div>
+          <div class="appt">
+            <span class="hr">12:00</span>
+            <span><span class="who">Andrés Vázquez</span><br><span class="what">Urgencia — dolor molar · 30 min</span></span>
+            <span class="tag new">Reservó anoche</span>
+          </div>
+          <div class="appt">
+            <span class="hr">12:45</span>
+            <span><span class="who">Familia Ortiz (2 niños)</span><br><span class="what">Odontopediatría · 40 min c/u</span></span>
+            <span class="tag conf">Confirmada</span>
+          </div>
+          <div class="appt">
+            <span class="hr">16:00</span>
+            <span><span class="who">Rodrigo Méndez</span><br><span class="what">Endodoncia — sesión 2 · 90 min</span></span>
+            <span class="tag conf">Confirmada</span>
+          </div>
+          <div class="appt">
+            <span class="hr">17:30</span>
+            <span><span class="who">Paola Guzmán</span><br><span class="what">Limpieza y prevención · 45 min</span></span>
+            <span class="tag pend">Sin confirmar</span>
+          </div>
+          <div class="appt">
+            <span class="hr">18:15</span>
+            <span><span class="who">Diego Salinas</span><br><span class="what">Ortodoncia — valoración · 60 min</span></span>
+            <span class="tag new">Reservó hoy</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <div class="card">
+          <div class="card-h"><h2>Ocupación de la semana</h2></div>
+          <div class="chart">
+            <div class="bar-row"><span class="lab">Lun</span><span class="bar-track"><span class="bar-fill" style="width:92%"></span></span><span class="pct">92%</span></div>
+            <div class="bar-row"><span class="lab">Mar</span><span class="bar-track"><span class="bar-fill" style="width:85%"></span></span><span class="pct">85%</span></div>
+            <div class="bar-row"><span class="lab">Mié</span><span class="bar-track"><span class="bar-fill" style="width:78%"></span></span><span class="pct">78%</span></div>
+            <div class="bar-row"><span class="lab">Jue</span><span class="bar-track"><span class="bar-fill low" style="width:54%"></span></span><span class="pct">54%</span></div>
+            <div class="bar-row"><span class="lab">Vie</span><span class="bar-track"><span class="bar-fill" style="width:88%"></span></span><span class="pct">88%</span></div>
+            <div class="bar-row"><span class="lab">Sáb</span><span class="bar-track"><span class="bar-fill low" style="width:61%"></span></span><span class="pct">61%</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h"><h2>Pacientes nuevos</h2><span class="note">Este mes</span></div>
+          <div class="list-simple">
+            <div class="li"><span><span class="n">Andrés Vázquez</span><br><span class="s">Llegó por el sitio web</span></span><span class="v">Hoy</span></div>
+            <div class="li"><span><span class="n">Diego Salinas</span><br><span class="s">Llegó por el sitio web</span></span><span class="v">Hoy</span></div>
+            <div class="li"><span><span class="n">Paola Guzmán</span><br><span class="s">Recomendación</span></span><span class="v">Ayer</span></div>
+            <div class="li"><span><span class="n">Lucía Hernández</span><br><span class="s">Llegó por el sitio web</span></span><span class="v">2 días</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h"><h2>Recordatorios</h2><span class="note">Automáticos</span></div>
+          <div class="list-simple">
+            <div class="li"><span><span class="n">8 recordatorios enviados</span><br><span class="s">Para las citas de mañana</span></span><span class="v">✓ Listo</span></div>
+            <div class="li"><span><span class="n">1 confirmación pendiente</span><br><span class="s">Paola Guzmán — 17:30</span></span><span class="v">Reenviar</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <a class="back-link" href="consultorio.html">← Volver al sitio del paciente</a>
+
+  </main>
+</div>
+
+<div class="demo-flag">Panel demo — datos de ejemplo</div>
+
+<script>
+  var f = new Date();
+  var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('fechaHoy').textContent =
+    DIAS[f.getDay()].charAt(0).toUpperCase() + DIAS[f.getDay()].slice(1) + ' ' + f.getDate() + ' de ' + MESES[f.getMonth()] + ', ' + f.getFullYear();
+</script>
+
+</body>
+</html>

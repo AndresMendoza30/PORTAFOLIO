@@ -3,142 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Praxis — Consultorio dental</title>
-<meta name="description" content="Sitio conceptual para consultorio dental: agendamiento de citas, servicios y confianza clínica.">
+<title>Praxis — Consultorio dental | Agenda tu cita en línea</title>
+<meta name="description" content="Consultorio dental con agenda en línea: elige servicio, día y hora en menos de un minuto. Sin llamadas, sin esperas.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F5F7F6; --ink:#182022; --sage:#3E6259; --line:rgba(24,32,34,0.12); --max:1080px;
+    --paper:#FAF8F4;
+    --ink:#101F1E;
+    --teal:#14524F;
+    --teal-soft:#E6EEEC;
+    --gold:#C8A46B;
+    --line:rgba(16,31,30,0.12);
+    --muted:#5A6968;
+    --max:1140px;
   }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  body{ background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
-  h1,h2,h3{ font-family:'Archivo',sans-serif; font-weight:700; line-height:1.1; letter-spacing:-0.01em; }
-  a{ color:inherit; }
-  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
-  @media (max-width:640px){ .wrap{ padding:0 20px; } }
-  :focus-visible{ outline:2px solid var(--sage); outline-offset:3px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-weight:700;line-height:1.12;letter-spacing:-0.02em}
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  @media(max-width:640px){.wrap{padding:0 20px}}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-  header{ padding:26px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(245,247,246,0.92); backdrop-filter:blur(6px); z-index:10; }
-  .nav{ display:flex; justify-content:space-between; align-items:center; }
-  .brand{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.2rem; }
-  .nav a.cta{ background:var(--sage); color:#fff; text-decoration:none; padding:10px 20px; border-radius:20px; font-size:0.88rem; }
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.vis{opacity:1;transform:none}
 
-  .hero{ padding:76px 0 60px; }
-  .hero-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center; }
-  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } }
-  .badge{ display:inline-block; background:rgba(62,98,89,0.1); color:var(--sage); font-size:0.82rem; padding:6px 14px; border-radius:20px; margin-bottom:18px; }
-  .hero h1{ font-size:clamp(2.1rem,4.6vw,3.2rem); max-width:14ch; }
-  .hero p.lede{ margin-top:18px; max-width:44ch; color:#3d4a48; font-size:1.05rem; }
-  .hero-actions{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
-  .btn-primary{ background:var(--sage); color:#fff; text-decoration:none; padding:14px 26px; border-radius:24px; font-size:0.95rem; font-weight:600; }
-  .btn-ghost{ text-decoration:none; border:1px solid var(--line); padding:14px 24px; border-radius:24px; font-size:0.95rem; }
+  header{position:sticky;top:0;z-index:50;background:rgba(250,248,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em}
+  .brand .mark{width:30px;height:30px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center}
+  .brand .mark svg{width:16px;height:16px}
+  .nav-links{display:flex;gap:26px;list-style:none;font-size:.93rem}
+  .nav-links a{text-decoration:none;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;text-decoration:none;font-weight:600;transition:background .2s,transform .2s,color .2s}
+  .btn-primary{background:var(--teal);color:#fff;padding:13px 24px;border-radius:100px;font-size:.94rem}
+  .btn-primary:hover{background:#0e3d3b;transform:translateY(-1px)}
+  .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .btn-ghost{border:1px solid var(--line);padding:13px 22px;border-radius:100px;font-size:.94rem;background:transparent;color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+  @media(max-width:820px){.nav-links{display:none}}
 
-  .hero-art{ aspect-ratio:1; border-radius:50%; background:#E4ECE9; display:flex; align-items:center; justify-content:center; }
-  .hero-art svg{ width:60%; }
+  .hero{padding:72px 0 64px;position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--teal-soft);color:var(--teal);font-size:.82rem;font-weight:600;padding:7px 15px;border-radius:100px;margin-bottom:20px}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-size:clamp(2.3rem,5.2vw,3.7rem);max-width:13ch}
+  .hero p.lede{margin-top:20px;max-width:44ch;font-size:1.1rem;color:var(--muted)}
+  .hero-actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .trust{margin-top:34px;display:flex;gap:30px;flex-wrap:wrap;padding-top:26px;border-top:1px solid var(--line)}
+  .trust div .n{font-size:1.5rem;font-weight:800;color:var(--teal);letter-spacing:-0.03em}
+  .trust div .l{font-size:.82rem;color:var(--muted)}
 
-  .servicios{ padding:80px 0; border-top:1px solid var(--line); }
-  .servicios h2{ font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:40px; }
-  .service-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
-  @media (max-width:760px){ .service-grid{ grid-template-columns:1fr; } }
-  .service-card{ background:var(--paper); padding:30px 26px; }
-  .service-card .icon{ width:40px; height:40px; border-radius:50%; background:rgba(62,98,89,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
-  .service-card h3{ font-size:1.05rem; margin-bottom:8px; }
-  .service-card p{ font-size:0.9rem; color:#556360; }
+  .hero-visual{position:relative;aspect-ratio:1/1.05;background:linear-gradient(160deg,#EDF3F1 0%,#E2EDE9 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;padding:36px}
+  .hero-visual svg{width:78%;height:auto}
+  .float-card{position:absolute;background:#fff;border-radius:14px;padding:14px 18px;box-shadow:0 12px 34px rgba(16,31,30,.13);display:flex;align-items:center;gap:11px}
+  .float-card .ic{width:32px;height:32px;border-radius:9px;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;font-size:.95rem}
+  .float-card .t{font-size:.82rem;font-weight:700;line-height:1.25;display:block}
+  .float-card .s{font-size:.74rem;color:var(--muted);display:block}
+  .fc-1{top:8%;right:-14px;animation:floaty 5s ease-in-out infinite}
+  .fc-2{bottom:11%;left:-18px;animation:floaty 5s ease-in-out infinite .9s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @media(max-width:520px){.fc-1{right:2px}.fc-2{left:2px}}
 
-  .agenda{ background:var(--ink); color:var(--paper); padding:80px 0; }
-  .agenda-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
-  @media (max-width:860px){ .agenda-grid{ grid-template-columns:1fr; } }
-  .agenda h2{ color:#fff; font-size:clamp(1.7rem,3.4vw,2.3rem); max-width:14ch; }
-  .agenda p{ color:#a9b6b2; margin-top:14px; max-width:38ch; }
-  .form-card{ background:#20292b; border-radius:12px; padding:28px; }
-  .form-card label{ display:block; font-size:0.82rem; color:#a9b6b2; margin-bottom:6px; }
-  .form-card input, .form-card select{ width:100%; padding:12px 14px; margin-bottom:16px; border-radius:8px; border:1px solid #33403f; background:#182022; color:#fff; font-family:inherit; font-size:0.95rem; }
-  .form-card button{ width:100%; background:var(--sage); color:#fff; border:none; padding:13px; border-radius:24px; font-weight:600; font-size:0.95rem; cursor:pointer; }
-  .form-card button:hover{ background:#345349; }
+  .como{padding:80px 0;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sec-head{margin-bottom:44px;max-width:36ch}
+  .sec-head .tag{font-size:.8rem;font-weight:700;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+  .sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem)}
+  .sec-head p{margin-top:14px;color:var(--muted)}
+  .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:760px){.steps3{grid-template-columns:1fr}}
+  .step3{padding-top:22px;border-top:2px solid var(--teal)}
+  .step3 .n{font-size:.8rem;font-weight:700;color:var(--teal);margin-bottom:10px}
+  .step3 h3{font-size:1.12rem;margin-bottom:7px}
+  .step3 p{font-size:.93rem;color:var(--muted)}
 
-  footer{ padding:32px 0; text-align:center; font-size:0.85rem; color:#6b7674; }
+  .servicios{padding:88px 0}
+  .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:860px){.serv-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.serv-grid{grid-template-columns:1fr}}
+  .serv{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 24px;transition:transform .25s,box-shadow .25s,border-color .25s}
+  .serv:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(16,31,30,.09);border-color:transparent}
+  .serv .ic{width:44px;height:44px;border-radius:12px;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .serv .ic svg{width:22px;height:22px}
+  .serv h3{font-size:1.08rem;margin-bottom:8px}
+  .serv p{font-size:.91rem;color:var(--muted);margin-bottom:14px}
+  .serv .meta{font-size:.8rem;color:var(--teal);font-weight:600}
+
+  .reservas{padding:88px 0;background:var(--ink);color:var(--paper)}
+  .reservas .sec-head h2{color:#fff}
+  .reservas .sec-head p{color:#9FB0AE}
+  .booking{background:#fff;color:var(--ink);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:290px 1fr}
+  @media(max-width:820px){.booking{grid-template-columns:1fr}}
+  .bk-side{background:#F4F1EB;padding:30px 26px;border-right:1px solid var(--line)}
+  @media(max-width:820px){.bk-side{border-right:none;border-bottom:1px solid var(--line)}}
+  .bk-side h3{font-size:1.05rem;margin-bottom:20px}
+  .bk-prog{list-style:none;display:flex;flex-direction:column;gap:2px}
+  @media(max-width:820px){.bk-prog{flex-direction:row;gap:10px;overflow-x:auto}}
+  .bk-prog li{display:flex;align-items:center;gap:11px;padding:10px 0;font-size:.9rem;color:var(--muted);white-space:nowrap}
+  .bk-prog li .c{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex:none;background:#fff}
+  .bk-prog li.on{color:var(--ink);font-weight:600}
+  .bk-prog li.on .c{background:var(--teal);border-color:var(--teal);color:#fff}
+  .bk-prog li.done .c{background:var(--teal-soft);border-color:var(--teal-soft);color:var(--teal)}
+  .bk-summary{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:.85rem}
+  .bk-summary div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;color:var(--muted)}
+  .bk-summary div b{color:var(--ink);font-weight:600;text-align:right}
+  @media(max-width:820px){.bk-summary{display:none}}
+
+  .bk-main{padding:32px 30px}
+  @media(max-width:560px){.bk-main{padding:24px 20px}}
+  .bk-step{display:none}
+  .bk-step.active{display:block;animation:fadeUp .35s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .bk-main h4{font-size:1.2rem;margin-bottom:6px}
+  .bk-main .hint{font-size:.88rem;color:var(--muted);margin-bottom:22px}
+
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  @media(max-width:520px){.opt-grid{grid-template-columns:1fr}}
+  .opt{border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;cursor:pointer;background:#fff;text-align:left;font-family:inherit;transition:border-color .2s,background .2s}
+  .opt:hover{border-color:var(--teal)}
+  .opt.sel{border-color:var(--teal);background:var(--teal-soft)}
+  .opt .t{font-weight:700;font-size:.95rem;display:block}
+  .opt .s{font-size:.8rem;color:var(--muted);display:block}
+
+  .day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  @media(max-width:560px){.day-grid{grid-template-columns:repeat(4,1fr)}}
+  .day{border:1.5px solid var(--line);border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;background:#fff;font-family:inherit;transition:border-color .2s,background .2s}
+  .day:hover:not(:disabled){border-color:var(--teal)}
+  .day.sel{border-color:var(--teal);background:var(--teal);color:#fff}
+  .day:disabled{opacity:.32;cursor:not-allowed}
+  .day .dw{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:block}
+  .day.sel .dw{color:rgba(255,255,255,.75)}
+  .day .dn{font-size:1.05rem;font-weight:700;line-height:1.3;display:block}
+
+  .slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+  @media(max-width:560px){.slot-grid{grid-template-columns:repeat(3,1fr)}}
+  .slot{border:1.5px solid var(--line);border-radius:10px;padding:11px 4px;text-align:center;cursor:pointer;background:#fff;font-family:inherit;font-size:.9rem;font-weight:600;transition:border-color .2s,background .2s}
+  .slot:hover:not(:disabled){border-color:var(--teal)}
+  .slot.sel{border-color:var(--teal);background:var(--teal);color:#fff}
+  .slot:disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+  .field input,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:.95rem;background:#fff;color:var(--ink)}
+  .field input:focus,.field textarea:focus{border-color:var(--teal);outline:none}
+  .field textarea{resize:vertical;min-height:70px}
+
+  .bk-nav{margin-top:24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .bk-note{margin-top:16px;font-size:.78rem;color:var(--muted)}
+
+  .done-box{text-align:center;padding:14px 0}
+  .done-box .check{width:60px;height:60px;border-radius:50%;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+  .done-box .check svg{width:28px;height:28px}
+  .done-box h4{font-size:1.35rem;margin-bottom:8px}
+  .done-recap{background:#F4F1EB;border-radius:12px;padding:18px;margin:20px 0;text-align:left;font-size:.9rem}
+  .done-recap div{display:flex;justify-content:space-between;padding:5px 0;color:var(--muted);gap:10px}
+  .done-recap div b{color:var(--ink);text-align:right}
+
+  .visita{padding:88px 0;background:#fff;border-top:1px solid var(--line)}
+  .visita-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px}
+  @media(max-width:860px){.visita-grid{grid-template-columns:1fr;gap:28px}}
+  .vitem{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .vitem:first-child{border-top:1px solid var(--line)}
+  .vitem .vn{font-weight:800;color:var(--gold);font-size:.9rem;padding-top:2px}
+  .vitem h3{font-size:1.02rem;margin-bottom:5px}
+  .vitem p{font-size:.92rem;color:var(--muted)}
+
+  .info{padding:80px 0}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:760px){.info-grid{grid-template-columns:1fr}}
+  .info-card{border:1px solid var(--line);border-radius:16px;padding:26px;background:#fff}
+  .info-card h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px;font-weight:700}
+  .info-card p{font-size:1rem;font-weight:600;line-height:1.5}
+  .info-card p span{display:block;font-weight:400;color:var(--muted);font-size:.9rem;margin-top:4px}
+
+  .final{padding:88px 0;text-align:center;background:var(--teal);color:#fff}
+  .final h2{font-size:clamp(1.8rem,4vw,2.7rem);max-width:17ch;margin:0 auto;color:#fff}
+  .final p{margin:16px auto 0;max-width:40ch;color:rgba(255,255,255,.8)}
+  .final .btn-white{background:#fff;color:var(--teal);padding:15px 30px;border-radius:100px;font-weight:700;margin-top:28px;display:inline-flex}
+  .final .btn-white:hover{background:#F4F1EB}
+
+  footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--muted)}
+  .demo-flag{position:fixed;bottom:14px;left:14px;z-index:60;background:var(--ink);color:#fff;font-size:.74rem;padding:8px 14px;border-radius:100px;opacity:.9}
+  @media(max-width:560px){.demo-flag{font-size:.68rem;padding:6px 11px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="wrap nav">
-    <div class="brand">Praxis</div>
-    <a class="cta" href="#agenda">Agendar cita</a>
-  </div>
+  <nav class="wrap nav" aria-label="Navegación principal">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4c-3 0-5 2.2-5 5.5 0 4.4 2.2 7.3 2.9 10.1.4 1.5 1 2.4 2.1 2.4s1.7-.9 2.1-2.4c.7-2.8 2.9-5.7 2.9-10.1C17 6.2 15 4 12 4Z" stroke="#fff" stroke-width="1.7"/></svg>
+      </span>
+      Praxis
+    </div>
+    <ul class="nav-links">
+      <li><a href="#como">Cómo funciona</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#visita">Primera visita</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#agenda">Agendar cita</a>
+  </nav>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="badge">Odontología general y estética</span>
-      <h1>Cuidado dental sin la espera ni la incertidumbre.</h1>
-      <p class="lede">Agenda tu cita en menos de un minuto, revisa disponibilidad real y recibe confirmación directa — sin llamar ni esperar a que te contesten.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#agenda">Agendar cita</a>
-        <a class="btn-ghost" href="#servicios">Ver servicios</a>
-      </div>
-    </div>
-    <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 100 100" fill="none">
-        <path d="M50 20c-8 0-14 6-14 15 0 12 6 20 8 30 1 5 3 8 6 8s5-3 6-8c2-10 8-18 8-30 0-9-6-15-14-15Z" stroke="#3E6259" stroke-width="2.5"/>
-        <path d="M50 20c-3 0-5 2-6 5M50 20c3 0 5 2 6 5" stroke="#3E6259" stroke-width="2"/>
-      </svg>
-    </div>
-  </div>
-</section>
+<main>
 
-<section class="servicios" id="servicios">
-  <div class="wrap">
-    <h2>Servicios</h2>
-    <div class="service-grid">
-      <div class="service-card">
-        <div class="icon">🦷</div>
-        <h3>Limpieza y prevención</h3>
-        <p>Revisión completa, limpieza profesional y detección temprana de caries.</p>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="pill"><span class="dot"></span> Agenda abierta esta semana</span>
+        <h1>Tu cita dental, agendada en menos de un minuto.</h1>
+        <p class="lede">Elige el servicio, el día y la hora que te acomode. Sin llamar, sin esperar a que contesten, sin depender del horario del consultorio.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#agenda">Agendar mi cita</a>
+          <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+        </div>
+        <div class="trust">
+          <div><div class="n">24/7</div><div class="l">Agenda siempre abierta</div></div>
+          <div><div class="n">&lt;1 min</div><div class="l">Para reservar</div></div>
+          <div><div class="n">0</div><div class="l">Llamadas necesarias</div></div>
+        </div>
       </div>
-      <div class="service-card">
-        <div class="icon">✨</div>
-        <h3>Estética dental</h3>
-        <p>Blanqueamiento, carillas y diseño de sonrisa personalizado.</p>
-      </div>
-      <div class="service-card">
-        <div class="icon">🔧</div>
-        <h3>Ortodoncia</h3>
-        <p>Brackets tradicionales y alineadores transparentes, con plan de pagos.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="agenda" id="agenda">
-  <div class="wrap agenda-grid">
-    <div>
-      <h2>Agenda tu cita ahora</h2>
-      <p>Llena tus datos y te confirmamos disponibilidad el mismo día por WhatsApp.</p>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 200 210" fill="none">
+          <path d="M100 30c-26 0-42 19-42 47 0 37 19 62 25 86 3 13 8 21 17 21s14-8 17-21c6-24 25-49 25-86 0-28-16-47-42-47Z" fill="#fff" stroke="#14524F" stroke-width="2.4"/>
+          <path d="M100 30c-9 0-16 4-21 10M100 30c9 0 16 4 21 10" stroke="#14524F" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M100 78v88" stroke="#C8A46B" stroke-width="1.6" stroke-dasharray="5 6"/>
+          <circle cx="100" cy="118" r="19" fill="#E6EEEC"/>
+          <path d="M92 118l6 6 11-13" stroke="#14524F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="float-card fc-1">
+          <span class="ic">📅</span>
+          <span><span class="t">Cita confirmada</span><span class="s">Jueves · 10:30 a.m.</span></span>
+        </div>
+        <div class="float-card fc-2">
+          <span class="ic">💬</span>
+          <span><span class="t">Recordatorio enviado</span><span class="s">24 h antes por WhatsApp</span></span>
+        </div>
+      </div>
     </div>
-    <div class="form-card">
-      <form onsubmit="event.preventDefault(); alert('Demo — en el sitio real esto se conecta a la agenda del consultorio.');">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" required>
-        <label for="servicio">Servicio</label>
-        <select id="servicio">
-          <option>Limpieza y prevención</option>
-          <option>Estética dental</option>
-          <option>Ortodoncia</option>
-        </select>
-        <label for="fecha">Fecha preferida</label>
-        <input type="date" id="fecha" required>
-        <button type="submit">Confirmar cita</button>
-      </form>
-    </div>
-  </div>
-</section>
+  </section>
 
-<footer>© 2026 Praxis Dental · Proyecto conceptual de portafolio</footer>
+  <section class="como" id="como">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="tag">Cómo funciona</div>
+        <h2>Tres pasos y listo</h2>
+        <p>Diseñado para que agendes desde el celular, a la hora que sea, sin complicaciones.</p>
+      </div>
+      <div class="steps3">
+        <div class="step3 reveal"><div class="n">PASO 01</div><h3>Elige tu servicio</h3><p>Limpieza, ortodoncia, estética o urgencia — cada uno con su duración real.</p></div>
+        <div class="step3 reveal"><div class="n">PASO 02</div><h3>Escoge día y hora</h3><p>Ves la disponibilidad real del consultorio, no una lista genérica.</p></div>
+        <div class="step3 reveal"><div class="n">PASO 03</div><h3>Confirma y ya</h3><p>Recibes confirmación al momento y un recordatorio por WhatsApp antes de tu cita.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="servicios" id="servicios">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="tag">Servicios</div>
+        <h2>Lo que hacemos</h2>
+        <p>Cada servicio tiene su tiempo asignado en la agenda, para que nadie espere de más.</p>
+      </div>
+      <div class="serv-grid">
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c-4 0-6.5 3-6.5 7 0 5 3 8.5 4 12 .5 1.8 1.2 2 2.5 2s2-.2 2.5-2c1-3.5 4-7 4-12 0-4-2.5-7-6.5-7Z" stroke="#14524F" stroke-width="1.6"/></svg></div>
+          <h3>Limpieza y prevención</h3>
+          <p>Revisión completa, limpieza profesional y detección temprana de caries antes de que duelan.</p>
+          <div class="meta">⏱ 45 minutos</div>
+        </div>
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3Z" stroke="#14524F" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h3>Estética dental</h3>
+          <p>Blanqueamiento, carillas y diseño de sonrisa, planeado contigo antes de empezar.</p>
+          <div class="meta">⏱ 60–90 minutos</div>
+        </div>
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="8" width="16" height="8" rx="2" stroke="#14524F" stroke-width="1.6"/><path d="M8 8v8M12 8v8M16 8v8" stroke="#14524F" stroke-width="1.4"/></svg></div>
+          <h3>Ortodoncia</h3>
+          <p>Brackets tradicionales o alineadores transparentes, con plan de pagos a tu medida.</p>
+          <div class="meta">⏱ 60 minutos · primera valoración</div>
+        </div>
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#14524F" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="#14524F" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <h3>Urgencias</h3>
+          <p>Dolor, fractura o pieza caída — espacios reservados cada día para atención inmediata.</p>
+          <div class="meta">⏱ 30 minutos · mismo día</div>
+        </div>
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16l-6-3-6 3V4Z" stroke="#14524F" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h3>Endodoncia</h3>
+          <p>Tratamiento de conducto con anestesia moderna y seguimiento posterior incluido.</p>
+          <div class="meta">⏱ 90 minutos</div>
+        </div>
+        <div class="serv reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18c2-6 5-9 8-9s6 3 8 9" stroke="#14524F" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="6" r="2.4" stroke="#14524F" stroke-width="1.6"/></svg></div>
+          <h3>Odontopediatría</h3>
+          <p>Atención para los más chicos, en un ambiente pensado para que no le tengan miedo al dentista.</p>
+          <div class="meta">⏱ 40 minutos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reservas" id="agenda">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="tag">Agenda en línea</div>
+        <h2>Reserva tu cita ahora</h2>
+        <p>La disponibilidad que ves es la disponibilidad real. Elige y confirma.</p>
+      </div>
+
+      <div class="booking reveal">
+        <aside class="bk-side">
+          <h3>Tu cita</h3>
+          <ul class="bk-prog" id="prog">
+            <li class="on" data-s="1"><span class="c">1</span> Servicio</li>
+            <li data-s="2"><span class="c">2</span> Día</li>
+            <li data-s="3"><span class="c">3</span> Hora</li>
+            <li data-s="4"><span class="c">4</span> Tus datos</li>
+          </ul>
+          <div class="bk-summary">
+            <div><span>Servicio</span><b id="sm-serv">—</b></div>
+            <div><span>Fecha</span><b id="sm-date">—</b></div>
+            <div><span>Hora</span><b id="sm-time">—</b></div>
+            <div><span>Duración</span><b id="sm-dur">—</b></div>
+          </div>
+        </aside>
+
+        <div class="bk-main">
+
+          <div class="bk-step active" data-step="1">
+            <h4>¿Qué necesitas?</h4>
+            <p class="hint">Elige el servicio para reservar el tiempo correcto en la agenda.</p>
+            <div class="opt-grid" id="servOpts">
+              <button type="button" class="opt" data-serv="Limpieza y prevención" data-dur="45"><span class="t">Limpieza y prevención</span><span class="s">45 min</span></button>
+              <button type="button" class="opt" data-serv="Estética dental" data-dur="90"><span class="t">Estética dental</span><span class="s">90 min</span></button>
+              <button type="button" class="opt" data-serv="Ortodoncia — valoración" data-dur="60"><span class="t">Ortodoncia — valoración</span><span class="s">60 min</span></button>
+              <button type="button" class="opt" data-serv="Urgencia" data-dur="30"><span class="t">Urgencia</span><span class="s">30 min · mismo día</span></button>
+              <button type="button" class="opt" data-serv="Endodoncia" data-dur="90"><span class="t">Endodoncia</span><span class="s">90 min</span></button>
+              <button type="button" class="opt" data-serv="Odontopediatría" data-dur="40"><span class="t">Odontopediatría</span><span class="s">40 min</span></button>
+            </div>
+            <div class="bk-nav">
+              <span></span>
+              <button class="btn btn-primary" id="n1" disabled>Continuar</button>
+            </div>
+          </div>
+
+          <div class="bk-step" data-step="2">
+            <h4>Elige el día</h4>
+            <p class="hint">Mostramos los próximos días con espacio disponible.</p>
+            <div class="day-grid" id="dayGrid"></div>
+            <div class="bk-nav">
+              <button type="button" class="btn btn-ghost" data-back="1">Atrás</button>
+              <button class="btn btn-primary" id="n2" disabled>Continuar</button>
+            </div>
+          </div>
+
+          <div class="bk-step" data-step="3">
+            <h4>Elige la hora</h4>
+            <p class="hint">Los horarios tachados ya están ocupados.</p>
+            <div class="slot-grid" id="slotGrid"></div>
+            <div class="bk-nav">
+              <button type="button" class="btn btn-ghost" data-back="2">Atrás</button>
+              <button class="btn btn-primary" id="n3" disabled>Continuar</button>
+            </div>
+          </div>
+
+          <div class="bk-step" data-step="4">
+            <h4>Tus datos</h4>
+            <p class="hint">Solo lo necesario para confirmar tu cita.</p>
+            <div class="field"><label for="p-nombre">Nombre completo</label><input type="text" id="p-nombre"></div>
+            <div class="field"><label for="p-tel">WhatsApp</label><input type="tel" id="p-tel" placeholder="951 000 0000"></div>
+            <div class="field"><label for="p-nota">¿Algo que debamos saber? (opcional)</label><textarea id="p-nota" placeholder="Molestia, tratamiento previo, alguna duda…"></textarea></div>
+            <div class="bk-nav">
+              <button type="button" class="btn btn-ghost" data-back="3">Atrás</button>
+              <button class="btn btn-primary" id="n4">Confirmar cita</button>
+            </div>
+            <p class="bk-note">Al confirmar recibirás un mensaje de WhatsApp con los detalles y un recordatorio 24 h antes.</p>
+          </div>
+
+          <div class="bk-step" data-step="5">
+            <div class="done-box">
+              <div class="check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#14524F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <h4>Cita registrada</h4>
+              <p class="hint" style="margin-bottom:0">Te esperamos. Aquí están los detalles:</p>
+              <div class="done-recap">
+                <div><span>Paciente</span><b id="r-nombre">—</b></div>
+                <div><span>Servicio</span><b id="r-serv">—</b></div>
+                <div><span>Fecha</span><b id="r-date">—</b></div>
+                <div><span>Hora</span><b id="r-time">—</b></div>
+              </div>
+              <a class="btn btn-primary" id="waConfirm" href="#" target="_blank" rel="noopener">Recibir confirmación por WhatsApp</a>
+              <p class="bk-note">Demostración: en el sitio real esta cita queda guardada en la agenda del consultorio automáticamente.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visita" id="visita">
+    <div class="wrap visita-grid">
+      <div class="reveal">
+        <div class="sec-head" style="margin-bottom:0">
+          <div class="tag">Primera visita</div>
+          <h2>Qué esperar cuando llegues</h2>
+          <p>Sin sorpresas ni letras chiquitas: te contamos todo antes de empezar cualquier tratamiento.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="vitem"><span class="vn">01</span><div><h3>Llegas y te reciben</h3><p>Sin fila ni papeleo largo — tus datos ya están registrados desde que agendaste.</p></div></div>
+        <div class="vitem"><span class="vn">02</span><div><h3>Revisión y diagnóstico</h3><p>Evaluamos tu caso y te explicamos qué encontramos, en palabras claras.</p></div></div>
+        <div class="vitem"><span class="vn">03</span><div><h3>Plan y presupuesto</h3><p>Te presentamos las opciones con su costo antes de tocar nada. Tú decides.</p></div></div>
+        <div class="vitem"><span class="vn">04</span><div><h3>Seguimiento</h3><p>Si tu tratamiento requiere varias sesiones, quedan agendadas desde ese día.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info">
+    <div class="wrap">
+      <div class="info-grid">
+        <div class="info-card reveal"><h3>Dirección</h3><p>Av. Ejemplo 123, Centro<span>Oaxaca de Juárez, Oax.</span></p></div>
+        <div class="info-card reveal"><h3>Horario</h3><p>Lunes a viernes · 9:00 – 19:00<span>Sábados · 9:00 – 14:00</span></p></div>
+        <div class="info-card reveal"><h3>Contacto</h3><p>951 000 0000<span>hola@praxisdental.mx</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Tu sonrisa no debería esperar a que alguien conteste el teléfono.</h2>
+      <p>Agenda ahora, a la hora que sea, desde donde estés.</p>
+      <a class="btn btn-white" href="#agenda">Agendar mi cita</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Praxis Dental</span>
+  <span><a href="consultorio-panel.html" style="color:var(--teal);font-weight:600">Ver el panel del consultorio →</a></span>
+  <span>Proyecto conceptual · Andrés Mendoza</span>
+</footer>
+
+<div class="demo-flag">Demo — proyecto conceptual de portafolio</div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var items = document.querySelectorAll('.reveal');
+  if(reduced){ items.forEach(function(el){ el.classList.add('vis'); }); }
+  else {
+    var obs = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    },{threshold:.12});
+    items.forEach(function(el){ obs.observe(el); });
+  }
+
+  var state = { serv:null, dur:null, date:null, dateLabel:null, time:null };
+  var DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+  function goStep(n){
+    document.querySelectorAll('.bk-step').forEach(function(s){
+      s.classList.toggle('active', s.dataset.step === String(n));
+    });
+    document.querySelectorAll('#prog li').forEach(function(li){
+      var s = Number(li.dataset.s);
+      li.classList.toggle('on', s === n);
+      li.classList.toggle('done', s < n);
+    });
+  }
+
+  function updSummary(){
+    document.getElementById('sm-serv').textContent = state.serv || '—';
+    document.getElementById('sm-date').textContent = state.dateLabel || '—';
+    document.getElementById('sm-time').textContent = state.time || '—';
+    document.getElementById('sm-dur').textContent = state.dur ? state.dur + ' min' : '—';
+  }
+
+  document.querySelectorAll('#servOpts .opt').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('#servOpts .opt').forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+      state.serv = b.dataset.serv;
+      state.dur = b.dataset.dur;
+      document.getElementById('n1').disabled = false;
+      updSummary();
+    });
+  });
+  document.getElementById('n1').addEventListener('click', function(){ buildDays(); goStep(2); });
+
+  function buildDays(){
+    var grid = document.getElementById('dayGrid');
+    grid.innerHTML = '';
+    var today = new Date();
+    var shown = 0, i = 1;
+    while(shown < 14 && i < 30){
+      var d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
+      i++;
+      if(d.getDay() === 0) continue;
+      var b = document.createElement('button');
+      b.className = 'day';
+      b.type = 'button';
+      b.innerHTML = '<span class="dw">' + DIAS[d.getDay()] + '</span><span class="dn">' + d.getDate() + '</span>';
+      var full = (d.getDate() % 7 === 3);
+      if(full){ b.disabled = true; b.title = 'Sin espacio disponible'; }
+      (function(dd, btn){
+        btn.addEventListener('click', function(){
+          grid.querySelectorAll('.day').forEach(function(x){ x.classList.remove('sel'); });
+          btn.classList.add('sel');
+          state.date = dd;
+          state.dateLabel = DIAS[dd.getDay()] + ' ' + dd.getDate() + ' ' + MESES[dd.getMonth()];
+          document.getElementById('n2').disabled = false;
+          updSummary();
+        });
+      })(d, b);
+      grid.appendChild(b);
+      shown++;
+    }
+    document.getElementById('n2').disabled = true;
+  }
+  document.getElementById('n2').addEventListener('click', function(){ buildSlots(); goStep(3); });
+
+  function buildSlots(){
+    var grid = document.getElementById('slotGrid');
+    grid.innerHTML = '';
+    var horas = ['09:00','09:45','10:30','11:15','12:00','12:45','16:00','16:45','17:30','18:15'];
+    var seed = state.date ? state.date.getDate() : 1;
+    horas.forEach(function(h, idx){
+      var b = document.createElement('button');
+      b.className = 'slot';
+      b.type = 'button';
+      b.textContent = h;
+      if(((idx + seed) % 4) === 0){ b.disabled = true; b.title = 'Ocupado'; }
+      b.addEventListener('click', function(){
+        grid.querySelectorAll('.slot').forEach(function(x){ x.classList.remove('sel'); });
+        b.classList.add('sel');
+        state.time = h;
+        document.getElementById('n3').disabled = false;
+        updSummary();
+      });
+      grid.appendChild(b);
+    });
+    document.getElementById('n3').disabled = true;
+  }
+  document.getElementById('n3').addEventListener('click', function(){ goStep(4); });
+
+  document.querySelectorAll('[data-back]').forEach(function(b){
+    b.addEventListener('click', function(){ goStep(Number(b.dataset.back)); });
+  });
+
+  document.getElementById('n4').addEventListener('click', function(){
+    var nombre = document.getElementById('p-nombre').value.trim();
+    var tel = document.getElementById('p-tel').value.trim();
+    if(!nombre || !tel){ alert('Necesitamos tu nombre y WhatsApp para confirmar la cita.'); return; }
+    var nota = document.getElementById('p-nota').value.trim();
+
+    document.getElementById('r-nombre').textContent = nombre;
+    document.getElementById('r-serv').textContent = state.serv;
+    document.getElementById('r-date').textContent = state.dateLabel;
+    document.getElementById('r-time').textContent = state.time;
+
+    var msg = 'Hola, confirmo mi cita en Praxis Dental.\n'
+            + 'Nombre: ' + nombre + '\n'
+            + 'Servicio: ' + state.serv + '\n'
+            + 'Fecha: ' + state.dateLabel + '\n'
+            + 'Hora: ' + state.time
+            + (nota ? '\nNota: ' + nota : '');
+    document.getElementById('waConfirm').href = 'https://wa.me/529510000000?text=' + encodeURIComponent(msg);
+
+    goStep(5);
+  });
+
+})();
+</script>
 
 </body>
 </html>
