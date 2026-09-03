@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelia — Ropa de mujer hecha en Oaxaca</title>
+<meta name="description" content="Boutique de ropa hecha en talleres de Oaxaca. Catálogo con tallas, carrito y pedido directo por WhatsApp.">
+<meta name="theme-color" content="#FDFBF9">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blanco:#FDFBF9;
+    --hueso:#F3EDE7;
+    --tinta:#2A2320;
+    --suave:#7C716B;
+    --rosa:#B4655F;
+    --oliva:#6E7458;
+    --linea:rgba(42,35,32,.14);
+    --linea-suave:rgba(42,35,32,.07);
+    --max:1180px;
+    --pad:clamp(18px,4.5vw,52px);
+    --band:clamp(56px,8vw,104px);
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Manrope","Segoe UI",Helvetica,sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--blanco); color:var(--tinta); font-family:var(--sans);
+    font-weight:300; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--serif); font-weight:400; text-wrap:balance; letter-spacing:.01em; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:var(--pad); }
+  .eyebrow{ font-size:.68rem; font-weight:500; letter-spacing:.26em; text-transform:uppercase; color:var(--rosa); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+    font-size:.76rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+    padding:13px 22px; border:1px solid var(--tinta); background:var(--tinta); color:var(--blanco);
+    transition:transform .18s ease, background .2s ease, color .2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.line{ background:transparent; color:var(--tinta); }
+  .btn.line:hover{ background:var(--hueso); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--rosa); outline-offset:3px;
+  }
+
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(253,251,249,.94);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--linea-suave);
+  }
+  .bar{ display:flex; align-items:center; gap:22px; height:70px; }
+  .marca{
+    margin-right:auto; text-decoration:none; font-family:var(--serif); font-size:1.7rem;
+    letter-spacing:.22em; text-transform:uppercase;
+  }
+  nav{ display:flex; gap:24px; }
+  nav a{ font-size:.82rem; text-decoration:none; color:var(--suave); transition:color .2s ease; }
+  nav a:hover{ color:var(--tinta); }
+  .cart-btn{
+    background:none; border:1px solid var(--linea); padding:9px 15px;
+    font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; display:flex; gap:9px; align-items:center;
+  }
+  .cart-btn b{ background:var(--rosa); color:#fff; border-radius:999px; padding:1px 8px; font-size:.72rem; font-weight:600; }
+
+  .hero{ background:var(--hueso); }
+  .hero-in{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:clamp(28px,5vw,60px); align-items:center; padding-block:clamp(44px,7vw,88px); }
+  .hero h1{ font-size:clamp(2.6rem,1.4rem + 4.6vw,4.6rem); line-height:1.02; margin-block:16px 18px; }
+  .hero h1 em{ font-style:italic; color:var(--rosa); }
+  .hero p{ color:var(--suave); max-width:46ch; }
+  .hero .btn{ margin-top:26px; }
+  .telar{ width:100%; height:auto; }
+
+  section{ border-top:1px solid var(--linea-suave); }
+  .band{ padding-block:var(--band); }
+  .head{ display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:flex-end; margin-bottom:30px; }
+  .head h2{ font-size:clamp(1.9rem,1.2rem + 2.2vw,2.9rem); line-height:1.1; }
+
+  .filtros{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+  .chip{
+    border:1px solid var(--linea); background:transparent; padding:8px 16px;
+    font-size:.78rem; letter-spacing:.06em; transition:all .18s ease;
+  }
+  .chip:hover{ border-color:var(--tinta); }
+  .chip[aria-pressed="true"]{ background:var(--tinta); color:var(--blanco); border-color:var(--tinta); }
+
+  .catalogo{ display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:clamp(18px,2.6vw,32px); }
+  .prod{ display:flex; flex-direction:column; }
+  .foto{
+    aspect-ratio:3/4; background:var(--hueso); position:relative; overflow:hidden;
+    display:grid; place-items:center;
+  }
+  .foto svg{ width:100%; height:100%; }
+  .foto .etq{
+    position:absolute; top:12px; left:12px; background:var(--blanco); color:var(--tinta);
+    font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:5px 9px;
+  }
+  .prod h3{ font-size:1.28rem; margin-top:14px; }
+  .prod .mat{ font-size:.78rem; color:var(--suave); }
+  .prod .precio{ font-family:var(--serif); font-size:1.3rem; margin-top:6px; font-variant-numeric:tabular-nums; }
+  .tallas{ display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
+  .talla{
+    border:1px solid var(--linea); background:transparent; width:36px; height:32px;
+    font-size:.76rem; transition:all .16s ease;
+  }
+  .talla:hover{ border-color:var(--tinta); }
+  .talla[aria-pressed="true"]{ background:var(--tinta); color:var(--blanco); border-color:var(--tinta); }
+  .talla[disabled]{ opacity:.3; cursor:not-allowed; text-decoration:line-through; }
+  .prod .add{
+    margin-top:12px; border:1px solid var(--tinta); background:transparent; padding:10px;
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; transition:all .18s ease;
+  }
+  .prod .add:hover{ background:var(--tinta); color:var(--blanco); }
+  .vacio{ color:var(--suave); grid-column:1/-1; padding-block:30px; }
+
+  /* carrito */
+  .drawer{
+    position:fixed; top:0; right:0; bottom:0; width:min(400px,92vw); background:var(--blanco);
+    border-left:1px solid var(--linea); z-index:70; transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column;
+  }
+  .drawer.open{ transform:none; }
+  .drawer header{ position:static; display:flex; justify-content:space-between; align-items:center; padding:20px; border-bottom:1px solid var(--linea-suave); background:none; }
+  .drawer h2{ font-size:1.4rem; }
+  .drawer .x{ background:none; border:0; font-size:1.5rem; line-height:1; color:var(--suave); }
+  .items{ flex:1; overflow-y:auto; padding:8px 20px; }
+  .item{ display:grid; grid-template-columns:52px minmax(0,1fr) auto; gap:12px; align-items:center; padding-block:16px; border-bottom:1px solid var(--linea-suave); }
+  .item .mini{ width:52px; height:66px; background:var(--hueso); }
+  .item b{ font-weight:500; font-size:.92rem; display:block; }
+  .item small{ color:var(--suave); font-size:.78rem; }
+  .item .quitar{ background:none; border:0; color:var(--suave); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; padding:0; }
+  .item .quitar:hover{ color:var(--rosa); }
+  .item .p{ font-variant-numeric:tabular-nums; font-size:.9rem; }
+  .drawer footer{ border-top:1px solid var(--linea); padding:20px; display:flex; flex-direction:column; gap:12px; }
+  .total{ display:flex; justify-content:space-between; align-items:baseline; }
+  .total b{ font-family:var(--serif); font-size:1.7rem; font-variant-numeric:tabular-nums; font-weight:400; }
+  .envio{ font-size:.78rem; color:var(--suave); }
+  .backdrop{
+    position:fixed; inset:0; background:rgba(42,35,32,.42); z-index:65; opacity:0; pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .backdrop.on{ opacity:1; pointer-events:auto; }
+
+  /* historia */
+  .taller{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,64px); align-items:center; }
+  .taller p{ color:var(--suave); }
+  .taller p + p{ margin-top:14px; }
+  .datos{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--linea-suave); border:1px solid var(--linea-suave); }
+  .datos div{ background:var(--blanco); padding:22px 18px; }
+  .datos b{ display:block; font-family:var(--serif); font-size:1.9rem; color:var(--oliva); }
+  .datos span{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--suave); }
+
+  .envios{ background:var(--hueso); }
+  .envios-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:26px; }
+  .envios h3{ font-size:1.2rem; margin-bottom:6px; }
+  .envios p{ font-size:.88rem; color:var(--suave); }
+
+  footer.pie{ padding-block:40px 52px; border-top:1px solid var(--linea-suave); }
+  .pie-in{ display:flex; flex-wrap:wrap; gap:16px 40px; justify-content:space-between; align-items:center; font-size:.84rem; color:var(--suave); }
+
+  .demo-bar{
+    position:fixed; left:20px; bottom:18px; z-index:80;
+    display:flex; align-items:center; gap:12px; background:var(--tinta); color:var(--hueso);
+    padding:9px 16px; font-size:.72rem; max-width:calc(100vw - 40px);
+  }
+  .demo-bar a{ color:#E8B7B2; text-decoration:none; font-weight:500; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  @media (max-width:860px){
+    .hero-in, .taller{ grid-template-columns:1fr; }
+    nav{ display:none; }
+    .datos{ grid-template-columns:1fr; }
+    .demo-bar{ left:12px; right:12px; justify-content:center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="marca" href="#top">Aurelia</a>
+    <nav>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#taller">El taller</a>
+      <a href="#envios">Envíos</a>
+    </nav>
+    <button class="cart-btn" id="abrir" aria-haspopup="dialog">Bolsa <b id="conteo">0</b></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none">
+    <div class="wrap hero-in">
+      <div>
+        <p class="eyebrow">Colección otoño · Hecho en Oaxaca</p>
+        <h1>Ropa que se hizo <em>despacio</em>, a media hora de aquí.</h1>
+        <p>Piezas cortadas y cosidas en dos talleres familiares de Villa de Etla y San Antonino, con algodón y lino teñidos a mano. Tiradas cortas: cuando se acaba una talla, se acabó.</p>
+        <a class="btn" href="#catalogo">Ver catálogo</a>
+      </div>
+      <svg class="telar" viewBox="0 0 420 340" role="img" aria-label="Ilustración de un telar con hilos de colores.">
+        <rect x="0" y="0" width="420" height="340" fill="#F3EDE7"></rect>
+        <g stroke="#2A2320" stroke-width="2" fill="none" opacity=".55">
+          <rect x="40" y="34" width="340" height="272"></rect>
+          <line x1="40" y1="72" x2="380" y2="72"></line>
+          <line x1="40" y1="268" x2="380" y2="268"></line>
+        </g>
+        <g stroke-width="3">
+          <line x1="72" y1="72" x2="72" y2="268" stroke="#B4655F"></line>
+          <line x1="96" y1="72" x2="96" y2="268" stroke="#6E7458"></line>
+          <line x1="120" y1="72" x2="120" y2="268" stroke="#C9A227"></line>
+          <line x1="144" y1="72" x2="144" y2="268" stroke="#B4655F"></line>
+          <line x1="168" y1="72" x2="168" y2="268" stroke="#7C716B"></line>
+          <line x1="192" y1="72" x2="192" y2="268" stroke="#6E7458"></line>
+          <line x1="216" y1="72" x2="216" y2="268" stroke="#B4655F"></line>
+          <line x1="240" y1="72" x2="240" y2="268" stroke="#C9A227"></line>
+          <line x1="264" y1="72" x2="264" y2="268" stroke="#7C716B"></line>
+          <line x1="288" y1="72" x2="288" y2="268" stroke="#6E7458"></line>
+          <line x1="312" y1="72" x2="312" y2="268" stroke="#B4655F"></line>
+          <line x1="336" y1="72" x2="336" y2="268" stroke="#C9A227"></line>
+        </g>
+        <g stroke="#FDFBF9" stroke-width="7" opacity=".9">
+          <line x1="60" y1="112" x2="360" y2="112"></line>
+          <line x1="60" y1="146" x2="360" y2="146"></line>
+          <line x1="60" y1="180" x2="360" y2="180"></line>
+          <line x1="60" y1="214" x2="360" y2="214"></line>
+          <line x1="60" y1="248" x2="360" y2="248"></line>
+        </g>
+        <rect x="40" y="286" width="340" height="10" fill="#2A2320" opacity=".7"></rect>
+      </svg>
+    </div>
+  </section>
+
+  <section id="catalogo">
+    <div class="wrap band">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Catálogo</p>
+          <h2>Lo que hay ahora mismo</h2>
+        </div>
+        <p style="color:var(--suave); font-size:.88rem; max-width:34ch">Elige tu talla y agrégalo a la bolsa. El pedido se cierra por WhatsApp con una persona real.</p>
+      </div>
+
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar por categoría">
+        <button class="chip" aria-pressed="true" data-cat="todo">Todo</button>
+        <button class="chip" aria-pressed="false" data-cat="vestidos">Vestidos</button>
+        <button class="chip" aria-pressed="false" data-cat="blusas">Blusas</button>
+        <button class="chip" aria-pressed="false" data-cat="pantalones">Pantalones</button>
+        <button class="chip" aria-pressed="false" data-cat="abrigo">Abrigo</button>
+      </div>
+
+      <div class="catalogo" id="catalogo-grid"></div>
+    </div>
+  </section>
+
+  <section id="taller">
+    <div class="wrap band">
+      <div class="taller">
+        <div>
+          <p class="eyebrow">El taller</p>
+          <h2 style="font-size:clamp(1.8rem,1.1rem + 2.2vw,2.7rem); line-height:1.1; margin-block:14px 18px">Dos talleres, once manos, ninguna prisa.</h2>
+          <p>Aurelia empezó en 2021 con seis blusas vendidas en un tianguis de Etla. Hoy trabajamos con el taller de doña Amalia en Villa de Etla y con tres costureras de San Antonino Castillo Velasco.</p>
+          <p>Compramos el algodón por temporada y teñimos con añil, nuez y cochinilla. Por eso cada tirada sale distinta y por eso no hay reposición: cuando se acaba una talla, no vuelve.</p>
+          <p>Puedes venir al taller con cita los jueves, ver cómo se corta y probarte antes de comprar.</p>
+        </div>
+        <div class="datos">
+          <div><b>2021</b><span>primer tianguis</span></div>
+          <div><b>11</b><span>manos en dos talleres</span></div>
+          <div><b>3</b><span>tintes naturales</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="envios" id="envios">
+    <div class="wrap band">
+      <div class="envios-grid">
+        <div>
+          <h3>Envíos a todo México</h3>
+          <p>Salen al día siguiente hábil. Gratis en compras desde $1,500; $180 en pedidos menores.</p>
+        </div>
+        <div>
+          <h3>Cambios de talla</h3>
+          <p>Quince días para cambiar talla sin costo, si la prenda no se usó y conserva su etiqueta.</p>
+        </div>
+        <div>
+          <h3>Recoger en el taller</h3>
+          <p>Villa de Etla, jueves y viernes de 10:00 a 17:00. Sin costo de envío y te lo pruebas ahí.</p>
+        </div>
+        <div>
+          <h3>Cómo se paga</h3>
+          <p>Transferencia, tarjeta con link de pago o efectivo al recoger. El pedido se cierra por WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap pie-in">
+    <p style="font-family:var(--serif); font-size:1.5rem; letter-spacing:.22em; text-transform:uppercase; color:var(--tinta)">Aurelia</p>
+    <p>Villa de Etla, Oaxaca · 951 441 8403</p>
+    <p>Hecho a mano · Tiradas cortas</p>
+  </div>
+</footer>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-label="Bolsa de compra" aria-modal="false">
+  <header>
+    <h2>Tu bolsa</h2>
+    <button class="x" id="cerrar" aria-label="Cerrar bolsa">×</button>
+  </header>
+  <div class="items" id="items"></div>
+  <footer>
+    <div class="total"><span>Total</span><b id="total">$0</b></div>
+    <p class="envio" id="envio">Envío gratis a partir de $1,500.</p>
+    <button class="btn" id="pedir">Cerrar pedido por WhatsApp</button>
+  </footer>
+</aside>
+
+<div class="demo-bar">
+  <span>Tienda conceptual de Andrés Mendoza</span>
+  <a href="index.html">← Volver al portafolio</a>
+</div>
+
+<script>
+  const productos = [
+    { id:1, nombre:"Vestido Amalia", cat:"vestidos", mat:"Algodón teñido con añil", precio:1890, tallas:{ CH:true, M:true, G:true, XG:false }, etq:"Últimas 3", tono:["#3E5570","#8FA3BC"] },
+    { id:2, nombre:"Blusa Etla", cat:"blusas", mat:"Manta bordada a mano", precio:980, tallas:{ CH:true, M:true, G:true, XG:true }, etq:"", tono:["#E4D9CB","#C9B9A4"] },
+    { id:3, nombre:"Pantalón Zaachila", cat:"pantalones", mat:"Lino lavado, corte recto", precio:1450, tallas:{ CH:false, M:true, G:true, XG:true }, etq:"", tono:["#6E7458","#96A07E"] },
+    { id:4, nombre:"Vestido Cochinilla", cat:"vestidos", mat:"Algodón teñido con grana", precio:2150, tallas:{ CH:true, M:false, G:true, XG:false }, etq:"Tirada única", tono:["#B4655F","#D89A93"] },
+    { id:5, nombre:"Blusa Nuez", cat:"blusas", mat:"Algodón teñido con cáscara de nuez", precio:1120, tallas:{ CH:true, M:true, G:false, XG:false }, etq:"", tono:["#8B6F4E","#B99873"] },
+    { id:6, nombre:"Rebozo Amuzgo", cat:"abrigo", mat:"Telar de cintura, dos semanas de trabajo", precio:3400, tallas:{ Única:true }, etq:"Pieza única", tono:["#2A2320","#5E5450"] },
+    { id:7, nombre:"Pantalón Mitla", cat:"pantalones", mat:"Algodón grueso, tiro alto", precio:1290, tallas:{ CH:true, M:true, G:true, XG:false }, etq:"", tono:["#4A4A44","#7C7C72"] },
+    { id:8, nombre:"Saco Ocotlán", cat:"abrigo", mat:"Lana natural sin teñir", precio:2890, tallas:{ CH:false, M:true, G:true, XG:false }, etq:"Últimas 2", tono:["#C9BCA6","#E7DECC"] }
+  ];
+
+  const mx = n => "$" + n.toLocaleString("es-MX");
+  const grid = document.getElementById("catalogo-grid");
+  const bolsa = [];
+  let cat = "todo";
+
+  function ilustracion(p){
+    return '<svg viewBox="0 0 300 400" role="img" aria-label="' + p.nombre + '">' +
+      '<rect width="300" height="400" fill="' + p.tono[1] + '"/>' +
+      '<path d="M110 70 L150 96 L190 70 L232 110 L206 140 L206 330 L94 330 L94 140 L68 110 Z" fill="' + p.tono[0] + '"/>' +
+      '<path d="M150 96 L150 330" stroke="' + p.tono[1] + '" stroke-width="2" opacity=".55"/>' +
+      '<circle cx="150" cy="122" r="5" fill="' + p.tono[1] + '" opacity=".8"/>' +
+      '<circle cx="150" cy="152" r="5" fill="' + p.tono[1] + '" opacity=".8"/>' +
+      '</svg>';
+  }
+
+  function pintar(){
+    grid.innerHTML = "";
+    const lista = productos.filter(p => cat === "todo" || p.cat === cat);
+    if (!lista.length) { grid.innerHTML = '<p class="vacio">No hay piezas en esta categoría ahora mismo.</p>'; return; }
+    lista.forEach(p => {
+      const art = document.createElement("article");
+      art.className = "prod";
+      const tallas = Object.entries(p.tallas).map(([t, hay]) =>
+        '<button class="talla" type="button" aria-pressed="false" data-talla="' + t + '"' + (hay ? "" : " disabled") + '>' + t + '</button>'
+      ).join("");
+      art.innerHTML =
+        '<div class="foto">' + ilustracion(p) + (p.etq ? '<span class="etq">' + p.etq + '</span>' : "") + '</div>' +
+        '<h3>' + p.nombre + '</h3>' +
+        '<p class="mat">' + p.mat + '</p>' +
+        '<p class="precio">' + mx(p.precio) + '</p>' +
+        '<div class="tallas">' + tallas + '</div>' +
+        '<button class="add" type="button">Agregar a la bolsa</button>';
+
+      const btns = [...art.querySelectorAll(".talla")];
+      btns.forEach(b => b.addEventListener("click", () => {
+        btns.forEach(o => o.setAttribute("aria-pressed","false"));
+        b.setAttribute("aria-pressed","true");
+      }));
+
+      const add = art.querySelector(".add");
+      add.addEventListener("click", () => {
+        const sel = btns.find(b => b.getAttribute("aria-pressed") === "true");
+        if (!sel) { add.textContent = "Elige una talla primero"; setTimeout(() => add.textContent = "Agregar a la bolsa", 1800); return; }
+        bolsa.push({ nombre:p.nombre, talla:sel.dataset.talla, precio:p.precio, tono:p.tono[0] });
+        add.textContent = "Agregado ✓";
+        setTimeout(() => add.textContent = "Agregar a la bolsa", 1400);
+        pintarBolsa();
+        abrirDrawer();
+      });
+
+      grid.appendChild(art);
+    });
+  }
+
+  document.getElementById("filtros").addEventListener("click", e => {
+    const b = e.target.closest(".chip");
+    if (!b) return;
+    [...e.currentTarget.children].forEach(c => c.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    cat = b.dataset.cat;
+    pintar();
+  });
+
+  const items = document.getElementById("items");
+  const conteo = document.getElementById("conteo");
+  const totalEl = document.getElementById("total");
+  const envioEl = document.getElementById("envio");
+
+  function pintarBolsa(){
+    items.innerHTML = "";
+    if (!bolsa.length) {
+      items.innerHTML = '<p style="color:var(--suave); padding-block:24px">Tu bolsa está vacía. Elige una talla y agrega una pieza.</p>';
+    }
+    bolsa.forEach((it, i) => {
+      const row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML =
+        '<span class="mini" style="background:' + it.tono + '"></span>' +
+        '<span><b>' + it.nombre + '</b><small>Talla ' + it.talla + '</small>' +
+        '<button class="quitar" type="button">Quitar</button></span>' +
+        '<span class="p">' + mx(it.precio) + '</span>';
+      row.querySelector(".quitar").addEventListener("click", () => { bolsa.splice(i,1); pintarBolsa(); });
+      items.appendChild(row);
+    });
+    const total = bolsa.reduce((s, i) => s + i.precio, 0);
+    conteo.textContent = bolsa.length;
+    totalEl.textContent = mx(total);
+    envioEl.textContent = total >= 1500
+      ? "Envío gratis incluido."
+      : bolsa.length ? "Faltan " + mx(1500 - total) + " para envío gratis." : "Envío gratis a partir de $1,500.";
+  }
+
+  const drawer = document.getElementById("drawer");
+  const backdrop = document.getElementById("backdrop");
+  function abrirDrawer(){ drawer.classList.add("open"); backdrop.classList.add("on"); }
+  function cerrarDrawer(){ drawer.classList.remove("open"); backdrop.classList.remove("on"); }
+  document.getElementById("abrir").addEventListener("click", abrirDrawer);
+  document.getElementById("cerrar").addEventListener("click", cerrarDrawer);
+  backdrop.addEventListener("click", cerrarDrawer);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") cerrarDrawer(); });
+
+  document.getElementById("pedir").addEventListener("click", () => {
+    if (!bolsa.length) return;
+    const total = bolsa.reduce((s, i) => s + i.precio, 0);
+    const lineas = bolsa.map(i => "• " + i.nombre + " (talla " + i.talla + ") — " + mx(i.precio)).join("\n");
+    const texto = "Hola Aurelia, quiero este pedido:\n" + lineas + "\nTotal: " + mx(total);
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  pintar();
+  pintarBolsa();
+</script>
+</body>
+</html>

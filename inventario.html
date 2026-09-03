@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Almacén — Control de inventario para ferretería</title>
+<meta name="description" content="Panel de inventario: stock en vivo, alertas de mínimos, entradas y salidas del día, y sugerencia de resurtido.">
+<meta name="theme-color" content="#14161A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --steel:#14161A;
+    --steel-2:#1B1F25;
+    --card:#20252C;
+    --line:rgba(233,237,243,.10);
+    --line-soft:rgba(233,237,243,.06);
+    --text:#E9EDF3;
+    --muted:#8A94A3;
+    --safety:#F2A310;
+    --ok:#4FA97C;
+    --warn:#E0A030;
+    --alert:#D4533F;
+    --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+    --sans:"Inter Tight","Segoe UI",Helvetica,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--steel); color:var(--text); font-family:var(--sans);
+    font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--safety); outline-offset:2px;
+  }
+
+  .app{ display:grid; grid-template-columns:220px minmax(0,1fr); min-height:100vh; }
+
+  aside{
+    background:var(--steel-2); border-right:1px solid var(--line);
+    padding:20px 16px; display:flex; flex-direction:column; gap:24px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo i{
+    width:30px; height:30px; background:var(--safety); color:#14161A; display:grid; place-items:center;
+    font-family:var(--cond); font-weight:700; font-size:1.05rem; font-style:normal; clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%);
+  }
+  .logo b{ font-family:var(--cond); font-size:1.35rem; letter-spacing:.06em; text-transform:uppercase; }
+  aside nav{ display:flex; flex-direction:column; gap:2px; }
+  aside nav a{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    text-decoration:none; font-size:.9rem; color:var(--muted); padding:9px 11px;
+    border-left:2px solid transparent; transition:color .18s ease, background .18s ease, border-color .18s ease;
+  }
+  aside nav a:hover{ color:var(--text); background:rgba(233,237,243,.04); }
+  aside nav a.on{ color:var(--text); background:rgba(242,163,16,.10); border-left-color:var(--safety); font-weight:600; }
+  aside nav a .pill{
+    font-family:var(--mono); font-size:.68rem; background:var(--alert); color:#fff; padding:1px 7px; border-radius:999px;
+  }
+  .sucursal{
+    margin-top:auto; border-top:1px solid var(--line); padding-top:14px;
+    font-size:.8rem; color:var(--muted);
+  }
+  .sucursal b{ display:block; color:var(--text); font-size:.9rem; }
+
+  main{ padding:22px clamp(14px,2.6vw,30px) 64px; min-width:0; }
+  .top{ display:flex; flex-wrap:wrap; gap:14px 18px; justify-content:space-between; align-items:flex-end; margin-bottom:20px; }
+  .top h1{ font-family:var(--cond); font-size:2rem; text-transform:uppercase; letter-spacing:.04em; line-height:1.1; }
+  .top .sub{ font-family:var(--mono); font-size:.75rem; color:var(--muted); }
+  .live{ display:inline-flex; align-items:center; gap:7px; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 0 rgba(79,169,124,.6); animation:pulse 2.4s infinite; }
+  @keyframes pulse{ 70%{ box-shadow:0 0 0 8px rgba(79,169,124,0) } 100%{ box-shadow:0 0 0 0 rgba(79,169,124,0) } }
+  @media (prefers-reduced-motion: reduce){ .dot{ animation:none } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; border:1px solid var(--safety);
+    background:var(--safety); color:#14161A; font-size:.82rem; font-weight:600;
+    padding:9px 16px; transition:transform .16s ease, background .18s ease, color .18s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn.line{ background:transparent; color:var(--text); border-color:var(--line); }
+  .btn.line:hover{ border-color:var(--safety); color:var(--safety); }
+
+  .kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:18px; }
+  .kpi{ background:var(--card); border:1px solid var(--line); padding:15px 16px 16px; position:relative; }
+  .kpi::after{ content:""; position:absolute; left:0; top:0; width:3px; height:100%; background:var(--line); }
+  .kpi.ok::after{ background:var(--ok); }
+  .kpi.warn::after{ background:var(--warn); }
+  .kpi.alert::after{ background:var(--alert); }
+  .kpi .k{ font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .kpi b{ display:block; font-family:var(--cond); font-size:2.1rem; line-height:1.15; margin-top:2px; font-variant-numeric:tabular-nums; }
+  .kpi span{ font-family:var(--mono); font-size:.72rem; color:var(--muted); }
+
+  .grid{ display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:14px; align-items:start; }
+  .card{ background:var(--card); border:1px solid var(--line); }
+  .card > header{
+    display:flex; flex-wrap:wrap; gap:10px 14px; justify-content:space-between; align-items:center;
+    padding:14px 16px; border-bottom:1px solid var(--line-soft);
+  }
+  .card h2{ font-family:var(--cond); font-size:1.15rem; text-transform:uppercase; letter-spacing:.05em; }
+  .card .hint{ font-family:var(--mono); font-size:.7rem; color:var(--muted); }
+
+  .tools{ display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px; border-bottom:1px solid var(--line-soft); }
+  input[type="search"], select{
+    background:var(--steel); border:1px solid var(--line); color:var(--text);
+    font-family:var(--sans); font-size:.85rem; padding:8px 11px; min-width:0;
+  }
+  input[type="search"]{ flex:1; min-width:160px; }
+  input::placeholder{ color:var(--muted); }
+
+  .scroll{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; font-size:.86rem; }
+  th, td{ padding:11px 16px; text-align:left; border-bottom:1px solid var(--line-soft); white-space:nowrap; }
+  th{ font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:500; }
+  td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; }
+  th.num{ text-align:right; }
+  tbody tr:hover{ background:rgba(233,237,243,.03); }
+  .sku{ font-family:var(--mono); font-size:.78rem; color:var(--muted); }
+  .prod b{ font-weight:600; }
+
+  .lvl{ display:flex; align-items:center; gap:9px; justify-content:flex-end; }
+  .track{ width:74px; height:6px; background:rgba(233,237,243,.10); position:relative; }
+  .track i{ position:absolute; left:0; top:0; height:100%; display:block; }
+  .track .min{ position:absolute; top:-3px; width:1px; height:12px; background:var(--muted); }
+  .state{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 8px; border:1px solid currentColor;
+  }
+  .s-ok{ color:var(--ok); } .s-warn{ color:var(--warn); } .s-alert{ color:var(--alert); }
+
+  .mov{ display:flex; flex-direction:column; }
+  .mov .row{
+    display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center;
+    padding:12px 16px; border-bottom:1px solid var(--line-soft);
+  }
+  .mov .row:last-child{ border-bottom:0; }
+  .mov .io{
+    width:26px; height:26px; display:grid; place-items:center; font-family:var(--mono); font-size:.85rem; font-weight:600;
+  }
+  .mov .in{ background:rgba(79,169,124,.14); color:var(--ok); }
+  .mov .out{ background:rgba(212,83,63,.14); color:var(--alert); }
+  .mov b{ font-weight:500; font-size:.9rem; display:block; }
+  .mov small{ color:var(--muted); font-family:var(--mono); font-size:.72rem; }
+  .mov .qty{ font-family:var(--mono); font-size:.85rem; font-variant-numeric:tabular-nums; }
+
+  .resurtir .row{ display:flex; justify-content:space-between; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line-soft); }
+  .resurtir .row:last-child{ border-bottom:0; }
+  .resurtir small{ display:block; color:var(--muted); font-size:.78rem; }
+  .resurtir .money{ font-family:var(--mono); font-size:.84rem; font-variant-numeric:tabular-nums; }
+
+  .auto{ padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .auto .rule{
+    display:flex; gap:12px; align-items:flex-start; padding:12px; border:1px dashed var(--line);
+    font-size:.85rem;
+  }
+  .auto .rule b{ display:block; font-weight:600; margin-bottom:2px; }
+  .auto .rule small{ color:var(--muted); }
+  .auto .rule .sw{ width:34px; height:19px; border-radius:999px; background:var(--ok); position:relative; flex:none; margin-top:2px; }
+  .auto .rule .sw::after{ content:""; position:absolute; right:3px; top:3px; width:13px; height:13px; border-radius:50%; background:#14161A; }
+  .auto .rule.off .sw{ background:rgba(233,237,243,.18); }
+  .auto .rule.off .sw::after{ left:3px; right:auto; background:var(--muted); }
+
+  .demo-bar{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:80;
+    display:flex; align-items:center; gap:14px; background:rgba(20,22,26,.94); border:1px solid var(--line);
+    padding:9px 16px; font-size:.75rem; color:var(--muted); max-width:calc(100vw - 24px);
+  }
+  .demo-bar a{ color:var(--safety); text-decoration:none; font-weight:600; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  @media (max-width:1000px){
+    .app{ grid-template-columns:1fr; }
+    aside{ flex-direction:row; align-items:center; gap:16px; overflow-x:auto; border-right:0; border-bottom:1px solid var(--line); padding:12px 14px; }
+    aside nav{ flex-direction:row; }
+    aside nav a{ border-left:0; border-bottom:2px solid transparent; white-space:nowrap; }
+    aside nav a.on{ border-left:0; border-bottom-color:var(--safety); }
+    .sucursal{ margin-top:0; border-top:0; border-left:1px solid var(--line); padding:0 0 0 14px; white-space:nowrap; }
+    .grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside>
+    <p class="logo"><i>A</i><b>Almacén</b></p>
+    <nav>
+      <a class="on" href="#">Tablero</a>
+      <a href="#">Existencias</a>
+      <a href="#">Entradas</a>
+      <a href="#">Salidas</a>
+      <a href="#">Resurtido <span class="pill">6</span></a>
+      <a href="#">Proveedores</a>
+      <a href="#">Reportes</a>
+    </nav>
+    <div class="sucursal">
+      <b>Ferretería El Yunque</b>
+      Sucursal Centro · Turno matutino
+    </div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div>
+        <h1>Tablero de inventario</h1>
+        <p class="sub live"><span class="dot"></span> <span id="reloj">—</span> · sincronizado con el punto de venta</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <button class="btn line" type="button">Exportar a Excel</button>
+        <button class="btn" type="button">Registrar entrada</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi ok">
+        <p class="k">Valor del inventario</p><b>$486,220</b>
+        <span>1,284 claves activas</span>
+      </div>
+      <div class="kpi alert">
+        <p class="k">Bajo mínimo</p><b>6</b>
+        <span>2 sin existencia desde ayer</span>
+      </div>
+      <div class="kpi warn">
+        <p class="k">Movimientos hoy</p><b>38</b>
+        <span>31 salidas · 7 entradas</span>
+      </div>
+      <div class="kpi ok">
+        <p class="k">Venta del día</p><b>$18,940</b>
+        <span>Corte parcial 14:20</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <header>
+          <h2>Existencias</h2>
+          <span class="hint">Mostrando 8 de 1,284 claves</span>
+        </header>
+        <div class="tools">
+          <input type="search" id="buscar" placeholder="Buscar por nombre o clave (ej. cemento, TOR-014)" aria-label="Buscar producto">
+          <select id="filtro" aria-label="Filtrar por estado">
+            <option value="todos">Todos los estados</option>
+            <option value="alert">Solo bajo mínimo</option>
+            <option value="warn">Solo por agotarse</option>
+            <option value="ok">Solo con stock sano</option>
+          </select>
+        </div>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th><th>Categoría</th><th class="num">Stock</th>
+                <th class="num">Mínimo</th><th class="num">Nivel</th><th>Estado</th><th class="num">Costo</th>
+              </tr>
+            </thead>
+            <tbody id="tabla"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <section class="card">
+          <header><h2>Movimientos de hoy</h2><span class="hint">Últimos 6</span></header>
+          <div class="mov">
+            <div class="row"><span class="io out">−</span><span><b>Cemento gris 50 kg</b><small>14:12 · venta mostrador · folio 8842</small></span><span class="qty">−12</span></div>
+            <div class="row"><span class="io in">+</span><span><b>Tornillo autorroscante 1"</b><small>13:40 · entrada · Aceros del Valle</small></span><span class="qty">+500</span></div>
+            <div class="row"><span class="io out">−</span><span><b>Pintura vinílica blanca 19 L</b><small>12:55 · venta mostrador · folio 8839</small></span><span class="qty">−3</span></div>
+            <div class="row"><span class="io out">−</span><span><b>Cable THW cal. 12 (m)</b><small>11:30 · venta a crédito · Constructora Sur</small></span><span class="qty">−150</span></div>
+            <div class="row"><span class="io in">+</span><span><b>Silicón transparente</b><small>10:05 · devolución de cliente</small></span><span class="qty">+2</span></div>
+            <div class="row"><span class="io out">−</span><span><b>Disco de corte 7"</b><small>09:22 · venta mostrador · folio 8831</small></span><span class="qty">−8</span></div>
+          </div>
+        </section>
+
+        <section class="card resurtir">
+          <header><h2>Hay que resurtir</h2><span class="hint">Sugerido por consumo</span></header>
+          <div class="row">
+            <span><b>Cemento gris 50 kg</b><small>Se agota en 3 días · Cementos Oaxaca</small></span>
+            <span class="money">80 pzas<br><small>$34,400</small></span>
+          </div>
+          <div class="row">
+            <span><b>Cable THW cal. 12</b><small>Sin existencia desde ayer · Condumex</small></span>
+            <span class="money">500 m<br><small>$9,750</small></span>
+          </div>
+          <div class="row">
+            <span><b>Pintura vinílica blanca</b><small>Se agota en 6 días · Comex</small></span>
+            <span class="money">12 cubetas<br><small>$16,680</small></span>
+          </div>
+          <div style="padding:14px 16px">
+            <button class="btn" type="button" style="width:100%; justify-content:center">Generar orden de compra</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <header><h2>Automatizaciones activas</h2><span class="hint">3 de 4</span></header>
+          <div class="auto">
+            <div class="rule">
+              <span class="sw"></span>
+              <span><b>Aviso de mínimo por WhatsApp</b><small>Cuando una clave baja de su mínimo, le llega mensaje al encargado de compras.</small></span>
+            </div>
+            <div class="rule">
+              <span class="sw"></span>
+              <span><b>Corte diario por correo</b><small>Todos los días a las 20:00 con ventas, movimientos y faltantes del día.</small></span>
+            </div>
+            <div class="rule">
+              <span class="sw"></span>
+              <span><b>Orden de compra sugerida</b><small>Cada lunes arma el pedido por proveedor según el consumo de las últimas 4 semanas.</small></span>
+            </div>
+            <div class="rule off">
+              <span class="sw"></span>
+              <span><b>Conteo cíclico</b><small>Pediría contar 20 claves distintas cada semana para detectar diferencias.</small></span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-bar">
+  <span>Panel conceptual de Andrés Mendoza · datos de ejemplo</span>
+  <a href="index.html">← Volver al portafolio</a>
+</div>
+
+<script>
+  const productos = [
+    { sku:"CEM-050", nombre:"Cemento gris 50 kg", cat:"Construcción", stock:14, min:40, costo:430 },
+    { sku:"CAB-012", nombre:"Cable THW calibre 12 (m)", cat:"Eléctrico", stock:0, min:300, costo:19.5 },
+    { sku:"PIN-B19", nombre:"Pintura vinílica blanca 19 L", cat:"Pinturas", stock:9, min:12, costo:1390 },
+    { sku:"TOR-014", nombre:"Tornillo autorroscante 1\"", cat:"Fijación", stock:1840, min:600, costo:1.2 },
+    { sku:"DIS-007", nombre:"Disco de corte 7\"", cat:"Herramienta", stock:46, min:25, costo:78 },
+    { sku:"SIL-T01", nombre:"Silicón transparente", cat:"Adhesivos", stock:31, min:30, costo:64 },
+    { sku:"VAR-038", nombre:"Varilla 3/8\" 12 m", cat:"Construcción", stock:120, min:60, costo:214 },
+    { sku:"FOC-LED", nombre:"Foco LED 9 W", cat:"Eléctrico", stock:22, min:50, costo:38 }
+  ];
+
+  const tabla = document.getElementById("tabla");
+  const buscar = document.getElementById("buscar");
+  const filtro = document.getElementById("filtro");
+  const mx = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
+
+  function estado(p){
+    if (p.stock <= p.min * 0.5) return "alert";
+    if (p.stock < p.min) return "warn";
+    return "ok";
+  }
+  const etiqueta = { ok:"En orden", warn:"Por agotarse", alert:"Bajo mínimo" };
+  const color = { ok:"var(--ok)", warn:"var(--warn)", alert:"var(--alert)" };
+
+  function pintar(){
+    const q = buscar.value.trim().toLowerCase();
+    const f = filtro.value;
+    tabla.innerHTML = "";
+    productos
+      .filter(p => !q || p.nombre.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q))
+      .filter(p => f === "todos" || estado(p) === f)
+      .forEach(p => {
+        const e = estado(p);
+        const tope = Math.max(p.min * 2, p.stock);
+        const ancho = Math.min(100, (p.stock / tope) * 100);
+        const marca = Math.min(100, (p.min / tope) * 100);
+        const tr = document.createElement("tr");
+        tr.innerHTML =
+          '<td class="prod"><b>' + p.nombre + '</b><br><span class="sku">' + p.sku + '</span></td>' +
+          '<td>' + p.cat + '</td>' +
+          '<td class="num">' + p.stock.toLocaleString("es-MX") + '</td>' +
+          '<td class="num">' + p.min.toLocaleString("es-MX") + '</td>' +
+          '<td class="num"><span class="lvl"><span class="track"><i style="width:' + ancho + '%; background:' + color[e] + '"></i>' +
+            '<span class="min" style="left:' + marca + '%"></span></span></span></td>' +
+          '<td><span class="state s-' + e + '">' + etiqueta[e] + '</span></td>' +
+          '<td class="num">' + mx.format(p.costo * p.stock) + '</td>';
+        tabla.appendChild(tr);
+      });
+    if (!tabla.children.length) {
+      tabla.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ninguna clave coincide con la búsqueda.</td></tr>';
+    }
+  }
+
+  buscar.addEventListener("input", pintar);
+  filtro.addEventListener("change", pintar);
+  pintar();
+
+  function reloj(){
+    document.getElementById("reloj").textContent =
+      new Date().toLocaleString("es-MX", { weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" });
+  }
+  reloj();
+  setInterval(reloj, 30000);
+</script>
+</body>
+</html>

@@ -1,33 +1,47 @@
 # Portafolio — Andrés Mendoza
 
-Sitio personal: diseño y desarrollo digital. HTML/CSS/JS estático, sin dependencias ni build.
+Sitios, paneles de gestión y automatizaciones para negocios. HTML/CSS/JS estático, sin build ni dependencias.
+
+**En vivo:** https://andresmendoza30.github.io/PORTAFOLIO/
 
 ## Archivos
 
 | Archivo | Qué es |
 |---|---|
-| `index.html` | Portafolio principal (hero, servicios, casos, proceso, sobre, contacto) |
-| `copal.html` | Caso de estudio 01 — mezcalería/restaurante |
-| `consultorio.html` | Caso de estudio 02 — consultorio dental |
+| `index.html` | Portafolio principal. Concepto "sala de proyección": cada proyecto se muestra en una pantalla con vista previa en vivo (iframe) que se recorre sola al pasar el cursor |
+| `copal.html` | Proyecto 01 — mezcalería y cocina, sitio de una página con reservaciones |
+| `consultorio.html` | Proyecto 02 — consultorio dental con agenda en línea funcional |
+| `consultorio-panel.html` | Proyecto 02b — panel interno del consultorio (agenda, ocupación, cobros) |
+| `inventario.html` | Proyecto 03 — panel de inventario para ferretería (stock, alertas, resurtido) |
+| `boutique.html` | Proyecto 04 — tienda en línea con filtros, carrito y pedido por WhatsApp |
 | `404.html` | Página de error con la identidad del sitio |
 | `favicon.svg` | Ícono de pestaña (monograma AM) |
 | `robots.txt` / `sitemap.xml` | SEO básico |
 
 ## Configuración
 
-- Formulario: Formspree `xoeqwndw`
+- Formulario de contacto: Formspree `xoeqwndw`
 - WhatsApp: `529514418403`
-- URL: https://AndresMendoza30.github.io/portafolio/
+- Correo: `andresmendoza8403@gmail.com`
 
-## Cómo agregar un caso de estudio nuevo
+## Cómo agregar un proyecto nuevo
 
-1. Crea el archivo (ej. `tienda.html`) en la raíz
-2. En `index.html`, busca `<section class="casos"` y duplica un bloque `<div class="case-row reveal">`
-3. Cambia el `href` y el `src` del iframe al archivo nuevo
-4. Actualiza el texto de problema / solución / resultado esperado
-5. Agrega la URL a `sitemap.xml`
+1. Crea el archivo del proyecto en la raíz (ej. `gimnasio.html`).
+2. En `index.html`, dentro de `<div class="reel">`, duplica un bloque `<article class="film rise">`.
+3. Cambia el `src` del `<iframe>`, el `href` de los botones, el número, el título y la ficha de créditos.
+4. Agrega la URL a `sitemap.xml` y súmala al conteo del hero ("4 proyectos en cartelera").
 
-## Convención
+## Convención de honestidad
 
-- Los proyectos conceptuales SIEMPRE llevan la etiqueta `PROYECTO CONCEPTUAL` y dicen "Resultado esperado", nunca métricas inventadas.
-- Cuando un caso sea de un cliente real, se quita la etiqueta y se puede poner el resultado real.
+Los proyectos sin cliente real llevan la etiqueta `PROYECTO CONCEPTUAL` y nunca muestran métricas inventadas.
+Cuando un caso sea de un cliente real, se quita la etiqueta y ahí sí se puede poner el resultado medido.
+
+## Publicar cambios
+
+```bash
+git add -A
+git commit -m "Actualiza portafolio"
+git push
+```
+
+GitHub Pages republica solo en un par de minutos (rama `main`, carpeta raíz).

@@ -3,630 +3,735 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andrés Mendoza — Diseño y desarrollo digital</title>
-<meta name="description" content="Diseño y desarrollo sitios, sistemas y automatizaciones a la medida para negocios que necesitan algo calibrado a su operación real, no una plantilla.">
-<meta property="og:title" content="Andrés Mendoza — Diseño y desarrollo digital">
-<meta property="og:description" content="Sitios, sistemas y automatizaciones calibrados a cómo opera tu negocio.">
+<title>Andrés Mendoza — Sitios, paneles y automatizaciones</title>
+<meta name="description" content="Diseño y programo sitios web, paneles de gestión y automatizaciones para negocios. Oaxaca, México. Entrega en 2 a 3 semanas.">
+<meta property="og:title" content="Andrés Mendoza — Sitios, paneles y automatizaciones">
+<meta property="og:description" content="Tu negocio, en pantalla grande. Sitios, paneles de inventario y automatizaciones a la medida.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://andresmendoza30.github.io/PORTAFOLIO/">
+<meta name="theme-color" content="#100E0C">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F5F2EA;
-    --ink:#131215;
-    --wine:#7A2A2A;
-    --gold:#C9A227;
-    --line: rgba(19,18,21,0.12);
-    --max: 1180px;
+    --film:      #100E0C;
+    --film-2:    #17140F;
+    --light:     #F3EEE4;
+    --dim:       #A2988A;
+    --dimmer:    #6E675C;
+    --edge:      rgba(243,238,228,0.13);
+    --edge-soft: rgba(243,238,228,0.07);
+    --beam:      #E4A93F;
+    --beam-soft: rgba(228,169,63,0.13);
+
+    --display: "Bodoni Moda", Didot, Georgia, serif;
+    --body: "Hanken Grotesk", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+    --max: 1220px;
+    --pad: clamp(20px, 5vw, 60px);
+    --band: clamp(72px, 10vw, 140px);
   }
+
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; }
+
   body{
-    background:var(--paper); color:var(--ink);
-    font-family:'Inter', sans-serif; font-size:16px; line-height:1.6;
+    background:var(--film);
+    color:var(--light);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.65;
+    font-weight:300;
     -webkit-font-smoothing:antialiased;
-    cursor:none;
+    overflow-x:hidden;
   }
-  @media (pointer:coarse){ body{ cursor:auto; } }
-  h1,h2,h3{ font-family:'Archivo', sans-serif; font-weight:700; line-height:1.05; letter-spacing:-0.015em; }
+
+  /* grano de película sobre todo el sitio */
+  body::after{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    pointer-events:none;
+    z-index:100;
+    opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 1.1s steps(3) infinite;
+  }
+  @keyframes grain{
+    0%{ transform:translate(0,0) }
+    33%{ transform:translate(-3%,2%) }
+    66%{ transform:translate(2%,-3%) }
+    100%{ transform:translate(0,0) }
+  }
+  @media (prefers-reduced-motion: reduce){
+    body::after{ animation:none; }
+  }
+
+  h1,h2,h3{ font-family:var(--display); font-weight:400; text-wrap:balance; letter-spacing:-0.01em; }
   a{ color:inherit; }
-  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
-  @media (max-width:640px){ .wrap{ padding:0 22px; } }
-  :focus-visible{ outline:2px solid var(--wine); outline-offset:3px; }
-  @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; } }
   img,svg{ display:block; max-width:100%; }
 
-  /* ---------- Custom cursor ---------- */
-  #cursor-dot, #cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:999; border-radius:50%; transform:translate(-50%,-50%); }
-  #cursor-dot{ width:6px; height:6px; background:var(--wine); }
-  #cursor-ring{ width:34px; height:34px; border:1px solid rgba(19,18,21,0.35); transition:width .2s ease, height .2s ease, border-color .2s ease, background .2s ease; }
-  #cursor-ring.active{ width:54px; height:54px; background:rgba(122,42,42,0.06); border-color:var(--wine); }
-  @media (pointer:coarse){ #cursor-dot, #cursor-ring{ display:none; } }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:var(--pad); }
 
-  /* ---------- Reveal on scroll ---------- */
-  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
-  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  .mono{
+    font-family:var(--mono);
+    font-size:.7rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .rail{ display:flex; align-items:center; gap:12px; color:var(--beam); }
+  .rail::before{ content:""; width:30px; height:1px; background:var(--beam); flex:none; }
 
-  /* ---------- Header ---------- */
+  .lede{ color:var(--dim); font-size:1.07rem; max-width:60ch; }
+
+  /* ---------- encabezado ---------- */
   header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(245,242,234,0.9); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:60;
+    background:rgba(16,14,12,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--edge-soft);
   }
-  .nav{ display:flex; align-items:center; justify-content:space-between; height:72px; }
-  .brand{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:0.01em; }
-  .nav-right{ display:flex; align-items:center; gap:26px; }
-  .nav-right a.link{ text-decoration:none; font-size:0.9rem; }
-  .nav-right a.cta{
-    background:var(--ink); color:var(--paper); text-decoration:none;
-    padding:10px 20px; font-size:0.88rem; transition:background .2s ease;
+  .bar{ display:flex; align-items:center; gap:26px; height:70px; }
+  .logo{ display:flex; align-items:center; gap:11px; text-decoration:none; margin-right:auto; }
+  .logo .mark{
+    width:34px; height:34px; flex:none;
+    border:1px solid var(--beam);
+    display:grid; place-items:center;
+    font-family:var(--display); font-size:.9rem; letter-spacing:.04em;
+    color:var(--beam);
   }
-  .nav-right a.cta:hover{ background:var(--wine); }
-  @media (max-width:640px){ .nav-right .link{ display:none; } }
+  .logo b{ font-family:var(--body); font-weight:500; font-size:.95rem; letter-spacing:.02em; }
+  nav{ display:flex; gap:28px; }
+  nav a{
+    font-size:.85rem; text-decoration:none; color:var(--dim);
+    transition:color .2s ease; padding-block:6px;
+  }
+  nav a:hover{ color:var(--light); }
 
-  /* ---------- Hero ---------- */
-  .hero{ padding:84px 0 60px; }
-  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:44px; align-items:center; }
-  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+    text-decoration:none; padding:13px 20px;
+    border:1px solid var(--beam); background:var(--beam); color:#14100A;
+    transition:transform .18s ease, box-shadow .25s ease, border-color .2s ease, color .2s ease;
+    cursor:pointer;
+  }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 10px 34px rgba(228,169,63,.22); }
+  .btn.line{ background:transparent; color:var(--light); border-color:var(--edge); }
+  .btn.line:hover{ border-color:var(--beam); color:var(--beam); box-shadow:none; }
+  .btn.sm{ padding:10px 15px; font-size:.66rem; }
 
-  .eyebrow{ font-family:'Archivo',sans-serif; font-weight:600; font-size:0.82rem; letter-spacing:0.04em; color:#4a4a45; margin-bottom:18px; }
-  .hero h1{ font-size:clamp(2.2rem,5vw,3.7rem); max-width:16ch; overflow:hidden; }
-  .hero h1 .word{ display:inline-block; opacity:0; transform:translateY(100%); animation:wordIn .7s cubic-bezier(.2,.8,.2,1) forwards; }
-  @keyframes wordIn{ to{ opacity:1; transform:translateY(0); } }
-  .hero p.lede{ margin-top:22px; max-width:42ch; font-size:1.08rem; color:#3c3d38; }
-  .hero-actions{ margin-top:30px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
-  .btn-primary{
-    display:inline-block; background:var(--wine); color:#fff; text-decoration:none;
-    padding:15px 28px; font-size:0.95rem; font-weight:600;
-    transition:background .2s ease;
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--beam); outline-offset:3px;
+  }
+
+  .burger{
+    display:none; background:none; border:1px solid var(--edge); color:var(--light);
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; padding:9px 12px; cursor:pointer;
+  }
+
+  /* ---------- portada ---------- */
+  .hero{ position:relative; padding-block:clamp(56px,9vw,110px) var(--band); overflow:hidden; }
+  .hero::before{
+    content:"";
+    position:absolute; top:-340px; left:50%; width:min(1150px,150vw); height:820px;
+    transform:translateX(-50%);
+    background:radial-gradient(ellipse at 50% 0%, rgba(228,169,63,.20), rgba(228,169,63,.05) 42%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; }
+  .hero h1{
+    font-size:clamp(3rem, 1.4rem + 6.4vw, 6.6rem);
+    line-height:.96;
+    margin-block:24px 26px;
+    max-width:15ch;
+  }
+  .hero h1 em{ font-style:italic; color:var(--beam); }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
+
+  .strip{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+    border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);
+    margin-top:clamp(48px,7vw,84px);
+  }
+  .strip div{ padding:20px 24px 22px; border-right:1px solid var(--edge-soft); }
+  .strip div:last-child{ border-right:none; }
+  .strip b{
+    display:block; font-family:var(--display); font-size:1.9rem; font-weight:400;
+    color:var(--light); line-height:1.15; font-variant-numeric:tabular-nums;
+  }
+  .strip span{ font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dimmer); }
+
+  /* ---------- secciones ---------- */
+  section{ border-top:1px solid var(--edge-soft); }
+  .band{ padding-block:var(--band); }
+  .head{ max-width:62ch; margin-bottom:clamp(36px,5vw,64px); }
+  .head h2{
+    font-size:clamp(2rem, 1.1rem + 3vw, 3.6rem);
+    line-height:1.05; margin-block:18px 16px;
+  }
+
+  /* ---------- cartelera ---------- */
+  .reel{ display:flex; flex-direction:column; gap:clamp(56px,8vw,110px); }
+  .film{
+    display:grid;
+    grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);
+    gap:clamp(28px,4vw,56px);
+    align-items:start;
+  }
+  .film:nth-child(even) .screen-col{ order:2; }
+
+  .screen-col{ min-width:0; }
+  .screen{
+    position:relative;
+    aspect-ratio:16/10;
+    overflow:hidden;
+    background:var(--film-2);
+    border:1px solid var(--edge);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+  }
+  .tape{
+    position:absolute; top:0; left:0; width:100%;
+    transition:transform 8s cubic-bezier(.33,0,.25,1);
     will-change:transform;
   }
-  .btn-primary:hover{ background:#5f2020; }
-  .link-quiet{ text-decoration:none; font-size:0.94rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
-
-  .calib-wrap{ position:relative; }
-  .calib-row{ display:flex; align-items:flex-end; gap:14px; height:140px; }
-  .calib-tick{ flex:1; background:var(--ink); opacity:0.14; transform-origin:bottom; transform:scaleY(0.3); transition: transform 1s cubic-bezier(.2,.8,.2,1), opacity 1s ease; }
-  .calib-tick.hit{ background:var(--gold); opacity:1; }
-  .calib-row.animate .calib-tick{ transform:scaleY(1); }
-  .calib-caption{ margin-top:14px; font-size:0.8rem; color:#6b6c67; font-family:'Archivo',sans-serif; }
-
-  /* ---------- Puente de valor ---------- */
-  .puente{ padding:64px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .puente p{ font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(1.35rem,2.6vw,1.9rem); max-width:24ch; line-height:1.3; }
-  .puente span{ color:var(--wine); }
-
-  /* ---------- Servicios (bento) ---------- */
-  .servicios{ padding:96px 0 40px; }
-  .section-head{ margin-bottom:44px; }
-  .section-head .tag{ font-family:'Archivo',sans-serif; font-size:0.82rem; font-weight:600; color:var(--wine); margin-bottom:10px; }
-  .section-head h2{ font-size:clamp(1.8rem,3.4vw,2.4rem); max-width:18ch; }
-
-  .bento{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  @media (max-width:760px){ .bento{ grid-template-columns:1fr; } }
-  .bento .card:nth-child(1){ grid-column:span 2; }
-  .bento .card:nth-child(2){ grid-column:span 1; }
-  .bento .card:nth-child(3){ grid-column:span 1; }
-  .bento .card:nth-child(4){ grid-column:span 2; }
-  @media (max-width:760px){ .bento .card{ grid-column:span 1 !important; } }
-
-  .card{ border:1px solid var(--line); background:#fff; padding:26px 26px 22px; cursor:pointer; }
-  .card .top{ display:flex; align-items:center; justify-content:space-between; }
-  .card .num{ font-family:'Archivo',sans-serif; color:var(--gold); font-size:0.95rem; font-weight:700; }
-  .card .plus{ font-family:'Archivo',sans-serif; font-size:1.2rem; color:#9a9a92; transition:transform .3s ease; }
-  .card.open .plus{ transform:rotate(45deg); color:var(--wine); }
-  .card h3{ font-size:1.35rem; margin-top:14px; }
-  .card .detail{ max-height:0; overflow:hidden; transition:max-height .4s ease; }
-  .card.open .detail{ }
-  .card .detail-inner{ padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  @media (max-width:520px){ .card .detail-inner{ grid-template-columns:1fr; } }
-  .card .field-label{ font-size:0.74rem; text-transform:uppercase; letter-spacing:0.05em; color:#9a9a92; margin-bottom:5px; }
-  .card .detail-inner p{ font-size:0.9rem; color:#3c3d38; }
-
-  /* ---------- Casos de estudio (live preview) ---------- */
-  .casos{ padding:96px 0; }
-  .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:44px; }
-  @media (max-width:860px){ .case-grid{ grid-template-columns:1fr; } }
-
-  .case-card{ border:1px solid var(--line); background:#fff; display:flex; flex-direction:column; overflow:hidden; }
-  .case-preview-live{ aspect-ratio:16/10; position:relative; overflow:hidden; background:#eee; transition:transform .4s ease; }
-  .case-card:hover .case-preview-live{ transform:scale(1.015); }
-  .case-preview-live iframe{ position:absolute; top:0; left:0; width:250%; height:250%; border:0; transform:scale(0.4); transform-origin:top left; pointer-events:none; }
-
-  .case-body{ padding:24px 26px 28px; flex:1; display:flex; flex-direction:column; }
-  .case-badge{ display:inline-block; font-size:0.74rem; font-weight:600; color:var(--wine); font-family:'Archivo',sans-serif; margin-bottom:10px; }
-  .case-body h3{ font-size:1.3rem; margin-bottom:14px; }
-  .case-structure{ display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:18px; font-size:0.86rem; }
-  .case-structure div span.k{ font-weight:600; color:var(--ink); }
-  .case-structure div span.v{ color:#4a4a45; }
-  .case-cta{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
-  .case-cta a.demo{ text-decoration:none; font-size:0.88rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
-  .case-cta .prompt{ font-size:0.82rem; color:#6b6c67; }
-
-  /* ---------- Proceso ---------- */
-  .proceso{ background:var(--ink); color:var(--paper); padding:96px 0; }
-  .proceso .section-head h2{ color:var(--paper); }
-  .proceso .section-head .tag{ color:var(--gold); }
-  .proc-grid{ margin-top:48px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(245,242,234,0.14); }
-  @media (max-width:860px){ .proc-grid{ grid-template-columns:1fr 1fr; } }
-  @media (max-width:520px){ .proc-grid{ grid-template-columns:1fr; } }
-  .proc-card{ background:var(--ink); padding:30px 24px; }
-  .proc-card .num{ font-family:'Archivo',sans-serif; color:var(--gold); font-size:0.95rem; margin-bottom:14px; }
-  .proc-card h3{ color:var(--paper); font-size:1.1rem; margin-bottom:8px; }
-  .proc-card p{ color:#a9a9a3; font-size:0.9rem; }
-
-  /* ---------- Sobre Andrés ---------- */
-  .sobre{ padding:96px 0; }
-  .sobre-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; }
-  @media (max-width:860px){ .sobre-grid{ grid-template-columns:1fr; gap:28px; } }
-  .sobre h2{ font-size:clamp(1.8rem,3.4vw,2.4rem); max-width:12ch; }
-  .sobre-copy p{ font-size:1.02rem; color:#3c3d38; max-width:56ch; }
-  .sobre-copy p + p{ margin-top:16px; }
-  .sobre-copy .context{ margin-top:24px; padding-top:20px; border-top:1px solid var(--line); font-size:0.9rem; color:#6b6c67; }
-
-  /* ---------- Contacto ---------- */
-  .contacto{ padding:100px 0; border-top:1px solid var(--line); }
-  .contacto-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
-  @media (max-width:860px){ .contacto-grid{ grid-template-columns:1fr; gap:36px; } }
-  .contacto h2{ font-size:clamp(1.9rem,3.6vw,2.6rem); max-width:12ch; }
-  .contacto p.sub{ margin-top:16px; color:#3c3d38; max-width:38ch; }
-  .promise{ margin-top:24px; font-size:0.9rem; color:#4a4a45; display:flex; align-items:center; gap:8px; }
-  .promise .dot{ width:7px; height:7px; background:var(--gold); border-radius:50%; flex:none; }
-
-  .wa-alt{ margin-top:28px; display:flex; align-items:center; gap:10px; }
-  .wa-alt a{ text-decoration:none; font-size:0.92rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
-
-  form.qual{ background:#fff; border:1px solid var(--line); padding:28px; }
-  form.qual label{ display:block; font-size:0.82rem; color:#4a4a45; margin-bottom:6px; }
-  form.qual input, form.qual select, form.qual textarea{
-    width:100%; padding:12px 14px; margin-bottom:18px; font-size:0.95rem;
-    border:1px solid var(--line); background:var(--paper); color:var(--ink);
-    font-family:inherit;
+  .tape iframe{
+    width:1440px; height:2000px; border:0; display:block;
+    transform-origin:top left; background:#fff;
   }
-  form.qual textarea{ resize:vertical; min-height:80px; }
-  form.qual button{
-    width:100%; background:var(--ink); color:var(--paper); border:none;
-    padding:15px; font-size:0.95rem; font-weight:600; cursor:pointer;
-    transition:background .2s ease;
+  .screen .veil{
+    position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(to top, rgba(16,14,12,.5), rgba(16,14,12,0) 38%);
+    transition:opacity .4s ease;
   }
-  form.qual button:hover{ background:var(--wine); }
-  form.qual .note{ margin-top:14px; font-size:0.8rem; color:#8b8b85; }
-
-
-  /* ---------- Intro curtain ---------- */
-  #curtain{
-    position:fixed; inset:0; background:var(--ink); z-index:9999;
-    display:flex; align-items:center; justify-content:center;
-    transition: transform .7s cubic-bezier(.6,0,.2,1);
+  .screen:hover .veil{ opacity:.35; }
+  .cue{
+    position:absolute; left:0; bottom:0; z-index:3;
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--light); background:rgba(16,14,12,.72); backdrop-filter:blur(4px);
+    padding:8px 12px; border-top:1px solid var(--edge); border-right:1px solid var(--edge);
+    display:flex; align-items:center; gap:8px;
   }
-  #curtain span{ font-family:'Archivo',sans-serif; color:var(--paper); font-weight:700; font-size:1.1rem; letter-spacing:0.06em; opacity:0; animation:curtainText .5s ease forwards .2s; }
-  @keyframes curtainText{ to{ opacity:1; } }
-  #curtain.hide{ transform:translateY(-100%); }
-  body.loading{ overflow:hidden; }
+  .cue i{ width:0; height:0; border-left:7px solid var(--beam); border-block:5px solid transparent; }
+  .screen-links{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
 
-  /* ---------- Marquee ---------- */
-  .marquee{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; padding:16px 0; background:var(--paper); }
-  .marquee-track{ display:flex; white-space:nowrap; animation:marquee 22s linear infinite; }
-  .marquee-track span{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.1rem; padding:0 28px; color:var(--ink); display:flex; align-items:center; gap:28px; }
-  .marquee-track span::after{ content:'—'; color:var(--gold); }
-  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-  @media (prefers-reduced-motion: reduce){ .marquee-track{ animation:none; } }
+  .slate{ min-width:0; }
+  .slate .no{
+    font-family:var(--display); font-size:clamp(2.4rem,4vw,3.6rem);
+    color:var(--beam); line-height:1; font-variant-numeric:tabular-nums;
+  }
+  .slate h3{ font-size:clamp(1.6rem,1rem + 1.5vw,2.3rem); line-height:1.1; margin-block:10px 6px; }
+  .slate .kind{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
+  .slate p.desc{ color:var(--dim); font-size:.96rem; margin-top:18px; }
+  .flag{
+    display:inline-block; margin-top:20px;
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--beam); border:1px solid var(--beam-soft); background:var(--beam-soft); padding:5px 10px;
+  }
+  .credits{
+    margin-top:24px; border-top:1px solid var(--edge-soft);
+    display:flex; flex-direction:column;
+  }
+  .credits div{
+    display:flex; justify-content:space-between; gap:18px;
+    padding-block:10px; border-bottom:1px solid var(--edge-soft);
+    font-size:.85rem;
+  }
+  .credits .k{
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--dimmer); flex:none; padding-top:3px;
+  }
+  .credits .v{ text-align:right; color:var(--light); font-weight:300; }
 
-  /* ---------- Oversized hero type ---------- */
-  .hero h1{ font-size:clamp(2.6rem,6.4vw,5rem); }
-
-  /* ---------- Editorial full-bleed case studies ---------- */
-  .case-row{ display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line); }
-  .case-row:last-child{ border-bottom:1px solid var(--line); }
-  @media (max-width:860px){ .case-row{ grid-template-columns:1fr; } }
-  .case-row .case-preview-live{ aspect-ratio:auto; height:420px; border-radius:0; }
-  @media (max-width:860px){ .case-row .case-preview-live{ height:280px; } }
-  .case-row .case-body{ padding:48px 44px; justify-content:center; }
-  @media (max-width:640px){ .case-row .case-body{ padding:32px 24px; } }
-  .case-row:nth-child(even) .case-preview-live{ order:2; }
-  @media (max-width:860px){ .case-row:nth-child(even) .case-preview-live{ order:0; } }
-  .case-row h3{ font-size:1.8rem; }
-
-
-  /* ---------- Scroll progress ---------- */
-  #progress{ position:fixed; top:0; left:0; height:2px; background:var(--gold); width:0%; z-index:60; transition:width .1s linear; }
-
-  /* ---------- Case preview: grows on scroll ---------- */
-  .case-row .case-preview-live{ overflow:hidden; }
-  .case-row .case-preview-live iframe{
-    transform:scale(0.4);
-    transition: transform .1s linear;
-    will-change: transform;
+  /* ---------- servicios ---------- */
+  .svc{ border-top:1px solid var(--edge); }
+  .svc-row{
+    display:grid; grid-template-columns:64px minmax(0,1fr) minmax(0,1.15fr) auto;
+    gap:clamp(16px,3vw,40px); align-items:baseline;
+    padding-block:26px; border-bottom:1px solid var(--edge-soft);
+    transition:background .25s ease;
+  }
+  .svc-row:hover{ background:rgba(243,238,228,.03); }
+  .svc-row .n{ font-family:var(--mono); font-size:.7rem; color:var(--dimmer); letter-spacing:.1em; }
+  .svc-row h3{ font-size:1.35rem; }
+  .svc-row p{ color:var(--dim); font-size:.93rem; }
+  .svc-row .from{
+    font-family:var(--mono); font-size:.75rem; color:var(--beam); white-space:nowrap;
+    font-variant-numeric:tabular-nums;
   }
 
-  /* ---------- Section counter (right rail) ---------- */
-  #rail{
-    position:fixed; right:26px; top:50%; transform:translateY(-50%);
-    display:flex; flex-direction:column; gap:14px; z-index:40;
-  }
-  @media (max-width:1000px){ #rail{ display:none; } }
-  #rail a{ width:22px; height:1px; background:rgba(19,18,21,0.25); transition:background .3s ease, width .3s ease; display:block; }
-  #rail a.active{ background:var(--wine); width:38px; }
+  /* ---------- proceso ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--edge-soft); border:1px solid var(--edge-soft); }
+  .steps article{ background:var(--film); padding:30px 26px 34px; display:flex; flex-direction:column; gap:10px; }
+  .steps .n{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; color:var(--beam); }
+  .steps h3{ font-size:1.3rem; }
+  .steps p{ color:var(--dim); font-size:.9rem; }
+  .steps .when{ margin-top:auto; padding-top:16px; font-family:var(--mono); font-size:.63rem; letter-spacing:.12em; text-transform:uppercase; color:var(--dimmer); }
 
-  footer{ border-top:1px solid var(--line); padding:32px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:0.85rem; color:#6b6c67; }
+  /* ---------- quién soy ---------- */
+  .about{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:clamp(30px,5vw,70px); align-items:start; }
+  .about p{ color:var(--dim); }
+  .about p + p{ margin-top:16px; }
+  .tools{ display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; }
+  .tools span{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.08em;
+    border:1px solid var(--edge); padding:6px 11px; color:var(--dim);
+  }
+  .portrait{
+    border:1px solid var(--edge); background:var(--film-2); padding:26px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .portrait .big{ font-family:var(--display); font-size:clamp(1.45rem,1rem + 1.3vw,2rem); line-height:1.22; color:var(--light); }
+  .portrait .sig{ font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dimmer); }
+
+  /* ---------- contacto ---------- */
+  .contact{ background:var(--film-2); border-top:1px solid var(--edge); }
+  .contact-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(32px,5vw,72px); align-items:start; }
+  form{ display:flex; flex-direction:column; gap:16px; }
+  label{ display:flex; flex-direction:column; gap:7px; }
+  input, textarea, select{
+    background:var(--film); border:1px solid var(--edge); color:var(--light);
+    font-family:var(--body); font-size:.95rem; font-weight:300; padding:13px 14px;
+    transition:border-color .2s ease;
+  }
+  input:focus, textarea:focus, select:focus{ outline:none; border-color:var(--beam); }
+  textarea{ resize:vertical; min-height:110px; }
+  .direct{ display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+  .direct a{
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    text-decoration:none; border-bottom:1px solid var(--edge-soft); padding-bottom:12px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .direct a:hover{ color:var(--beam); border-color:var(--beam); }
+  .direct .what{ font-family:var(--mono); font-size:.64rem; letter-spacing:.13em; text-transform:uppercase; color:var(--dimmer); }
+  .direct .val{ font-size:1rem; }
+  .note{ font-family:var(--mono); font-size:.66rem; letter-spacing:.05em; color:var(--dimmer); }
+
+  footer{ padding-block:44px 56px; border-top:1px solid var(--edge-soft); }
+  .foot{ display:flex; flex-wrap:wrap; gap:20px 40px; justify-content:space-between; align-items:center; }
+  .foot .mono{ color:var(--dimmer); }
+
+  /* ---------- entrada ---------- */
+  .rise{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: no-preference){
+    .js .rise{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+    .js .rise.on{ opacity:1; transform:none; }
+  }
+
+  @media (max-width:980px){
+    .film{ grid-template-columns:1fr; }
+    .film:nth-child(even) .screen-col{ order:0; }
+    .about{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .svc-row{ grid-template-columns:44px minmax(0,1fr); row-gap:8px; }
+    .svc-row p, .svc-row .from{ grid-column:2; }
+  }
+  @media (max-width:760px){
+    nav{
+      display:none; position:absolute; inset:70px 0 auto; flex-direction:column; gap:0;
+      background:var(--film); border-bottom:1px solid var(--edge); padding:6px var(--pad) 16px;
+    }
+    nav.open{ display:flex; }
+    nav a{ padding-block:13px; border-bottom:1px solid var(--edge-soft); }
+    .burger{ display:inline-block; }
+    .bar > .btn{ display:none; }
+    .strip div{ border-right:none; border-bottom:1px solid var(--edge-soft); }
+    .strip div:last-child{ border-bottom:none; }
+  }
 </style>
 </head>
-<body class="loading">
-
-<div id="curtain"><span>ANDRÉS MENDOZA</span></div>
-
-<div id="progress"></div>
-
-<nav id="rail" aria-label="Secciones">
-  <a href="#servicios" aria-label="Servicios"></a>
-  <a href="#trabajo" aria-label="Trabajo"></a>
-  <a href="#proceso" aria-label="Proceso"></a>
-  <a href="#sobre" aria-label="Sobre"></a>
-  <a href="#contacto" aria-label="Contacto"></a>
-</nav>
-
-<div id="cursor-ring"></div>
-<div id="cursor-dot"></div>
+<body>
 
 <header>
-  <nav class="wrap nav" aria-label="Navegación principal">
-    <div class="brand">Andrés Mendoza</div>
-    <div class="nav-right">
-      <a class="link" href="#servicios">Servicios</a>
-      <a class="link" href="#trabajo">Trabajo</a>
-      <a class="link" href="#proceso">Proceso</a>
-      <a class="cta" href="#contacto">Iniciar un proyecto</a>
-    </div>
-  </nav>
+  <div class="wrap bar">
+    <a class="logo" href="#top">
+      <span class="mark">AM</span>
+      <b>Andrés Mendoza</b>
+    </a>
+    <nav id="nav">
+      <a href="#cartelera">Cartelera</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#sobre">Quién soy</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menú</button>
+    <a class="btn sm" href="#contacto">Cotizar proyecto</a>
+  </div>
 </header>
 
-<main>
+<main id="top">
 
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="eyebrow">ANDRÉS MENDOZA — DISEÑO Y DESARROLLO DIGITAL</div>
-        <h1 id="heroTitle">Construyo lo que tu negocio necesita, no lo que trae la plantilla.</h1>
-        <p class="lede">Diseño y desarrollo sitios, sistemas y automatizaciones calibrados a cómo opera tu negocio realmente — no una fórmula genérica.</p>
-        <div class="hero-actions">
-          <a class="btn-primary" id="ctaMagnet" href="#contacto">Iniciar un proyecto</a>
-          <a class="link-quiet" href="#trabajo">Ver trabajo</a>
-        </div>
+  <section class="hero" style="border-top:none">
+    <div class="wrap hero-inner">
+      <p class="mono rail">Reel 2026 · Oaxaca, México · Trabajo remoto</p>
+      <h1>Tu negocio, en <em>pantalla grande</em>.</h1>
+      <p class="lede">Diseño y programo sitios web, paneles de control y automatizaciones para negocios que ya funcionan bien en la calle y ahora necesitan funcionar igual de bien en línea. Sin plantillas: cada proyecto se arma sobre cómo opera tu negocio de verdad.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#cartelera">Ver la cartelera</a>
+        <a class="btn line" href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Escribir por WhatsApp</a>
       </div>
-      <div class="calib-wrap" aria-hidden="true">
-        <div class="calib-row" id="calibRow">
-          <div class="calib-tick" style="height:38%"></div>
-          <div class="calib-tick" style="height:52%"></div>
-          <div class="calib-tick" style="height:30%"></div>
-          <div class="calib-tick" style="height:68%"></div>
-          <div class="calib-tick hit" style="height:100%"></div>
-          <div class="calib-tick" style="height:60%"></div>
-          <div class="calib-tick" style="height:44%"></div>
-          <div class="calib-tick" style="height:74%"></div>
-          <div class="calib-tick" style="height:34%"></div>
-        </div>
-        <div class="calib-caption">Cada proyecto, calibrado a su propia medida.</div>
+
+      <div class="strip">
+        <div><b>4</b><span>proyectos en cartelera</span></div>
+        <div><b>2–3 sem</b><span>tiempo de entrega</span></div>
+        <div><b>&lt;1.5 s</b><span>carga objetivo</span></div>
+        <div><b>0</b><span>plantillas compradas</span></div>
       </div>
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>WEB</span><span>E-COMMERCE</span><span>SISTEMAS</span><span>AUTOMATIZACIÓN</span>
-      <span>WEB</span><span>E-COMMERCE</span><span>SISTEMAS</span><span>AUTOMATIZACIÓN</span>
-    </div>
-  </div>
-
-  <section class="puente">
-    <div class="wrap">
-      <p class="reveal">Hablas directo con quien <span>diseña y construye</span> tu proyecto — sin intermediarios, desde la estrategia hasta el código.</p>
-    </div>
-  </section>
-
-  <section class="servicios" id="servicios">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="tag">Servicios</div>
-        <h2>Construyo lo que tu negocio necesita — toca una tarjeta para ver el detalle</h2>
+  <section id="cartelera">
+    <div class="wrap band">
+      <div class="head rise">
+        <p class="mono rail">En cartelera</p>
+        <h2>Cuatro funciones. Pasa el cursor y la pantalla se recorre sola.</h2>
+        <p class="lede">Cada proyecto abre completo en su propia pestaña: puedes navegarlo, llenar los formularios y probar el panel como si fueras el cliente.</p>
       </div>
 
-      <div class="bento reveal">
-        <div class="card" data-service>
-          <div class="top"><span class="num">01</span><span class="plus">+</span></div>
-          <h3>Web</h3>
-          <div class="detail"><div class="detail-inner">
-            <div><div class="field-label">Problema</div><p>Tu negocio no tiene presencia en línea, o la que tiene no genera confianza ni resultados.</p></div>
-            <div><div class="field-label">Qué construyo</div><p>Landing pages, sitios corporativos y páginas de conversión a la medida.</p></div>
-            <div><div class="field-label">Para qué negocio</div><p>Restaurantes, profesionales, servicios — cualquiera que necesite verse tan bien como trabaja.</p></div>
-            <div><div class="field-label">Cuándo tiene sentido</div><p>Cuando necesitas que alguien te encuentre, te entienda y te contacte, rápido.</p></div>
-          </div></div>
-        </div>
+      <div class="reel">
 
-        <div class="card" data-service>
-          <div class="top"><span class="num">02</span><span class="plus">+</span></div>
-          <h3>E-commerce</h3>
-          <div class="detail"><div class="detail-inner">
-            <div><div class="field-label">Problema</div><p>Vendes por WhatsApp o redes y pierdes pedidos o control de inventario.</p></div>
-            <div><div class="field-label">Qué construyo</div><p>Tiendas con catálogo, checkout, pagos y gestión de pedidos.</p></div>
-          </div></div>
-        </div>
+        <article class="film rise">
+          <div class="screen-col">
+            <div class="screen" data-screen>
+              <div class="tape" data-tape>
+                <iframe src="copal.html" title="Vista previa del sitio de la mezcalería Copal" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+              </div>
+              <div class="veil"></div>
+              <span class="cue"><i></i> Recorrer</span>
+            </div>
+            <div class="screen-links">
+              <a class="btn sm" href="copal.html" target="_blank" rel="noopener">Abrir sitio completo ↗</a>
+            </div>
+          </div>
+          <div class="slate">
+            <span class="no">01</span>
+            <h3>Copal</h3>
+            <p class="kind">Mezcalería y cocina · Sitio de una página</p>
+            <p class="desc">Un restaurante que vivía de Instagram y perdía reservas en mensajes sin responder. El sitio pone la carta, los mezcales de la casa y la reserva a un scroll de distancia, con la estética del lugar en lugar de una plantilla genérica de restaurante.</p>
+            <div class="credits">
+              <div><span class="k">Rol</span><span class="v">Diseño + desarrollo</span></div>
+              <div><span class="k">Incluye</span><span class="v">Carta, reservas, mapa, WhatsApp</span></div>
+              <div><span class="k">Stack</span><span class="v">HTML · CSS · JS sin dependencias</span></div>
+              <div><span class="k">Entrega</span><span class="v">2 semanas</span></div>
+            </div>
+            <span class="flag">Proyecto conceptual</span>
+          </div>
+        </article>
 
-        <div class="card" data-service>
-          <div class="top"><span class="num">03</span><span class="plus">+</span></div>
-          <h3>Sistemas</h3>
-          <div class="detail"><div class="detail-inner">
-            <div><div class="field-label">Problema</div><p>Llevas tu operación en hojas sueltas o memoria — y algo se te escapa.</p></div>
-            <div><div class="field-label">Qué construyo</div><p>Dashboards, inventarios, reservaciones y herramientas internas.</p></div>
-          </div></div>
-        </div>
+        <article class="film rise">
+          <div class="screen-col">
+            <div class="screen" data-screen>
+              <div class="tape" data-tape>
+                <iframe src="consultorio.html" title="Vista previa del sitio del consultorio dental Praxis" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+              </div>
+              <div class="veil"></div>
+              <span class="cue"><i></i> Recorrer</span>
+            </div>
+            <div class="screen-links">
+              <a class="btn sm" href="consultorio.html" target="_blank" rel="noopener">Abrir sitio ↗</a>
+              <a class="btn sm line" href="consultorio-panel.html" target="_blank" rel="noopener">Abrir panel de citas ↗</a>
+            </div>
+          </div>
+          <div class="slate">
+            <span class="no">02</span>
+            <h3>Praxis</h3>
+            <p class="kind">Consultorio dental · Sitio + panel de citas</p>
+            <p class="desc">El paciente elige tratamiento, día y hora en menos de un minuto, sin llamar. Del otro lado, el consultorio ve la agenda del día y la ocupación de la semana en un panel pensado para usarse entre consulta y consulta.</p>
+            <div class="credits">
+              <div><span class="k">Rol</span><span class="v">Diseño + desarrollo</span></div>
+              <div><span class="k">Incluye</span><span class="v">Agenda en línea + panel interno</span></div>
+              <div><span class="k">Stack</span><span class="v">HTML · CSS · JS con estado local</span></div>
+              <div><span class="k">Extra</span><span class="v">Confirmación automática al paciente</span></div>
+            </div>
+            <span class="flag">Proyecto conceptual</span>
+          </div>
+        </article>
 
-        <div class="card" data-service>
-          <div class="top"><span class="num">04</span><span class="plus">+</span></div>
-          <h3>Automatización</h3>
-          <div class="detail"><div class="detail-inner">
-            <div><div class="field-label">Problema</div><p>Repites las mismas tareas manuales cada vez que llega un cliente o pedido.</p></div>
-            <div><div class="field-label">Qué construyo</div><p>Flujos de formulario a WhatsApp/email, notificaciones, integraciones entre herramientas.</p></div>
-            <div><div class="field-label">Para qué negocio</div><p>Cualquiera que quiera responder más rápido sin contratar solo para eso.</p></div>
-            <div><div class="field-label">Cuándo tiene sentido</div><p>Cuando el tiempo perdido en tareas repetitivas ya cuesta más que automatizarlas.</p></div>
-          </div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <article class="film rise">
+          <div class="screen-col">
+            <div class="screen" data-screen>
+              <div class="tape" data-tape>
+                <iframe src="inventario.html" title="Vista previa del panel de inventario Almacén" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+              </div>
+              <div class="veil"></div>
+              <span class="cue"><i></i> Recorrer</span>
+            </div>
+            <div class="screen-links">
+              <a class="btn sm" href="inventario.html" target="_blank" rel="noopener">Abrir panel completo ↗</a>
+            </div>
+          </div>
+          <div class="slate">
+            <span class="no">03</span>
+            <h3>Almacén</h3>
+            <p class="kind">Ferretería · Panel de inventario</p>
+            <p class="desc">El negocio que lleva las existencias en un cuaderno y se entera de que faltó producto cuando el cliente ya se fue. El panel muestra stock en vivo, alertas de mínimos, movimientos del día y qué hay que resurtir esta semana.</p>
+            <div class="credits">
+              <div><span class="k">Rol</span><span class="v">Diseño + desarrollo</span></div>
+              <div><span class="k">Incluye</span><span class="v">Stock, entradas/salidas, alertas</span></div>
+              <div><span class="k">Stack</span><span class="v">HTML · CSS · JS, datos de ejemplo</span></div>
+              <div><span class="k">Se conecta a</span><span class="v">Excel, Sheets o base de datos</span></div>
+            </div>
+            <span class="flag">Proyecto conceptual</span>
+          </div>
+        </article>
 
-  <section class="casos" id="trabajo">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="tag">Trabajo</div>
-        <h2>Casos de estudio — vista previa en vivo</h2>
-      </div>
-    </div>
+        <article class="film rise">
+          <div class="screen-col">
+            <div class="screen" data-screen>
+              <div class="tape" data-tape>
+                <iframe src="boutique.html" title="Vista previa de la tienda en línea Aurelia" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+              </div>
+              <div class="veil"></div>
+              <span class="cue"><i></i> Recorrer</span>
+            </div>
+            <div class="screen-links">
+              <a class="btn sm" href="boutique.html" target="_blank" rel="noopener">Abrir tienda ↗</a>
+            </div>
+          </div>
+          <div class="slate">
+            <span class="no">04</span>
+            <h3>Aurelia</h3>
+            <p class="kind">Boutique de ropa · Catálogo con carrito</p>
+            <p class="desc">Catálogo con filtros por categoría y talla, carrito que suma en pantalla y pedido que sale armado por WhatsApp con todo lo que la clienta eligió. Vender en línea sin pagar comisión por venta ni depender de una plataforma ajena.</p>
+            <div class="credits">
+              <div><span class="k">Rol</span><span class="v">Diseño + desarrollo</span></div>
+              <div><span class="k">Incluye</span><span class="v">Catálogo, filtros, carrito, pedido</span></div>
+              <div><span class="k">Stack</span><span class="v">HTML · CSS · JS sin dependencias</span></div>
+              <div><span class="k">Cierre</span><span class="v">Pedido directo a WhatsApp</span></div>
+            </div>
+            <span class="flag">Proyecto conceptual</span>
+          </div>
+        </article>
 
-    <div class="case-row reveal">
-      <a class="case-preview-live" href="copal.html" aria-label="Abrir demo de Copal">
-        <iframe src="copal.html" title="Vista previa de Copal" loading="lazy" tabindex="-1"></iframe>
-      </a>
-      <div class="case-body">
-        <span class="case-badge">PROYECTO CONCEPTUAL</span>
-        <h3>Copal — Mezcalería y cocina</h3>
-        <div class="case-structure">
-          <div><span class="k">Problema:</span> <span class="v">un restaurante necesita transmitir identidad de marca, no solo listar un menú.</span></div>
-          <div><span class="k">Solución:</span> <span class="v">landing con historia, menú, experiencia de cata y reservación integrada.</span></div>
-          <div><span class="k">Resultado esperado:</span> <span class="v">más reservaciones directas.</span></div>
-        </div>
-        <div class="case-cta">
-          <a class="demo" href="copal.html">Ver demo en vivo →</a>
-          <span class="prompt">Proyecto conceptual</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="case-row reveal">
-      <a class="case-preview-live" href="consultorio.html" aria-label="Abrir demo de Praxis">
-        <iframe src="consultorio.html" title="Vista previa de Praxis" loading="lazy" tabindex="-1"></iframe>
-      </a>
-      <div class="case-body">
-        <span class="case-badge">PROYECTO CONCEPTUAL</span>
-        <h3>Praxis — Consultorio dental</h3>
-        <div class="case-structure">
-          <div><span class="k">Problema:</span> <span class="v">un consultorio pierde pacientes por no poder agendar fuera de horario de llamadas.</span></div>
-          <div><span class="k">Solución:</span> <span class="v">sitio con sistema de reservas de 4 pasos, disponibilidad real y panel para que el consultorio administre sus citas.</span></div>
-          <div><span class="k">Resultado esperado:</span> <span class="v">más citas fuera de horario, menos llamadas perdidas.</span></div>
-        </div>
-        <div class="case-cta">
-          <a class="demo" href="consultorio.html">Ver demo en vivo →</a>
-          <a class="demo" href="consultorio-panel.html">Ver el panel →</a>
-        </div>
-      </div>
-    </div>
-
-  <section class="proceso" id="proceso">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="tag">Proceso</div>
-        <h2>Cómo trabajo</h2>
-      </div>
-      <div class="proc-grid">
-        <div class="proc-card reveal"><div class="num">01</div><h3>Entender</h3><p>Qué vende tu negocio, a quién, y qué necesita ver alguien para decidirse.</p></div>
-        <div class="proc-card reveal"><div class="num">02</div><h3>Diseñar</h3><p>Dirección visual propia para tu marca — nunca una plantilla reciclada.</p></div>
-        <div class="proc-card reveal"><div class="num">03</div><h3>Construir</h3><p>Desarrollo la solución completa: sitio, sistema o automatización, funcionando de verdad.</p></div>
-        <div class="proc-card reveal"><div class="num">04</div><h3>Lanzar</h3><p>Publicado, probado, y explicado para que lo manejes sin depender de mí para todo.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sobre" id="sobre">
-    <div class="wrap sobre-grid">
-      <h2 class="reveal">Sobre Andrés</h2>
-      <div class="sobre-copy reveal">
-        <p>Diseño y desarrollo soluciones digitales para negocios — pero también opero las mías. Eso cambia cómo pienso cada proyecto: no construyo lo que se ve bien en un portafolio, construyo lo que realmente mueve una operación hacia adelante.</p>
-        <p>Trabajo directo contigo, sin intermediarios. La persona con la que hablas hoy es la misma que va a diseñar, construir y lanzar tu proyecto.</p>
-        <div class="context">Formación en Ciencias de la Computación · Con sede en Oaxaca, México</div>
       </div>
     </div>
   </section>
 
-  <section class="contacto" id="contacto">
-    <div class="wrap contacto-grid">
-      <div class="reveal">
-        <h2>Iniciar un proyecto</h2>
-        <p class="sub">Cuéntame de tu negocio y qué necesitas — te respondo con una propuesta concreta, no una plantilla de venta.</p>
-        <div class="promise"><span class="dot"></span> Respondo en menos de 24 horas</div>
-        <div class="wa-alt">
-          <span style="font-size:0.88rem; color:#6b6c67;">¿Prefieres algo directo?</span>
-          <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20vi%20tu%20portafolio%20y%20quiero%20platicarte%20sobre%20un%20proyecto%20para%20mi%20negocio." target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+  <section id="servicios">
+    <div class="wrap band">
+      <div class="head rise">
+        <p class="mono rail">Servicios</p>
+        <h2>Lo que puedo construir para tu negocio</h2>
+        <p class="lede">Precios de referencia en pesos mexicanos. La cotización final depende del alcance y siempre se cierra antes de empezar.</p>
+      </div>
+      <div class="svc rise">
+        <div class="svc-row">
+          <span class="n">01</span>
+          <h3>Landing page</h3>
+          <p>Una sola página que convence: propuesta, pruebas, precios y contacto. Ideal para servicios y para acompañar tu ficha de Google.</p>
+          <span class="from">desde $6,500</span>
+        </div>
+        <div class="svc-row">
+          <span class="n">02</span>
+          <h3>Sitio completo</h3>
+          <p>Hasta seis secciones con carta, catálogo o servicios, SEO local y formularios conectados directo a tu correo.</p>
+          <span class="from">desde $14,000</span>
+        </div>
+        <div class="svc-row">
+          <span class="n">03</span>
+          <h3>Tienda en línea</h3>
+          <p>Catálogo, carrito y cierre de pedido por WhatsApp o pasarela de pago. Sin comisión por venta ni renta de plataforma.</p>
+          <span class="from">desde $19,000</span>
+        </div>
+        <div class="svc-row">
+          <span class="n">04</span>
+          <h3>Panel de gestión e inventario</h3>
+          <p>Stock, entradas y salidas, alertas de mínimos, corte del día y reportes. Se conecta a lo que ya usas: Excel, Sheets o base de datos.</p>
+          <span class="from">desde $22,000</span>
+        </div>
+        <div class="svc-row">
+          <span class="n">05</span>
+          <h3>Automatizaciones</h3>
+          <p>Confirmaciones por WhatsApp o correo, recordatorios de cita, reportes automáticos y capturas que hoy alguien hace a mano.</p>
+          <span class="from">desde $4,500</span>
+        </div>
+        <div class="svc-row">
+          <span class="n">06</span>
+          <h3>Mantenimiento y soporte</h3>
+          <p>Actualizaciones, respaldos, monitoreo y cambios de contenido cada mes, para que no tengas que volver a tocar tu sitio.</p>
+          <span class="from">$1,200 / mes</span>
         </div>
       </div>
-
-      <form class="qual reveal" action="https://formspree.io/f/xoeqwndw" method="POST">
-        <label for="f-nombre">Nombre</label>
-        <input type="text" id="f-nombre" name="nombre" required>
-        <label for="f-negocio">Tipo de negocio</label>
-        <input type="text" id="f-negocio" name="negocio" placeholder="Ej. restaurante, consultorio, tienda…" required>
-        <label for="f-necesita">¿Qué necesitas?</label>
-        <textarea id="f-necesita" name="necesita" required placeholder="Cuéntame brevemente qué buscas"></textarea>
-        <label for="f-contacto">Correo o WhatsApp</label>
-        <input type="text" id="f-contacto" name="contacto" required>
-        <button type="submit">Enviar</button>
-        <p class="note">Formulario conectado vía Formspree — reemplazar xoeqwndw y 529514418403 antes de publicar.</p>
-      </form>
     </div>
   </section>
 
+  <section id="proceso">
+    <div class="wrap band">
+      <div class="head rise">
+        <p class="mono rail">Proceso</p>
+        <h2>De la primera llamada al estreno, en cuatro pasos</h2>
+        <p class="lede">Cada paso termina en algo que ves y apruebas. No avanzo al siguiente sin tu visto bueno.</p>
+      </div>
+      <div class="steps rise">
+        <article>
+          <span class="n">01 · Guion</span>
+          <h3>Entender el negocio</h3>
+          <p>Una llamada de 45 minutos: qué vendes, quién te compra, qué te quita tiempo hoy y qué debería lograr el proyecto en números.</p>
+          <span class="when">Día 1 · Brief y precio cerrado</span>
+        </article>
+        <article>
+          <span class="n">02 · Storyboard</span>
+          <h3>Estructura antes que color</h3>
+          <p>Mapa de secciones y bocetos en gris. Acordamos el recorrido del cliente antes de diseñar un solo detalle visual.</p>
+          <span class="when">Días 2–4 · Bocetos aprobados</span>
+        </article>
+        <article>
+          <span class="n">03 · Rodaje</span>
+          <h3>Diseño y programación</h3>
+          <p>Identidad, textos, código y pruebas en teléfonos reales. Recibes un enlace privado para ver el avance cuando quieras.</p>
+          <span class="when">Semanas 2–3 · Sitio en pruebas</span>
+        </article>
+        <article>
+          <span class="n">04 · Estreno</span>
+          <h3>Publicación y entrega</h3>
+          <p>Sale en vivo con tu dominio, alta en Google, videollamada de capacitación y 30 días de ajustes incluidos.</p>
+          <span class="when">Semana 3 · Todo a tu nombre</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap band">
+      <div class="about">
+        <div class="rise">
+          <p class="mono rail">Quién está detrás</p>
+          <h2 style="font-size:clamp(1.9rem,1.1rem + 2.6vw,3rem); line-height:1.08; margin-block:18px 20px">Andrés Mendoza, desarrollador en Oaxaca.</h2>
+          <p>Llevo el proyecto de principio a fin: la conversación inicial, el diseño, el código y la publicación. No subcontrato lo importante y no entrego plantillas compradas; todo lo que ves en la cartelera está escrito a mano.</p>
+          <p>Cuando un proyecto pide más manos —fotografía, contenido, integraciones pesadas— trabajo con gente de confianza, pero tú siempre tratas conmigo. Un solo interlocutor, un solo responsable.</p>
+          <p>Me interesan sobre todo los negocios que ya funcionan: la panadería que vende bien pero no aparece en Google, la ferretería que lleva el inventario en cuaderno, el consultorio que agenda por mensajes a medianoche. Ahí es donde una web bien hecha mueve números reales.</p>
+          <div class="tools">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span>
+            <span>Docker</span><span>SQL</span><span>Git</span><span>APIs</span><span>Automatización</span>
+          </div>
+        </div>
+        <aside class="portrait rise">
+          <p class="sig">Cómo trabajo</p>
+          <p class="big">Precio cerrado antes de empezar. Sin anticipo hasta que apruebes el diseño.</p>
+          <div class="credits" style="margin-top:4px">
+            <div><span class="k">Base</span><span class="v">Oaxaca de Juárez, México</span></div>
+            <div><span class="k">Modalidad</span><span class="v">Remoto en todo México</span></div>
+            <div><span class="k">Respuesta</span><span class="v">Menos de 24 horas</span></div>
+            <div><span class="k">Entrega</span><span class="v">Dominio y claves a tu nombre</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="wrap band">
+      <div class="contact-grid">
+        <div class="rise">
+          <p class="mono rail">Siguiente función</p>
+          <h2 style="font-size:clamp(2rem,1.2rem + 2.6vw,3.2rem); line-height:1.06; margin-block:18px 18px">¿Le damos play a tu proyecto?</h2>
+          <p class="lede">Cuéntame qué haces y qué te está costando tiempo o clientes. Te respondo con una propuesta concreta: qué construiría, cuánto cuesta y en cuánto tiempo lo tienes.</p>
+          <div class="direct">
+            <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">
+              <span class="what">WhatsApp</span><span class="val">+52 951 441 8403 ↗</span>
+            </a>
+            <a href="mailto:andresmendoza8403@gmail.com">
+              <span class="what">Correo</span><span class="val">andresmendoza8403@gmail.com</span>
+            </a>
+            <a href="https://github.com/AndresMendoza30" target="_blank" rel="noopener">
+              <span class="what">GitHub</span><span class="val">AndresMendoza30 ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <form class="rise" action="https://formspree.io/f/xoeqwndw" method="POST">
+          <label>
+            <span class="mono">Tu nombre</span>
+            <input type="text" name="nombre" required autocomplete="name" placeholder="Como te llaman en tu negocio">
+          </label>
+          <label>
+            <span class="mono">Correo o WhatsApp</span>
+            <input type="text" name="contacto" required placeholder="Por dónde te contesto">
+          </label>
+          <label>
+            <span class="mono">Qué necesitas</span>
+            <select name="servicio">
+              <option>Landing page</option>
+              <option>Sitio completo</option>
+              <option>Tienda en línea</option>
+              <option>Panel de gestión o inventario</option>
+              <option>Automatizaciones</option>
+              <option>Todavía no sé, quiero asesoría</option>
+            </select>
+          </label>
+          <label>
+            <span class="mono">Cuéntame del negocio</span>
+            <textarea name="mensaje" required placeholder="A qué te dedicas, qué te está costando tiempo o clientes, y para cuándo lo necesitas."></textarea>
+          </label>
+          <button class="btn" type="submit">Enviar mensaje</button>
+          <p class="note">Respondo en menos de 24 horas. Sin listas de correo ni spam.</p>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="wrap">
-  <span>© 2026 Andrés Mendoza</span>
-  <span>Oaxaca de Juárez, México</span>
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top">
+      <span class="mark">AM</span>
+      <b>Andrés Mendoza</b>
+    </a>
+    <p class="mono">Sitios · Paneles · Automatizaciones — Oaxaca, México</p>
+    <p class="mono">© 2026 · Hecho a mano, sin plantillas</p>
+  </div>
 </footer>
 
 <script>
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  document.documentElement.classList.add("js");
 
+  const burger = document.getElementById("burger");
+  const nav = document.getElementById("nav");
+  burger.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  nav.addEventListener("click", e => {
+    if (e.target.tagName === "A") { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }
+  });
 
-  // Intro curtain
-  (function(){
-    var curtain = document.getElementById('curtain');
-    if(!curtain) return;
-    if(reduced){ curtain.style.display='none'; document.body.classList.remove('loading'); return; }
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        curtain.classList.add('hide');
-        document.body.classList.remove('loading');
-        setTimeout(function(){ curtain.style.display='none'; }, 750);
-      }, 500);
+  // Las vistas previas se renderizan a 1440px y se reducen al ancho del marco.
+  const screens = [...document.querySelectorAll("[data-screen]")];
+  function fit(){
+    screens.forEach(s => {
+      const frame = s.querySelector("iframe");
+      const scale = s.clientWidth / 1440;
+      frame.style.transform = "scale(" + scale + ")";
+      s.dataset.travel = String(Math.max(0, 2000 * scale - s.clientHeight));
     });
-  })();
+  }
+  fit();
+  window.addEventListener("resize", fit);
+  window.addEventListener("load", fit);
 
-
-  // Scroll progress bar
-  (function(){
-    var bar = document.getElementById('progress');
-    if(!bar) return;
-    function upd(){
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      var p = h > 0 ? (window.scrollY / h) * 100 : 0;
-      bar.style.width = p + '%';
-    }
-    window.addEventListener('scroll', upd, {passive:true});
-    upd();
-  })();
-
-  // Right rail — highlights current section
-  (function(){
-    var links = document.querySelectorAll('#rail a');
-    if(!links.length) return;
-    var targets = Array.prototype.map.call(links, function(a){
-      return document.querySelector(a.getAttribute('href'));
+  const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+  if (motionOK) {
+    // al pasar el cursor, la vista previa se recorre sola
+    screens.forEach(s => {
+      const tape = s.querySelector("[data-tape]");
+      s.addEventListener("mouseenter", () => { tape.style.transform = "translateY(-" + s.dataset.travel + "px)"; });
+      s.addEventListener("mouseleave", () => { tape.style.transform = "translateY(0)"; });
     });
-    function upd(){
-      var y = window.scrollY + window.innerHeight * 0.4;
-      var current = -1;
-      targets.forEach(function(t, i){ if(t && t.offsetTop <= y) current = i; });
-      links.forEach(function(a, i){ a.classList.toggle('active', i === current); });
-    }
-    window.addEventListener('scroll', upd, {passive:true});
-    upd();
-  })();
 
-  // Case previews grow as they scroll into view
-  (function(){
-    if(reduced) return;
-    var frames = document.querySelectorAll('.case-row .case-preview-live iframe');
-    if(!frames.length) return;
-    function upd(){
-      frames.forEach(function(f){
-        var box = f.parentElement.getBoundingClientRect();
-        var vh = window.innerHeight;
-        // progress 0 -> 1 as element travels from bottom of viewport to centered
-        var p = 1 - Math.min(Math.max((box.top - vh * 0.15) / (vh * 0.85), 0), 1);
-        var s = 0.36 + (p * 0.06); // 0.36 -> 0.42
-        f.style.transform = 'scale(' + s.toFixed(3) + ')';
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("on"); io.unobserve(entry.target); }
       });
-    }
-    window.addEventListener('scroll', upd, {passive:true});
-    window.addEventListener('resize', upd);
-    upd();
-  })();
-
-  // Reveal on scroll
-  (function(){
-    var items = document.querySelectorAll('.reveal');
-    if(reduced){ items.forEach(function(el){ el.classList.add('is-visible'); }); return; }
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); obs.unobserve(entry.target); }
-      });
-    }, { threshold: 0.15 });
-    items.forEach(function(el){ obs.observe(el); });
-  })();
-
-  // Hero calibration animation
-  (function(){
-    var row = document.getElementById('calibRow');
-    if(!row) return;
-    if(reduced){ row.classList.add('animate'); return; }
-    requestAnimationFrame(function(){ setTimeout(function(){ row.classList.add('animate'); }, 150); });
-  })();
-
-  // Hero headline — word by word stagger
-  (function(){
-    var el = document.getElementById('heroTitle');
-    if(!el) return;
-    var words = el.textContent.trim().split(' ');
-    el.innerHTML = words.map(function(w, i){
-      return '<span class="word" style="animation-delay:' + (i*0.05) + 's">' + w + '&nbsp;</span>';
-    }).join('');
-    if(reduced){ el.querySelectorAll('.word').forEach(function(w){ w.style.opacity=1; w.style.transform='none'; w.style.animation='none'; }); }
-  })();
-
-  // Custom cursor
-  (function(){
-    if(isCoarse || reduced) return;
-    var dot = document.getElementById('cursor-dot');
-    var ring = document.getElementById('cursor-ring');
-    var mx=0, my=0, rx=0, ry=0;
-    window.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
-    function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
-    loop();
-    document.querySelectorAll('a, button, [data-service]').forEach(function(el){
-      el.addEventListener('mouseenter', function(){ ring.classList.add('active'); });
-      el.addEventListener('mouseleave', function(){ ring.classList.remove('active'); });
-    });
-  })();
-
-  // Magnetic CTA button
-  (function(){
-    if(isCoarse || reduced) return;
-    var btn = document.getElementById('ctaMagnet');
-    if(!btn) return;
-    btn.addEventListener('mousemove', function(e){
-      var r = btn.getBoundingClientRect();
-      var x = e.clientX - r.left - r.width/2;
-      var y = e.clientY - r.top - r.height/2;
-      btn.style.transform = 'translate(' + (x*0.25) + 'px,' + (y*0.35) + 'px)';
-    });
-    btn.addEventListener('mouseleave', function(){ btn.style.transform = 'translate(0,0)'; });
-  })();
-
-  // Bento card accordion
-  (function(){
-    document.querySelectorAll('[data-service]').forEach(function(card){
-      var detail = card.querySelector('.detail');
-      card.addEventListener('click', function(){
-        var isOpen = card.classList.contains('open');
-        document.querySelectorAll('[data-service]').forEach(function(c){
-          c.classList.remove('open');
-          c.querySelector('.detail').style.maxHeight = null;
-        });
-        if(!isOpen){ card.classList.add('open'); detail.style.maxHeight = detail.scrollHeight + 'px'; }
-      });
-    });
-  })();
+    }, { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".rise").forEach(el => io.observe(el));
+  } else {
+    document.documentElement.classList.remove("js");
+  }
 </script>
-
 </body>
 </html>
