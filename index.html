@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrés Mendoza — Diseño y desarrollo digital</title>
+<meta name="description" content="Diseño y desarrollo sitios, sistemas y automatizaciones a la medida para negocios que necesitan algo calibrado a su operación real, no una plantilla.">
+<meta property="og:title" content="Andrés Mendoza — Diseño y desarrollo digital">
+<meta property="og:description" content="Sitios, sistemas y automatizaciones calibrados a cómo opera tu negocio.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2EA;
+    --ink:#131215;
+    --wine:#7A2A2A;
+    --gold:#C9A227;
+    --line: rgba(19,18,21,0.12);
+    --max: 1180px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter', sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    cursor:none;
+  }
+  @media (pointer:coarse){ body{ cursor:auto; } }
+  h1,h2,h3{ font-family:'Archivo', sans-serif; font-weight:700; line-height:1.05; letter-spacing:-0.015em; }
+  a{ color:inherit; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 22px; } }
+  :focus-visible{ outline:2px solid var(--wine); outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; } }
+  img,svg{ display:block; max-width:100%; }
+
+  /* ---------- Custom cursor ---------- */
+  #cursor-dot, #cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:999; border-radius:50%; transform:translate(-50%,-50%); }
+  #cursor-dot{ width:6px; height:6px; background:var(--wine); }
+  #cursor-ring{ width:34px; height:34px; border:1px solid rgba(19,18,21,0.35); transition:width .2s ease, height .2s ease, border-color .2s ease, background .2s ease; }
+  #cursor-ring.active{ width:54px; height:54px; background:rgba(122,42,42,0.06); border-color:var(--wine); }
+  @media (pointer:coarse){ #cursor-dot, #cursor-ring{ display:none; } }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,242,234,0.9); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:0.01em; }
+  .nav-right{ display:flex; align-items:center; gap:26px; }
+  .nav-right a.link{ text-decoration:none; font-size:0.9rem; }
+  .nav-right a.cta{
+    background:var(--ink); color:var(--paper); text-decoration:none;
+    padding:10px 20px; font-size:0.88rem; transition:background .2s ease;
+  }
+  .nav-right a.cta:hover{ background:var(--wine); }
+  @media (max-width:640px){ .nav-right .link{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:84px 0 60px; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:44px; align-items:center; }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .eyebrow{ font-family:'Archivo',sans-serif; font-weight:600; font-size:0.82rem; letter-spacing:0.04em; color:#4a4a45; margin-bottom:18px; }
+  .hero h1{ font-size:clamp(2.2rem,5vw,3.7rem); max-width:16ch; overflow:hidden; }
+  .hero h1 .word{ display:inline-block; opacity:0; transform:translateY(100%); animation:wordIn .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  @keyframes wordIn{ to{ opacity:1; transform:translateY(0); } }
+  .hero p.lede{ margin-top:22px; max-width:42ch; font-size:1.08rem; color:#3c3d38; }
+  .hero-actions{ margin-top:30px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  .btn-primary{
+    display:inline-block; background:var(--wine); color:#fff; text-decoration:none;
+    padding:15px 28px; font-size:0.95rem; font-weight:600;
+    transition:background .2s ease;
+    will-change:transform;
+  }
+  .btn-primary:hover{ background:#5f2020; }
+  .link-quiet{ text-decoration:none; font-size:0.94rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+
+  .calib-wrap{ position:relative; }
+  .calib-row{ display:flex; align-items:flex-end; gap:14px; height:140px; }
+  .calib-tick{ flex:1; background:var(--ink); opacity:0.14; transform-origin:bottom; transform:scaleY(0.3); transition: transform 1s cubic-bezier(.2,.8,.2,1), opacity 1s ease; }
+  .calib-tick.hit{ background:var(--gold); opacity:1; }
+  .calib-row.animate .calib-tick{ transform:scaleY(1); }
+  .calib-caption{ margin-top:14px; font-size:0.8rem; color:#6b6c67; font-family:'Archivo',sans-serif; }
+
+  /* ---------- Puente de valor ---------- */
+  .puente{ padding:64px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .puente p{ font-family:'Archivo',sans-serif; font-weight:600; font-size:clamp(1.35rem,2.6vw,1.9rem); max-width:24ch; line-height:1.3; }
+  .puente span{ color:var(--wine); }
+
+  /* ---------- Servicios (bento) ---------- */
+  .servicios{ padding:96px 0 40px; }
+  .section-head{ margin-bottom:44px; }
+  .section-head .tag{ font-family:'Archivo',sans-serif; font-size:0.82rem; font-weight:600; color:var(--wine); margin-bottom:10px; }
+  .section-head h2{ font-size:clamp(1.8rem,3.4vw,2.4rem); max-width:18ch; }
+
+  .bento{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:760px){ .bento{ grid-template-columns:1fr; } }
+  .bento .card:nth-child(1){ grid-column:span 2; }
+  .bento .card:nth-child(2){ grid-column:span 1; }
+  .bento .card:nth-child(3){ grid-column:span 1; }
+  .bento .card:nth-child(4){ grid-column:span 2; }
+  @media (max-width:760px){ .bento .card{ grid-column:span 1 !important; } }
+
+  .card{ border:1px solid var(--line); background:#fff; padding:26px 26px 22px; cursor:pointer; }
+  .card .top{ display:flex; align-items:center; justify-content:space-between; }
+  .card .num{ font-family:'Archivo',sans-serif; color:var(--gold); font-size:0.95rem; font-weight:700; }
+  .card .plus{ font-family:'Archivo',sans-serif; font-size:1.2rem; color:#9a9a92; transition:transform .3s ease; }
+  .card.open .plus{ transform:rotate(45deg); color:var(--wine); }
+  .card h3{ font-size:1.35rem; margin-top:14px; }
+  .card .detail{ max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .card.open .detail{ }
+  .card .detail-inner{ padding-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:520px){ .card .detail-inner{ grid-template-columns:1fr; } }
+  .card .field-label{ font-size:0.74rem; text-transform:uppercase; letter-spacing:0.05em; color:#9a9a92; margin-bottom:5px; }
+  .card .detail-inner p{ font-size:0.9rem; color:#3c3d38; }
+
+  /* ---------- Casos de estudio (live preview) ---------- */
+  .casos{ padding:96px 0; }
+  .case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:44px; }
+  @media (max-width:860px){ .case-grid{ grid-template-columns:1fr; } }
+
+  .case-card{ border:1px solid var(--line); background:#fff; display:flex; flex-direction:column; overflow:hidden; }
+  .case-preview-live{ aspect-ratio:16/10; position:relative; overflow:hidden; background:#eee; transition:transform .4s ease; }
+  .case-card:hover .case-preview-live{ transform:scale(1.015); }
+  .case-preview-live iframe{ position:absolute; top:0; left:0; width:250%; height:250%; border:0; transform:scale(0.4); transform-origin:top left; pointer-events:none; }
+
+  .case-body{ padding:24px 26px 28px; flex:1; display:flex; flex-direction:column; }
+  .case-badge{ display:inline-block; font-size:0.74rem; font-weight:600; color:var(--wine); font-family:'Archivo',sans-serif; margin-bottom:10px; }
+  .case-body h3{ font-size:1.3rem; margin-bottom:14px; }
+  .case-structure{ display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:18px; font-size:0.86rem; }
+  .case-structure div span.k{ font-weight:600; color:var(--ink); }
+  .case-structure div span.v{ color:#4a4a45; }
+  .case-cta{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+  .case-cta a.demo{ text-decoration:none; font-size:0.88rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  .case-cta .prompt{ font-size:0.82rem; color:#6b6c67; }
+
+  /* ---------- Proceso ---------- */
+  .proceso{ background:var(--ink); color:var(--paper); padding:96px 0; }
+  .proceso .section-head h2{ color:var(--paper); }
+  .proceso .section-head .tag{ color:var(--gold); }
+  .proc-grid{ margin-top:48px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(245,242,234,0.14); }
+  @media (max-width:860px){ .proc-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .proc-grid{ grid-template-columns:1fr; } }
+  .proc-card{ background:var(--ink); padding:30px 24px; }
+  .proc-card .num{ font-family:'Archivo',sans-serif; color:var(--gold); font-size:0.95rem; margin-bottom:14px; }
+  .proc-card h3{ color:var(--paper); font-size:1.1rem; margin-bottom:8px; }
+  .proc-card p{ color:#a9a9a3; font-size:0.9rem; }
+
+  /* ---------- Sobre Andrés ---------- */
+  .sobre{ padding:96px 0; }
+  .sobre-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; }
+  @media (max-width:860px){ .sobre-grid{ grid-template-columns:1fr; gap:28px; } }
+  .sobre h2{ font-size:clamp(1.8rem,3.4vw,2.4rem); max-width:12ch; }
+  .sobre-copy p{ font-size:1.02rem; color:#3c3d38; max-width:56ch; }
+  .sobre-copy p + p{ margin-top:16px; }
+  .sobre-copy .context{ margin-top:24px; padding-top:20px; border-top:1px solid var(--line); font-size:0.9rem; color:#6b6c67; }
+
+  /* ---------- Contacto ---------- */
+  .contacto{ padding:100px 0; border-top:1px solid var(--line); }
+  .contacto-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  @media (max-width:860px){ .contacto-grid{ grid-template-columns:1fr; gap:36px; } }
+  .contacto h2{ font-size:clamp(1.9rem,3.6vw,2.6rem); max-width:12ch; }
+  .contacto p.sub{ margin-top:16px; color:#3c3d38; max-width:38ch; }
+  .promise{ margin-top:24px; font-size:0.9rem; color:#4a4a45; display:flex; align-items:center; gap:8px; }
+  .promise .dot{ width:7px; height:7px; background:var(--gold); border-radius:50%; flex:none; }
+
+  .wa-alt{ margin-top:28px; display:flex; align-items:center; gap:10px; }
+  .wa-alt a{ text-decoration:none; font-size:0.92rem; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+
+  form.qual{ background:#fff; border:1px solid var(--line); padding:28px; }
+  form.qual label{ display:block; font-size:0.82rem; color:#4a4a45; margin-bottom:6px; }
+  form.qual input, form.qual select, form.qual textarea{
+    width:100%; padding:12px 14px; margin-bottom:18px; font-size:0.95rem;
+    border:1px solid var(--line); background:var(--paper); color:var(--ink);
+    font-family:inherit;
+  }
+  form.qual textarea{ resize:vertical; min-height:80px; }
+  form.qual button{
+    width:100%; background:var(--ink); color:var(--paper); border:none;
+    padding:15px; font-size:0.95rem; font-weight:600; cursor:pointer;
+    transition:background .2s ease;
+  }
+  form.qual button:hover{ background:var(--wine); }
+  form.qual .note{ margin-top:14px; font-size:0.8rem; color:#8b8b85; }
+
+
+  /* ---------- Intro curtain ---------- */
+  #curtain{
+    position:fixed; inset:0; background:var(--ink); z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .7s cubic-bezier(.6,0,.2,1);
+  }
+  #curtain span{ font-family:'Archivo',sans-serif; color:var(--paper); font-weight:700; font-size:1.1rem; letter-spacing:0.06em; opacity:0; animation:curtainText .5s ease forwards .2s; }
+  @keyframes curtainText{ to{ opacity:1; } }
+  #curtain.hide{ transform:translateY(-100%); }
+  body.loading{ overflow:hidden; }
+
+  /* ---------- Marquee ---------- */
+  .marquee{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; padding:16px 0; background:var(--paper); }
+  .marquee-track{ display:flex; white-space:nowrap; animation:marquee 22s linear infinite; }
+  .marquee-track span{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.1rem; padding:0 28px; color:var(--ink); display:flex; align-items:center; gap:28px; }
+  .marquee-track span::after{ content:'—'; color:var(--gold); }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{ animation:none; } }
+
+  /* ---------- Oversized hero type ---------- */
+  .hero h1{ font-size:clamp(2.6rem,6.4vw,5rem); }
+
+  /* ---------- Editorial full-bleed case studies ---------- */
+  .case-row{ display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line); }
+  .case-row:last-child{ border-bottom:1px solid var(--line); }
+  @media (max-width:860px){ .case-row{ grid-template-columns:1fr; } }
+  .case-row .case-preview-live{ aspect-ratio:auto; height:420px; border-radius:0; }
+  @media (max-width:860px){ .case-row .case-preview-live{ height:280px; } }
+  .case-row .case-body{ padding:48px 44px; justify-content:center; }
+  @media (max-width:640px){ .case-row .case-body{ padding:32px 24px; } }
+  .case-row:nth-child(even) .case-preview-live{ order:2; }
+  @media (max-width:860px){ .case-row:nth-child(even) .case-preview-live{ order:0; } }
+  .case-row h3{ font-size:1.8rem; }
+
+
+  /* ---------- Scroll progress ---------- */
+  #progress{ position:fixed; top:0; left:0; height:2px; background:var(--gold); width:0%; z-index:60; transition:width .1s linear; }
+
+  /* ---------- Case preview: grows on scroll ---------- */
+  .case-row .case-preview-live{ overflow:hidden; }
+  .case-row .case-preview-live iframe{
+    transform:scale(0.4);
+    transition: transform .1s linear;
+    will-change: transform;
+  }
+
+  /* ---------- Section counter (right rail) ---------- */
+  #rail{
+    position:fixed; right:26px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:14px; z-index:40;
+  }
+  @media (max-width:1000px){ #rail{ display:none; } }
+  #rail a{ width:22px; height:1px; background:rgba(19,18,21,0.25); transition:background .3s ease, width .3s ease; display:block; }
+  #rail a.active{ background:var(--wine); width:38px; }
+
+  footer{ border-top:1px solid var(--line); padding:32px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:0.85rem; color:#6b6c67; }
+</style>
+</head>
+<body class="loading">
+
+<div id="curtain"><span>ANDRÉS MENDOZA</span></div>
+
+<div id="progress"></div>
+
+<nav id="rail" aria-label="Secciones">
+  <a href="#servicios" aria-label="Servicios"></a>
+  <a href="#trabajo" aria-label="Trabajo"></a>
+  <a href="#proceso" aria-label="Proceso"></a>
+  <a href="#sobre" aria-label="Sobre"></a>
+  <a href="#contacto" aria-label="Contacto"></a>
+</nav>
+
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<header>
+  <nav class="wrap nav" aria-label="Navegación principal">
+    <div class="brand">Andrés Mendoza</div>
+    <div class="nav-right">
+      <a class="link" href="#servicios">Servicios</a>
+      <a class="link" href="#trabajo">Trabajo</a>
+      <a class="link" href="#proceso">Proceso</a>
+      <a class="cta" href="#contacto">Iniciar un proyecto</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">ANDRÉS MENDOZA — DISEÑO Y DESARROLLO DIGITAL</div>
+        <h1 id="heroTitle">Construyo lo que tu negocio necesita, no lo que trae la plantilla.</h1>
+        <p class="lede">Diseño y desarrollo sitios, sistemas y automatizaciones calibrados a cómo opera tu negocio realmente — no una fórmula genérica.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" id="ctaMagnet" href="#contacto">Iniciar un proyecto</a>
+          <a class="link-quiet" href="#trabajo">Ver trabajo</a>
+        </div>
+      </div>
+      <div class="calib-wrap" aria-hidden="true">
+        <div class="calib-row" id="calibRow">
+          <div class="calib-tick" style="height:38%"></div>
+          <div class="calib-tick" style="height:52%"></div>
+          <div class="calib-tick" style="height:30%"></div>
+          <div class="calib-tick" style="height:68%"></div>
+          <div class="calib-tick hit" style="height:100%"></div>
+          <div class="calib-tick" style="height:60%"></div>
+          <div class="calib-tick" style="height:44%"></div>
+          <div class="calib-tick" style="height:74%"></div>
+          <div class="calib-tick" style="height:34%"></div>
+        </div>
+        <div class="calib-caption">Cada proyecto, calibrado a su propia medida.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>WEB</span><span>E-COMMERCE</span><span>SISTEMAS</span><span>AUTOMATIZACIÓN</span>
+      <span>WEB</span><span>E-COMMERCE</span><span>SISTEMAS</span><span>AUTOMATIZACIÓN</span>
+    </div>
+  </div>
+
+  <section class="puente">
+    <div class="wrap">
+      <p class="reveal">Hablas directo con quien <span>diseña y construye</span> tu proyecto — sin intermediarios, desde la estrategia hasta el código.</p>
+    </div>
+  </section>
+
+  <section class="servicios" id="servicios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">Servicios</div>
+        <h2>Construyo lo que tu negocio necesita — toca una tarjeta para ver el detalle</h2>
+      </div>
+
+      <div class="bento reveal">
+        <div class="card" data-service>
+          <div class="top"><span class="num">01</span><span class="plus">+</span></div>
+          <h3>Web</h3>
+          <div class="detail"><div class="detail-inner">
+            <div><div class="field-label">Problema</div><p>Tu negocio no tiene presencia en línea, o la que tiene no genera confianza ni resultados.</p></div>
+            <div><div class="field-label">Qué construyo</div><p>Landing pages, sitios corporativos y páginas de conversión a la medida.</p></div>
+            <div><div class="field-label">Para qué negocio</div><p>Restaurantes, profesionales, servicios — cualquiera que necesite verse tan bien como trabaja.</p></div>
+            <div><div class="field-label">Cuándo tiene sentido</div><p>Cuando necesitas que alguien te encuentre, te entienda y te contacte, rápido.</p></div>
+          </div></div>
+        </div>
+
+        <div class="card" data-service>
+          <div class="top"><span class="num">02</span><span class="plus">+</span></div>
+          <h3>E-commerce</h3>
+          <div class="detail"><div class="detail-inner">
+            <div><div class="field-label">Problema</div><p>Vendes por WhatsApp o redes y pierdes pedidos o control de inventario.</p></div>
+            <div><div class="field-label">Qué construyo</div><p>Tiendas con catálogo, checkout, pagos y gestión de pedidos.</p></div>
+          </div></div>
+        </div>
+
+        <div class="card" data-service>
+          <div class="top"><span class="num">03</span><span class="plus">+</span></div>
+          <h3>Sistemas</h3>
+          <div class="detail"><div class="detail-inner">
+            <div><div class="field-label">Problema</div><p>Llevas tu operación en hojas sueltas o memoria — y algo se te escapa.</p></div>
+            <div><div class="field-label">Qué construyo</div><p>Dashboards, inventarios, reservaciones y herramientas internas.</p></div>
+          </div></div>
+        </div>
+
+        <div class="card" data-service>
+          <div class="top"><span class="num">04</span><span class="plus">+</span></div>
+          <h3>Automatización</h3>
+          <div class="detail"><div class="detail-inner">
+            <div><div class="field-label">Problema</div><p>Repites las mismas tareas manuales cada vez que llega un cliente o pedido.</p></div>
+            <div><div class="field-label">Qué construyo</div><p>Flujos de formulario a WhatsApp/email, notificaciones, integraciones entre herramientas.</p></div>
+            <div><div class="field-label">Para qué negocio</div><p>Cualquiera que quiera responder más rápido sin contratar solo para eso.</p></div>
+            <div><div class="field-label">Cuándo tiene sentido</div><p>Cuando el tiempo perdido en tareas repetitivas ya cuesta más que automatizarlas.</p></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="casos" id="trabajo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">Trabajo</div>
+        <h2>Casos de estudio — vista previa en vivo</h2>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <a class="case-preview-live" href="copal.html" aria-label="Abrir demo de Copal">
+        <iframe src="copal.html" title="Vista previa de Copal" loading="lazy" tabindex="-1"></iframe>
+      </a>
+      <div class="case-body">
+        <span class="case-badge">PROYECTO CONCEPTUAL</span>
+        <h3>Copal — Mezcalería y cocina</h3>
+        <div class="case-structure">
+          <div><span class="k">Problema:</span> <span class="v">un restaurante necesita transmitir identidad de marca, no solo listar un menú.</span></div>
+          <div><span class="k">Solución:</span> <span class="v">landing con historia, menú, experiencia de cata y reservación integrada.</span></div>
+          <div><span class="k">Resultado esperado:</span> <span class="v">más reservaciones directas.</span></div>
+        </div>
+        <div class="case-cta">
+          <a class="demo" href="copal.html">Ver demo en vivo →</a>
+          <span class="prompt">Proyecto conceptual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <a class="case-preview-live" href="consultorio.html" aria-label="Abrir demo de Praxis">
+        <iframe src="consultorio.html" title="Vista previa de Praxis" loading="lazy" tabindex="-1"></iframe>
+      </a>
+      <div class="case-body">
+        <span class="case-badge">PROYECTO CONCEPTUAL</span>
+        <h3>Praxis — Consultorio dental</h3>
+        <div class="case-structure">
+          <div><span class="k">Problema:</span> <span class="v">un consultorio pierde pacientes por no poder agendar fuera de horario de llamadas.</span></div>
+          <div><span class="k">Solución:</span> <span class="v">sitio con agenda integrada, catálogo de servicios y confirmación directa.</span></div>
+          <div><span class="k">Resultado esperado:</span> <span class="v">más citas fuera de horario, menos llamadas perdidas.</span></div>
+        </div>
+        <div class="case-cta">
+          <a class="demo" href="consultorio.html">Ver demo en vivo →</a>
+          <span class="prompt">Proyecto conceptual</span>
+        </div>
+      </div>
+    </div>
+
+  <section class="proceso" id="proceso">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="tag">Proceso</div>
+        <h2>Cómo trabajo</h2>
+      </div>
+      <div class="proc-grid">
+        <div class="proc-card reveal"><div class="num">01</div><h3>Entender</h3><p>Qué vende tu negocio, a quién, y qué necesita ver alguien para decidirse.</p></div>
+        <div class="proc-card reveal"><div class="num">02</div><h3>Diseñar</h3><p>Dirección visual propia para tu marca — nunca una plantilla reciclada.</p></div>
+        <div class="proc-card reveal"><div class="num">03</div><h3>Construir</h3><p>Desarrollo la solución completa: sitio, sistema o automatización, funcionando de verdad.</p></div>
+        <div class="proc-card reveal"><div class="num">04</div><h3>Lanzar</h3><p>Publicado, probado, y explicado para que lo manejes sin depender de mí para todo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <div class="wrap sobre-grid">
+      <h2 class="reveal">Sobre Andrés</h2>
+      <div class="sobre-copy reveal">
+        <p>Diseño y desarrollo soluciones digitales para negocios — pero también opero las mías. Eso cambia cómo pienso cada proyecto: no construyo lo que se ve bien en un portafolio, construyo lo que realmente mueve una operación hacia adelante.</p>
+        <p>Trabajo directo contigo, sin intermediarios. La persona con la que hablas hoy es la misma que va a diseñar, construir y lanzar tu proyecto.</p>
+        <div class="context">Formación en Ciencias de la Computación · Con sede en Oaxaca, México</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contacto" id="contacto">
+    <div class="wrap contacto-grid">
+      <div class="reveal">
+        <h2>Iniciar un proyecto</h2>
+        <p class="sub">Cuéntame de tu negocio y qué necesitas — te respondo con una propuesta concreta, no una plantilla de venta.</p>
+        <div class="promise"><span class="dot"></span> Respondo en menos de 24 horas</div>
+        <div class="wa-alt">
+          <span style="font-size:0.88rem; color:#6b6c67;">¿Prefieres algo directo?</span>
+          <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20vi%20tu%20portafolio%20y%20quiero%20platicarte%20sobre%20un%20proyecto%20para%20mi%20negocio." target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        </div>
+      </div>
+
+      <form class="qual reveal" action="https://formspree.io/f/xoeqwndw" method="POST">
+        <label for="f-nombre">Nombre</label>
+        <input type="text" id="f-nombre" name="nombre" required>
+        <label for="f-negocio">Tipo de negocio</label>
+        <input type="text" id="f-negocio" name="negocio" placeholder="Ej. restaurante, consultorio, tienda…" required>
+        <label for="f-necesita">¿Qué necesitas?</label>
+        <textarea id="f-necesita" name="necesita" required placeholder="Cuéntame brevemente qué buscas"></textarea>
+        <label for="f-contacto">Correo o WhatsApp</label>
+        <input type="text" id="f-contacto" name="contacto" required>
+        <button type="submit">Enviar</button>
+        <p class="note">Formulario conectado vía Formspree — reemplazar xoeqwndw y 529514418403 antes de publicar.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Andrés Mendoza</span>
+  <span>Oaxaca de Juárez, México</span>
+</footer>
+
+<script>
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+
+
+  // Intro curtain
+  (function(){
+    var curtain = document.getElementById('curtain');
+    if(!curtain) return;
+    if(reduced){ curtain.style.display='none'; document.body.classList.remove('loading'); return; }
+    window.addEventListener('load', function(){
+      setTimeout(function(){
+        curtain.classList.add('hide');
+        document.body.classList.remove('loading');
+        setTimeout(function(){ curtain.style.display='none'; }, 750);
+      }, 500);
+    });
+  })();
+
+
+  // Scroll progress bar
+  (function(){
+    var bar = document.getElementById('progress');
+    if(!bar) return;
+    function upd(){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      bar.style.width = p + '%';
+    }
+    window.addEventListener('scroll', upd, {passive:true});
+    upd();
+  })();
+
+  // Right rail — highlights current section
+  (function(){
+    var links = document.querySelectorAll('#rail a');
+    if(!links.length) return;
+    var targets = Array.prototype.map.call(links, function(a){
+      return document.querySelector(a.getAttribute('href'));
+    });
+    function upd(){
+      var y = window.scrollY + window.innerHeight * 0.4;
+      var current = -1;
+      targets.forEach(function(t, i){ if(t && t.offsetTop <= y) current = i; });
+      links.forEach(function(a, i){ a.classList.toggle('active', i === current); });
+    }
+    window.addEventListener('scroll', upd, {passive:true});
+    upd();
+  })();
+
+  // Case previews grow as they scroll into view
+  (function(){
+    if(reduced) return;
+    var frames = document.querySelectorAll('.case-row .case-preview-live iframe');
+    if(!frames.length) return;
+    function upd(){
+      frames.forEach(function(f){
+        var box = f.parentElement.getBoundingClientRect();
+        var vh = window.innerHeight;
+        // progress 0 -> 1 as element travels from bottom of viewport to centered
+        var p = 1 - Math.min(Math.max((box.top - vh * 0.15) / (vh * 0.85), 0), 1);
+        var s = 0.36 + (p * 0.06); // 0.36 -> 0.42
+        f.style.transform = 'scale(' + s.toFixed(3) + ')';
+      });
+    }
+    window.addEventListener('scroll', upd, {passive:true});
+    window.addEventListener('resize', upd);
+    upd();
+  })();
+
+  // Reveal on scroll
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(reduced){ items.forEach(function(el){ el.classList.add('is-visible'); }); return; }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ obs.observe(el); });
+  })();
+
+  // Hero calibration animation
+  (function(){
+    var row = document.getElementById('calibRow');
+    if(!row) return;
+    if(reduced){ row.classList.add('animate'); return; }
+    requestAnimationFrame(function(){ setTimeout(function(){ row.classList.add('animate'); }, 150); });
+  })();
+
+  // Hero headline — word by word stagger
+  (function(){
+    var el = document.getElementById('heroTitle');
+    if(!el) return;
+    var words = el.textContent.trim().split(' ');
+    el.innerHTML = words.map(function(w, i){
+      return '<span class="word" style="animation-delay:' + (i*0.05) + 's">' + w + '&nbsp;</span>';
+    }).join('');
+    if(reduced){ el.querySelectorAll('.word').forEach(function(w){ w.style.opacity=1; w.style.transform='none'; w.style.animation='none'; }); }
+  })();
+
+  // Custom cursor
+  (function(){
+    if(isCoarse || reduced) return;
+    var dot = document.getElementById('cursor-dot');
+    var ring = document.getElementById('cursor-ring');
+    var mx=0, my=0, rx=0, ry=0;
+    window.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+    function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
+    loop();
+    document.querySelectorAll('a, button, [data-service]').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ ring.classList.add('active'); });
+      el.addEventListener('mouseleave', function(){ ring.classList.remove('active'); });
+    });
+  })();
+
+  // Magnetic CTA button
+  (function(){
+    if(isCoarse || reduced) return;
+    var btn = document.getElementById('ctaMagnet');
+    if(!btn) return;
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      var x = e.clientX - r.left - r.width/2;
+      var y = e.clientY - r.top - r.height/2;
+      btn.style.transform = 'translate(' + (x*0.25) + 'px,' + (y*0.35) + 'px)';
+    });
+    btn.addEventListener('mouseleave', function(){ btn.style.transform = 'translate(0,0)'; });
+  })();
+
+  // Bento card accordion
+  (function(){
+    document.querySelectorAll('[data-service]').forEach(function(card){
+      var detail = card.querySelector('.detail');
+      card.addEventListener('click', function(){
+        var isOpen = card.classList.contains('open');
+        document.querySelectorAll('[data-service]').forEach(function(c){
+          c.classList.remove('open');
+          c.querySelector('.detail').style.maxHeight = null;
+        });
+        if(!isOpen){ card.classList.add('open'); detail.style.maxHeight = detail.scrollHeight + 'px'; }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

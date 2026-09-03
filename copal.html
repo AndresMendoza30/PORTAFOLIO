@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copal — Mezcalería y cocina de Oaxaca</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE6D6;
+    --ink:#211A13;
+    --clay:#AE4128;
+    --agave:#5B6E3F;
+    --gold:#C79A3C;
+    --line: rgba(33,26,19,0.16);
+    --max: 1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  :focus-visible{outline:2px solid var(--clay); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(237,230,214,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.5rem;
+    letter-spacing:0.01em;
+  }
+  .nav-links{display:flex; gap:32px; list-style:none; font-size:0.95rem;}
+  .nav-links a{text-decoration:none; padding-bottom:4px; border-bottom:1px solid transparent; transition:border-color .2s ease;}
+  .nav-links a:hover{border-color:var(--clay);}
+  .nav-cta{
+    background:var(--clay); color:var(--paper); text-decoration:none;
+    padding:10px 20px; border-radius:2px; font-size:0.92rem; font-weight:500;
+    transition: background .2s ease;
+  }
+  .nav-cta:hover{background:#8f3420;}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 72px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow-line{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px; color:var(--clay); font-size:0.95rem;
+  }
+  .eyebrow-line svg{width:22px; height:22px; flex:none;}
+
+  .hero h1{
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
+    max-width:11ch;
+  }
+  .hero p.lede{
+    margin-top:22px;
+    max-width:46ch;
+    font-size:1.15rem;
+    color:#413528;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .btn-primary{
+    background:var(--ink); color:var(--paper); text-decoration:none;
+    padding:14px 26px; font-size:0.98rem; font-weight:500; border-radius:2px;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .btn-primary:hover{background:var(--clay); transform:translateY(-1px);}
+  .btn-ghost{
+    text-decoration:none; color:var(--ink); font-size:0.98rem;
+    border-bottom:1px solid var(--ink); padding-bottom:2px;
+  }
+
+  .hero-art{ position:relative; }
+  .hero-art svg{ width:100%; height:auto; }
+
+  /* diamond motif divider, inspired by Oaxacan textile pattern, used as a sequence marker for the tasting flight steps */
+  .motif-row{ display:flex; gap:10px; }
+  .motif-row span{
+    width:9px; height:9px; background:var(--gold);
+    transform:rotate(45deg);
+  }
+
+  /* ---------- Story ---------- */
+  .story{
+    padding:88px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:#E4DBC5;
+  }
+  .story-grid{
+    display:grid; grid-template-columns: 0.9fr 1.1fr; gap:64px;
+  }
+  @media (max-width:860px){ .story-grid{grid-template-columns:1fr; gap:32px;} }
+  .story h2{ font-size:clamp(1.9rem,3.4vw,2.6rem); max-width:12ch; }
+  .story .story-copy{ font-size:1.05rem; color:#413528; max-width:56ch; }
+  .story .story-copy p + p{ margin-top:16px; }
+
+  /* ---------- Menu ---------- */
+  .menu{ padding:96px 0; }
+  .menu-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:48px; flex-wrap:wrap; }
+  .menu-head h2{ font-size:clamp(1.9rem,3.4vw,2.6rem); }
+  .menu-head p{ max-width:34ch; color:#413528; }
+
+  .menu-list{ border-top:1px solid var(--line); }
+  .menu-item{
+    display:grid; grid-template-columns: 1.4fr auto 0.9fr;
+    gap:24px; align-items:baseline;
+    padding:26px 0; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:640px){ .menu-item{grid-template-columns:1fr; gap:6px;} }
+  .menu-item h3{ font-size:1.25rem; font-weight:500; }
+  .menu-item .price{ font-family:'Fraunces', serif; font-size:1.1rem; color:var(--clay); white-space:nowrap; }
+  .menu-item .desc{ color:#5c4e3d; font-size:0.96rem; }
+
+  /* ---------- Flight (sequence — genuinely stepped, so numbering is earned) ---------- */
+  .flight{
+    background:var(--ink); color:var(--paper);
+    padding:96px 0;
+  }
+  .flight h2{ color:var(--paper); font-size:clamp(1.9rem,3.4vw,2.6rem); max-width:14ch; }
+  .flight > .wrap > p{ color:#c9bfae; max-width:50ch; margin-top:16px; }
+  .steps{
+    margin-top:56px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:rgba(237,230,214,0.16);
+  }
+  @media (max-width:860px){ .steps{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
+  .step{ background:var(--ink); padding:32px 26px; }
+  .step .num{ font-family:'Fraunces', serif; color:var(--gold); font-size:1.05rem; margin-bottom:14px; }
+  .step h3{ font-size:1.15rem; font-weight:500; margin-bottom:8px; }
+  .step p{ color:#b7ac99; font-size:0.92rem; }
+
+  /* ---------- Reservation CTA ---------- */
+  .cta{
+    padding:100px 0;
+    text-align:center;
+  }
+  .cta h2{ font-size:clamp(2.1rem,4.4vw,3.2rem); max-width:16ch; margin:0 auto; }
+  .cta p{ margin:18px auto 0; max-width:40ch; color:#413528; }
+  .cta-form{
+    margin:40px auto 0; max-width:520px;
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  }
+  .cta-form input{
+    flex:1 1 240px;
+    padding:14px 16px; font-size:0.98rem;
+    border:1px solid var(--ink); background:transparent; color:var(--ink);
+    border-radius:2px; font-family:inherit;
+  }
+  .cta-form input::placeholder{ color:#7a6d5b; }
+  .cta-form button{
+    background:var(--clay); color:var(--paper); border:none;
+    padding:14px 24px; font-size:0.98rem; font-weight:500; border-radius:2px;
+    cursor:pointer; transition:background .2s ease;
+  }
+  .cta-form button:hover{ background:#8f3420; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:56px 0 40px;
+  }
+  .foot-grid{
+    display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:32px;
+  }
+  @media (max-width:640px){ .foot-grid{grid-template-columns:1fr; gap:28px;} }
+  .foot-grid h4{ font-size:0.85rem; font-weight:600; margin-bottom:12px; color:#5c4e3d; }
+  .foot-grid p, .foot-grid a{ font-size:0.94rem; color:var(--ink); text-decoration:none; }
+  .foot-grid ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .foot-bottom{
+    margin-top:48px; padding-top:20px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-size:0.85rem; color:#7a6d5b;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap nav">
+    <div class="brand">Copal</div>
+    <ul class="nav-links">
+      <li><a href="#historia">Historia</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#cata">Cata de mezcal</a></li>
+      <li><a href="#reserva">Reservar</a></li>
+    </ul>
+    <a class="nav-cta" href="#reserva">Reservar mesa</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-line">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2c-1.2 3-4 4.8-4 8.4A4 4 0 0 0 12 14.4a4 4 0 0 0 4-4C16 6.8 13.2 5 12 2Z" stroke="#AE4128" stroke-width="1.4"/><path d="M12 14.4V22" stroke="#AE4128" stroke-width="1.4"/></svg>
+        <span>Centro de Oaxaca · desde 2019</span>
+      </div>
+      <h1>De la milpa al mezcal, todo en un solo plato.</h1>
+      <p class="lede">Cocina oaxaqueña de temporada y una barra de mezcales de productores pequeños de la Sierra Sur. Ocho mesas, una cocina abierta, sin prisa.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#reserva">Reservar mesa</a>
+        <a class="btn-ghost" href="#menu">Ver el menú</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="210" cy="230" r="190" fill="#E4DBC5"/>
+        <g stroke="#AE4128" stroke-width="2" fill="none" opacity="0.55">
+          <path d="M120 150 L210 90 L300 150 L300 260 L210 320 L120 260 Z"/>
+        </g>
+        <g fill="#5B6E3F">
+          <path d="M210 130c-16 30-42 44-42 78a42 42 0 0 0 84 0c0-34-26-48-42-78Z"/>
+        </g>
+        <g stroke="#C79A3C" stroke-width="1.6">
+          <line x1="210" y1="208" x2="210" y2="330"/>
+          <path d="M210 250c-24 0-38 14-38 14" fill="none"/>
+          <path d="M210 280c26 0 40 16 40 16" fill="none"/>
+        </g>
+        <g fill="#211A13" opacity="0.85">
+          <rect x="150" y="345" width="120" height="10" rx="1"/>
+          <rect x="170" y="358" width="80" height="6" rx="1"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="historia">
+  <div class="wrap story-grid">
+    <h2>Una cocina que sigue el tianguis, no la carta.</h2>
+    <div class="story-copy">
+      <p>Copal nació de la cocina familiar de la chef Renata Bautista, quien creció entre los puestos del mercado 20 de Noviembre. Cada mañana, el menú se ajusta a lo que llega ese día: quelites de la Sierra, chapulines de temporada, maíces nativos de tres comunidades distintas.</p>
+      <p>En la barra, trabajamos directo con seis palenques familiares de Miahuatlán y Ejutla — sin intermediarios, con precio justo para el maestro mezcalero. Cada botella en la carta trae el nombre de quien la hizo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="menu-head">
+      <h2>Del menú de esta semana</h2>
+      <p>Cambia cada domingo según lo que traiga el mercado. Esto es lo que hay ahora.</p>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item">
+        <h3>Memelas de tuétano y quelites</h3>
+        <span class="price">$185</span>
+        <span class="desc">Masa de maíz criollo, tuétano asado, quelites salteados, salsa de árbol tostado.</span>
+      </div>
+      <div class="menu-item">
+        <h3>Caldo de piedra</h3>
+        <span class="price">$240</span>
+        <span class="desc">Receta chinanteca, pescado del día cocido con piedras de río al rojo vivo, en la mesa.</span>
+      </div>
+      <div class="menu-item">
+        <h3>Mole negro de la casa</h3>
+        <span class="price">$260</span>
+        <span class="desc">28 ingredientes, seis horas de cocción, pechuga de guajolote de rancho.</span>
+      </div>
+      <div class="menu-item">
+        <h3>Tlayuda de tasajo</h3>
+        <span class="price">$210</span>
+        <span class="desc">Tortilla de un día, asiento, frijol negro, tasajo al carbón, quesillo de Etla.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flight" id="cata">
+  <div class="wrap">
+    <h2>La cata guiada, paso a paso</h2>
+    <p>Cuarenta minutos, cuatro mezcales, un maestro que te cuenta la historia detrás de cada uno.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Espadín joven</h3>
+        <p>El punto de partida: agave domesticado, cocción en horno cónico de tierra.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Tobalá silvestre</h3>
+        <p>Ocho años de maduración en la sierra, notas florales y de tierra húmeda.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Ensamble de tres agaves</h3>
+        <p>Mezcla de la casa, hecha para equilibrar humo y dulzor.</p>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <h3>Pechuga de temporada</h3>
+        <p>Destilado con frutas y pechuga de guajolote — el cierre, solo por encargo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="reserva">
+  <div class="wrap">
+    <h2>Ocho mesas por noche. Aparta la tuya.</h2>
+    <p>Deja tu nombre y te confirmamos disponibilidad por WhatsApp el mismo día.</p>
+    <form class="cta-form" onsubmit="event.preventDefault();">
+      <input type="text" placeholder="Tu nombre" aria-label="Tu nombre" required>
+      <input type="tel" placeholder="WhatsApp" aria-label="Número de WhatsApp" required>
+      <button type="submit">Solicitar mesa</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand" style="font-size:1.2rem; margin-bottom:10px;">Copal</div>
+      <p style="color:#5c4e3d;">Murguía 105, Centro Histórico<br>Oaxaca de Juárez, Oax.</p>
+    </div>
+    <div>
+      <h4>Horario</h4>
+      <p style="color:#5c4e3d;">Martes a domingo<br>13:00 – 22:30</p>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#">+52 951 000 0000</a></li>
+        <li><a href="#">hola@copaloaxaca.mx</a></li>
+        <li><a href="#">@copaloaxaca</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Copal Cocina y Mezcal</span>
+    <span>Sitio de ejemplo — hecho para mostrar el trabajo</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praxis — Consultorio dental</title>
+<meta name="description" content="Sitio conceptual para consultorio dental: agendamiento de citas, servicios y confianza clínica.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F7F6; --ink:#182022; --sage:#3E6259; --line:rgba(24,32,34,0.12); --max:1080px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Archivo',sans-serif; font-weight:700; line-height:1.1; letter-spacing:-0.01em; }
+  a{ color:inherit; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+  :focus-visible{ outline:2px solid var(--sage); outline-offset:3px; }
+
+  header{ padding:26px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(245,247,246,0.92); backdrop-filter:blur(6px); z-index:10; }
+  .nav{ display:flex; justify-content:space-between; align-items:center; }
+  .brand{ font-family:'Archivo',sans-serif; font-weight:700; font-size:1.2rem; }
+  .nav a.cta{ background:var(--sage); color:#fff; text-decoration:none; padding:10px 20px; border-radius:20px; font-size:0.88rem; }
+
+  .hero{ padding:76px 0 60px; }
+  .hero-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center; }
+  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } }
+  .badge{ display:inline-block; background:rgba(62,98,89,0.1); color:var(--sage); font-size:0.82rem; padding:6px 14px; border-radius:20px; margin-bottom:18px; }
+  .hero h1{ font-size:clamp(2.1rem,4.6vw,3.2rem); max-width:14ch; }
+  .hero p.lede{ margin-top:18px; max-width:44ch; color:#3d4a48; font-size:1.05rem; }
+  .hero-actions{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{ background:var(--sage); color:#fff; text-decoration:none; padding:14px 26px; border-radius:24px; font-size:0.95rem; font-weight:600; }
+  .btn-ghost{ text-decoration:none; border:1px solid var(--line); padding:14px 24px; border-radius:24px; font-size:0.95rem; }
+
+  .hero-art{ aspect-ratio:1; border-radius:50%; background:#E4ECE9; display:flex; align-items:center; justify-content:center; }
+  .hero-art svg{ width:60%; }
+
+  .servicios{ padding:80px 0; border-top:1px solid var(--line); }
+  .servicios h2{ font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:40px; }
+  .service-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:760px){ .service-grid{ grid-template-columns:1fr; } }
+  .service-card{ background:var(--paper); padding:30px 26px; }
+  .service-card .icon{ width:40px; height:40px; border-radius:50%; background:rgba(62,98,89,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .service-card h3{ font-size:1.05rem; margin-bottom:8px; }
+  .service-card p{ font-size:0.9rem; color:#556360; }
+
+  .agenda{ background:var(--ink); color:var(--paper); padding:80px 0; }
+  .agenda-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+  @media (max-width:860px){ .agenda-grid{ grid-template-columns:1fr; } }
+  .agenda h2{ color:#fff; font-size:clamp(1.7rem,3.4vw,2.3rem); max-width:14ch; }
+  .agenda p{ color:#a9b6b2; margin-top:14px; max-width:38ch; }
+  .form-card{ background:#20292b; border-radius:12px; padding:28px; }
+  .form-card label{ display:block; font-size:0.82rem; color:#a9b6b2; margin-bottom:6px; }
+  .form-card input, .form-card select{ width:100%; padding:12px 14px; margin-bottom:16px; border-radius:8px; border:1px solid #33403f; background:#182022; color:#fff; font-family:inherit; font-size:0.95rem; }
+  .form-card button{ width:100%; background:var(--sage); color:#fff; border:none; padding:13px; border-radius:24px; font-weight:600; font-size:0.95rem; cursor:pointer; }
+  .form-card button:hover{ background:#345349; }
+
+  footer{ padding:32px 0; text-align:center; font-size:0.85rem; color:#6b7674; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">Praxis</div>
+    <a class="cta" href="#agenda">Agendar cita</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge">Odontología general y estética</span>
+      <h1>Cuidado dental sin la espera ni la incertidumbre.</h1>
+      <p class="lede">Agenda tu cita en menos de un minuto, revisa disponibilidad real y recibe confirmación directa — sin llamar ni esperar a que te contesten.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#agenda">Agendar cita</a>
+        <a class="btn-ghost" href="#servicios">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 20c-8 0-14 6-14 15 0 12 6 20 8 30 1 5 3 8 6 8s5-3 6-8c2-10 8-18 8-30 0-9-6-15-14-15Z" stroke="#3E6259" stroke-width="2.5"/>
+        <path d="M50 20c-3 0-5 2-6 5M50 20c3 0 5 2 6 5" stroke="#3E6259" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="servicios" id="servicios">
+  <div class="wrap">
+    <h2>Servicios</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon">🦷</div>
+        <h3>Limpieza y prevención</h3>
+        <p>Revisión completa, limpieza profesional y detección temprana de caries.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">✨</div>
+        <h3>Estética dental</h3>
+        <p>Blanqueamiento, carillas y diseño de sonrisa personalizado.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">🔧</div>
+        <h3>Ortodoncia</h3>
+        <p>Brackets tradicionales y alineadores transparentes, con plan de pagos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="agenda" id="agenda">
+  <div class="wrap agenda-grid">
+    <div>
+      <h2>Agenda tu cita ahora</h2>
+      <p>Llena tus datos y te confirmamos disponibilidad el mismo día por WhatsApp.</p>
+    </div>
+    <div class="form-card">
+      <form onsubmit="event.preventDefault(); alert('Demo — en el sitio real esto se conecta a la agenda del consultorio.');">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" required>
+        <label for="servicio">Servicio</label>
+        <select id="servicio">
+          <option>Limpieza y prevención</option>
+          <option>Estética dental</option>
+          <option>Ortodoncia</option>
+        </select>
+        <label for="fecha">Fecha preferida</label>
+        <input type="date" id="fecha" required>
+        <button type="submit">Confirmar cita</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Praxis Dental · Proyecto conceptual de portafolio</footer>
+
+</body>
+</html>

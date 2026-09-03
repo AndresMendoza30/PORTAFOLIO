@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://AndresMendoza30.github.io/portafolio/sitemap.xml
