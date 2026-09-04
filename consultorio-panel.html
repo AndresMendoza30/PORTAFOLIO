@@ -95,6 +95,28 @@
     font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
     border-bottom:1px solid var(--line-soft);
   }
+  .btn.mini{ padding:6px 12px; font-size:.76rem; }
+
+  /* recordatorio listo para enviar */
+  .capa{
+    position:fixed; inset:0; background:rgba(15,31,30,.5); z-index:90;
+    display:none; align-items:center; justify-content:center; padding:18px;
+  }
+  .capa.on{ display:flex; }
+  .modal{
+    background:var(--panel); border-radius:16px; max-width:420px; width:100%;
+    padding:22px; display:flex; flex-direction:column; gap:14px;
+    box-shadow:0 30px 70px rgba(15,31,30,.3);
+  }
+  .modal h3{ font-size:1.15rem; font-weight:700; }
+  .modal p.sub{ font-size:.86rem; color:var(--muted); }
+  .modal .texto{
+    background:#E7FFDB; color:#0E1B1A; border-radius:12px; padding:12px 14px;
+    font-size:.86rem; line-height:1.5; white-space:pre-line;
+  }
+  .modal .acciones{ display:flex; gap:10px; flex-wrap:wrap; }
+  .modal .acciones .btn{ flex:1; justify-content:center; }
+
   .vacio-panel{ padding:22px 18px; color:var(--muted); font-size:.9rem; }
   .vacio-panel a{ color:var(--teal); font-weight:600; }
   .pie-panel{ padding:14px 18px; border-top:1px solid var(--line-soft); }
@@ -238,7 +260,8 @@
           <div class="list">
             <div class="row a">
               <span><b>Tomás Aguilar</b><small>No confirmó su cita de las 13:00</small></span>
-              <button class="btn soft" type="button">Recordar</button>
+              <button class="btn soft" type="button"
+                data-recordar='{"nombre":"Tomás Aguilar","trat":"Valoración primera vez","hora":"13:00","fecha":"hoy"}'>Recordar</button>
             </div>
             <div class="row w">
               <span><b>Saldo vencido · Óscar Beltrán</b><small>Segunda mensualidad de ortodoncia, 12 días</small></span>
@@ -283,6 +306,19 @@
   </main>
 </div>
 
+<div class="capa" id="capa">
+  <div class="modal">
+    <h3>Recordatorio listo</h3>
+    <p class="sub" id="modalSub">—</p>
+    <div class="texto" id="modalTexto">—</div>
+    <div class="acciones">
+      <button class="btn soft" type="button" id="modalCerrar">Cerrar</button>
+      <a class="btn" id="modalWA" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+    </div>
+    <p class="sub">La asistente solo revisa y envía. El texto se arma solo con los datos de la cita.</p>
+  </div>
+</div>
+
 <div class="demo-bar">
   <span>Panel conceptual de Andrés Mendoza · datos de ejemplo</span>
   <a href="consultorio.html">Ver el sitio del paciente →</a>
@@ -323,9 +359,37 @@
     return '<div class="cita' + (c.libre ? " free" : "") + '">' +
       '<span class="h">' + c.hora + '</span>' +
       '<span><b>' + c.nombre + '</b><small>' + c.detalle + '</small></span>' +
-      '<span class="chip ' + c.chip + '">' + c.texto + '</span>' +
+      (c.recordable
+        ? '<button class="btn soft mini" type="button" data-recordar=\'' + JSON.stringify(c.cita).replace(/'/g,"&#39;") + '\'>Recordar</button>'
+        : '<span class="chip ' + c.chip + '">' + c.texto + '</span>') +
       '</div>';
   }
+
+  // El recordatorio se arma solo; la asistente nada más revisa y envía.
+  const capa = document.getElementById("capa");
+  function abrirRecordatorio(c){
+    const cuando = (c.fecha === HOY || c.fecha === "hoy") ? "hoy" : "mañana";
+    const texto = "Hola " + c.nombre.split(" ")[0] + " 👋 Le recordamos su cita en Praxis:\n\n" +
+      "🕐 " + cuando + " a las " + c.hora + "\n🦷 " + c.trat + "\n📍 Av. Reforma 512, colonia Reforma\n\n" +
+      "¿Nos confirma que viene? Si no puede, avísenos y liberamos el espacio.";
+    document.getElementById("modalSub").textContent = "Para " + c.nombre + (c.tel ? " · " + c.tel : "");
+    document.getElementById("modalTexto").textContent = texto;
+    const wa = document.getElementById("modalWA");
+    if (c.tel) {
+      wa.style.display = "";
+      wa.href = "https://wa.me/52" + c.tel.replace(/\D/g,"") + "?text=" + encodeURIComponent(texto);
+    } else {
+      wa.style.display = "none";
+    }
+    capa.classList.add("on");
+  }
+  document.getElementById("modalCerrar").addEventListener("click", () => capa.classList.remove("on"));
+  capa.addEventListener("click", e => { if (e.target === capa) capa.classList.remove("on"); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") capa.classList.remove("on"); });
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-recordar]");
+    if (b) abrirRecordatorio(JSON.parse(b.dataset.recordar));
+  });
 
   function pintar(){
     const citas = leerCitas();
@@ -338,7 +402,9 @@
         dur: c.dur,
         chip: "nueva",
         texto: "Nueva · en línea",
-        linea: true
+        linea: true,
+        recordable: true,
+        cita: { nombre:c.nombre, tel:c.tel, trat:c.trat, hora:c.hora, fecha:c.fecha }
       }));
 
     const agenda = base.concat(nuevasHoy).sort((a,b) => a.hora.localeCompare(b.hora));
@@ -377,11 +443,12 @@
         dia = c.fecha;
         html += '<p class="dia-sep">' + fechaLarga(c.fecha) + '</p>';
       }
+      const datos = JSON.stringify({ nombre:c.nombre, tel:c.tel, trat:c.trat, hora:c.hora, fecha:c.fecha }).replace(/'/g,"&#39;");
       html += '<div class="cita">' +
         '<span class="h">' + c.hora + '</span>' +
         '<span><b>' + c.nombre + '</b><small>' + c.trat + " · " + c.dur + " min · " + c.tel +
           (c.primera && c.primera.indexOf("Sí") === 0 ? " · primera vez" : "") + '</small></span>' +
-        '<span class="chip nueva">En línea</span>' +
+        '<button class="btn soft mini" type="button" data-recordar=\'' + datos + '\'>Recordar</button>' +
         '</div>';
     });
     html += '<div class="pie-panel"><button class="btn soft" type="button" id="limpiar">Borrar citas de prueba</button></div>';
