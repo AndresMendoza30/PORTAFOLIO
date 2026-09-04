@@ -116,6 +116,64 @@ dan alcance), y el que está interesado te escribe por privado solo. De ahí sal
 
 ---
 
+## 3c. Mensajes directos en Facebook (Messenger)
+
+**Orden de prioridad, del que mejor funciona al que peor:**
+
+1. **Bandeja de la página del consultorio** — la mejor. Es un canal de negocio, ahí sí leen.
+2. **Quien comentó o reaccionó a mi publicación** — ya me conoce, es tibio.
+3. **Perfil personal de alguien del grupo** — el peor. Cae en solicitudes de mensaje y me expone
+   a que me saquen del grupo. Solo si ya interactuamos antes.
+
+### Mensaje A — a la página de un consultorio (el que más uso)
+
+Corto. Tres líneas y una pregunta. Los mensajes largos no se leen.
+
+> Buen día, ¿hablo con el encargado de [Nombre del consultorio]?
+>
+> Soy Andrés Mendoza, hago sitios con agenda en línea para consultorios aquí en Oaxaca.
+> Una pregunta rápida: ¿cuántos pacientes les escriben en la noche o en domingo, cuando no hay quién conteste?
+>
+> Le dejo una agenda que hice para que vea a qué me refiero, se puede probar:
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
+>
+> Si le interesa, le mando sin costo una revisión de cómo aparece su consultorio en Google hoy. ¿Se la mando?
+
+### Mensaje B — a quien comentó mi publicación (tibio, el que más cierra)
+
+> Qué tal [nombre], gracias por comentar 🙌
+>
+> Ya revisé la ficha de [su negocio] y encontré dos cosas rápidas:
+> 1. [hallazgo concreto, ej. no tiene sitio web ligado]
+> 2. [hallazgo concreto, ej. no responde reseñas]
+>
+> Se lo mando completo con capturas. ¿Por aquí o prefiere WhatsApp?
+
+**Nunca mando este mensaje sin haber revisado de verdad su ficha.** Si invento, se nota.
+
+### Mensaje C — respuesta dentro del grupo cuando alguien pregunta
+
+Cuando en un grupo alguien pregunta "¿alguien que haga páginas?", contesto en el hilo, no por privado:
+
+> Yo hago eso, aquí en Oaxaca. Le dejo un consultorio completo que armé para que vea el estilo
+> y lo pueda probar: https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
+> Si quiere le paso precios por privado, sin compromiso.
+
+### Nota corta al mandar solicitud de amistad
+
+> Hola doctor(a), soy Andrés, del grupo [nombre del grupo]. Hago agendas en línea para
+> consultorios aquí en Oaxaca. Le mando solicitud por si algún día le sirve, sin compromiso.
+
+### Reglas para no perder la cuenta
+
+- **Máximo 10 a 15 mensajes al día**, y espaciados, no todos en media hora.
+- **Nunca el mismo texto idéntico.** Cambio el nombre del consultorio y una línea. Facebook detecta el copiado.
+- **Leo las reglas fijadas del grupo antes.** Si prohíbe el privado, no lo hago y punto.
+- **Un solo seguimiento** a los 3 días si no contestan. Después, se acabó.
+- **Si el consultorio tiene botón de WhatsApp en su página, uso WhatsApp**, no Messenger. Se lee mucho más.
+
+---
+
 ## 4. Marketplace de Facebook (categoría: Servicios)
 
 **Título:** Páginas web para negocios en Oaxaca — desde $6,500
