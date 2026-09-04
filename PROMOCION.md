@@ -56,6 +56,66 @@ La regla: **primero das algo útil, luego te ofreces.** El que solo se anuncia l
 
 ---
 
+## 3b. Publicación para grupos, enfocada a dentistas
+
+Va en grupos de negocios de Oaxaca y en grupos de odontólogos.
+**Regla:** una publicación por grupo por día, y leer primero las reglas fijadas del grupo.
+Si el grupo prohíbe links, escribo "link en los comentarios" y lo pongo en el primer comentario.
+
+### Versión A — grupos de negocios y emprendedores de Oaxaca
+
+> **¿Cuántos pacientes pierdes porque te escriben a las 11 de la noche y nadie contesta?**
+>
+> Soy Andrés, desarrollador aquí en Oaxaca. Armé un consultorio dental completo para
+> mostrar lo que se puede hacer hoy, y lo dejo abierto para que lo prueben:
+>
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
+>
+> Agenden una cita de mentiras: elijan tratamiento, día y hora. Van a ver que los horarios
+> se acomodan solos según cuánto dura cada tratamiento.
+>
+> Y esta es la parte que casi nadie enseña, el otro lado, lo que ve el consultorio:
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio-panel.html
+>
+> Ahí aparece la cita que acaban de agendar, con nombre y teléfono, y hay un botón que arma
+> el recordatorio de WhatsApp para que la asistente solo lo revise y lo mande.
+>
+> Lo hago para negocios de aquí: consultorios, restaurantes, hoteles, tiendas y ferreterías.
+> Si tienes un negocio y quieres que te diga qué le falta a tu ficha de Google, comenta el
+> nombre y te lo reviso sin costo. Voy a revisar los primeros 10 que comenten.
+
+### Versión B — grupos de odontólogos y profesionales de la salud
+
+En estos grupos NO se llega a vender. Se llega a aportar y a pedir opinión.
+
+> Buen día, colegas. Soy desarrollador en Oaxaca y llevo un tiempo construyendo una agenda
+> en línea pensada específicamente para consultorios dentales. La dejo abierta por si quieren
+> probarla y decirme qué le falta desde su experiencia real en consulta:
+>
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
+>
+> Lo que resuelve:
+> - El paciente agenda solo, a cualquier hora, sin llamar
+> - Los horarios se ajustan a la duración de cada tratamiento (no es lo mismo una limpieza que una endodoncia)
+> - Se apartan dos espacios diarios para urgencias
+> - El consultorio ve la agenda del día, quién no ha confirmado y la ocupación de la semana
+> - Un botón arma el recordatorio de WhatsApp para que la asistente solo lo envíe
+>
+> Mi duda honesta para ustedes: ¿qué es lo primero que le cambiarían? Sobre todo si manejan
+> ortodoncia con controles mensuales, que es donde más dudas tengo del flujo.
+
+**Por qué funciona:** pedir opinión no rompe reglas de grupo, genera comentarios (y los comentarios
+dan alcance), y el que está interesado te escribe por privado solo. De ahí salen los clientes.
+
+### Reglas para no quemarme
+
+- Una publicación por grupo, no la misma a la misma hora en cinco grupos.
+- Contestar TODOS los comentarios el mismo día, aunque sean críticas.
+- Nunca discutir en público. Si alguien critica, agradecer y preguntar qué mejoraría.
+- No mandar mensajes privados a quien no comentó ni pidió nada.
+
+---
+
 ## 4. Marketplace de Facebook (categoría: Servicios)
 
 **Título:** Páginas web para negocios en Oaxaca — desde $6,500
