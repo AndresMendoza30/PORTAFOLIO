@@ -84,6 +84,47 @@ Si el grupo prohíbe links, escribo "link en los comentarios" y lo pongo en el p
 > Si tienes un negocio y quieres que te diga qué le falta a tu ficha de Google, comenta el
 > nombre y te lo reviso sin costo. Voy a revisar los primeros 10 que comenten.
 
+### Versión A2 — grupo de odontólogos, publicación completa con capturas
+
+La que uso en grupos grandes de dentistas sin reglas restrictivas.
+**Orden de las imágenes:** 1) la agenda con los horarios, 2) los datos del paciente y la confirmación,
+3) el panel con la agenda del día, 4) el recordatorio armado. La primera es la miniatura, va la mejor.
+
+> Doctores, una pregunta honesta: **¿cuántos pacientes se les pierden porque escriben a las diez de la noche o en domingo y no hay quién conteste?**
+>
+> Soy Andrés Mendoza, desarrollador aquí en Oaxaca. Armé un consultorio completo (de mentiras, para mostrar lo que se puede hacer) y lo dejo abierto para que lo prueben ustedes mismos, sin registrarse:
+>
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
+>
+> Agenden una cita de prueba y fíjense en esto:
+>
+> • Los horarios se ajustan solos a la duración del tratamiento. Una limpieza abre espacios de 30 minutos; una endodoncia, de 90. Se acabaron los empalmes.
+> • Dos espacios diarios apartados para urgencias, que se liberan solos si nadie los usa.
+> • El paciente deja su nombre, su teléfono y si es primera vez.
+> • Acepta el aviso de privacidad antes de guardar sus datos, como lo pide la ley. Casi ningún sitio dental lo tiene.
+>
+> Y este es el otro lado, lo que ve el consultorio:
+> https://andresmendoza30.github.io/PORTAFOLIO/consultorio-panel.html
+>
+> • La agenda del día: quién ya pasó, quién está en el sillón y quién no ha confirmado.
+> • Las citas que entraron por internet, con nombre y teléfono.
+> • La ocupación de la semana, para ver qué días se están quedando huecos.
+> • Un botón que arma el recordatorio de WhatsApp con el nombre, la hora y el tratamiento. La asistente solo lo revisa y lo manda; no lo escribe.
+> • Los cobros del día y quién trae saldo vencido.
+>
+> Lo aclaro por honestidad: es un proyecto mío, no de un cliente. Lo hice para enseñar lo que hago.
+>
+> Lo armo a la medida para consultorios de aquí, desde $8,900, entrega en 2 o 3 semanas, y el dominio queda a nombre del doctor.
+>
+> Si les sirve: **comenten el nombre de su consultorio y les digo sin costo qué le falta a su ficha de Google** para que los encuentren mejor. Reviso los primeros 10 que comenten.
+>
+> Andrés Mendoza · 951 441 8403
+
+**Primer comentario que dejo yo mismo, apenas publico:**
+
+> Por si prefieren verlo rápido: el video de 20 segundos donde se agenda una cita y aparece en el panel 👇
+> (aquí va el video o una captura más)
+
 ### Versión B — grupos de odontólogos y profesionales de la salud
 
 En estos grupos NO se llega a vender. Se llega a aportar y a pedir opinión.
