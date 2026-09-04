@@ -222,7 +222,8 @@ Enciéndelos cuando tengas:
 | Ajuste | Qué pongo | Por qué |
 |---|---|---|
 | Objetivo | **Mensajes → WhatsApp** | Nunca "Interacción": trae likes, no clientes |
-| Presupuesto | **$100 al día, 7 días** | Menos de eso el algoritmo no aprende |
+| Presupuesto | **$165 al día, sábado / domingo / lunes** | El dueño de un negocio chico ve Facebook cuando descansa, no en horas de consulta |
+| Programación | Empieza sábado 9:00, termina lunes 23:00 | Se sube el viernes en la noche para que Meta alcance a aprobarlo |
 | Ubicación | Oaxaca de Juárez + 25 km | Cubre Xoxo, Santa Lucía, Etla, Zaachila |
 | Edad | 28 a 58 | Abajo de 28 casi nadie es dueño |
 | Detallada | Propietarios de pequeñas empresas, Emprendimiento, Administración de empresas | |
@@ -272,6 +273,33 @@ Enciéndelos cuando tengas:
 > Mientras, aquí puedes ver mis proyectos funcionando: https://andresmendoza30.github.io/PORTAFOLIO/
 >
 > Te contesto en menos de 24 horas.
+
+### Por qué fin de semana
+
+El dueño de un consultorio, una fonda o una ferretería no revisa Facebook en horas de trabajo:
+está atendiendo. Lo revisa **sábado en la tarde y domingo**, cuando descansa y sí tiene los
+20 minutos para ver un video y escribir. Ahí es donde hay que estar.
+
+**La condición para que esto funcione:** yo también tengo que estar disponible el fin de semana.
+De nada sirve pagar por conversaciones el domingo y contestarlas el lunes. **Notificaciones
+prendidas y contestar en menos de 10 minutos.**
+
+### Cómo programar solo el fin de semana
+
+En Meta, para elegir días y horas hay que usar **presupuesto total (lifetime)**, no diario:
+
+1. En el conjunto de anuncios, cambio "Presupuesto diario" por **"Presupuesto total"**.
+2. Pongo **$500** y las fechas: **sábado 9:00 a lunes 23:00**.
+3. Abajo aparece **"Mostrar anuncios según un calendario"**: ahí marco solo esos días.
+4. Horas fuertes: **8:00 a 12:00** y **19:00 a 23:00**.
+
+Si se me complica, la salida fácil es: presupuesto diario de $165 y lo prendo el sábado
+y lo apago el lunes en la noche. Funciona igual.
+
+### Protección de mi dinero
+
+En Configuración de la cuenta publicitaria pongo un **límite de gasto de la cuenta de $500**.
+Aunque me equivoque en la configuración, Meta no me puede cobrar más de eso.
 
 ### Qué números vigilar (revisar al día 3, no antes)
 
