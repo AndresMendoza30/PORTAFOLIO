@@ -143,6 +143,37 @@
     border-radius:12px; padding:14px 16px; font-size:.9rem; color:var(--teal);
     white-space:pre-line;
   }
+
+  /* simulación de los mensajes que recibiría el paciente */
+  .chat{ display:none; margin-top:18px; border-top:1px solid var(--line-soft); padding-top:16px; }
+  .chat.show{ display:block; }
+  .chat .titulo{
+    font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--sand); margin-bottom:12px;
+  }
+  .tel{
+    background:#0E1B1A; border-radius:16px; padding:14px 12px 16px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .tel .cabecera{
+    display:flex; align-items:center; gap:9px; padding-bottom:10px;
+    border-bottom:1px solid rgba(255,255,255,.12); color:#fff;
+  }
+  .tel .cabecera i{
+    width:26px; height:26px; border-radius:50%; background:var(--sand); color:#0E1B1A;
+    display:grid; place-items:center; font-style:normal; font-weight:700; font-size:.78rem;
+  }
+  .tel .cabecera b{ font-size:.85rem; font-weight:600; }
+  .tel .cabecera span{ font-size:.68rem; opacity:.6; margin-left:auto; }
+  .burbuja{
+    background:#E7FFDB; color:#0E1B1A; border-radius:12px 12px 12px 4px;
+    padding:10px 12px; font-size:.86rem; line-height:1.5; max-width:92%; white-space:pre-line;
+    position:relative;
+  }
+  .burbuja .hora{ display:block; text-align:right; font-size:.66rem; color:#5B6B6A; margin-top:4px; }
+  .burbuja.despues{ background:#FFF6DF; }
+  .cuando{ font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+  .chat .nota{ font-size:.78rem; color:var(--muted); margin-top:12px; }
   .done.show{ display:block; }
 
   section{ border-top:1px solid var(--line-soft); }
@@ -301,6 +332,20 @@
 
         <button class="btn" type="button" id="confirmar">Confirmar cita</button>
         <p class="done" id="done"></p>
+
+        <div class="chat" id="chat">
+          <p class="titulo">Así le llegan los mensajes al paciente</p>
+          <div class="tel">
+            <div class="cabecera">
+              <i>P</i><b>Praxis · Consultorio dental</b><span>en línea</span>
+            </div>
+            <p class="cuando">Ahora mismo</p>
+            <div class="burbuja" id="msg1"></div>
+            <p class="cuando">Un día antes de la cita, automático</p>
+            <div class="burbuja despues" id="msg2"></div>
+          </div>
+          <p class="nota">Estos dos mensajes salen solos, sin que nadie del consultorio los escriba.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -574,10 +619,25 @@
       creada: new Date().toISOString()
     });
 
+    // así se verían los mensajes automáticos del sistema real
+    const cuando = dias[estado.dia.getDay()] + " " + estado.dia.getDate() + " de " + meses[estado.dia.getMonth()];
+    const ahora = new Date().toLocaleTimeString("es-MX", { hour:"2-digit", minute:"2-digit" });
+    document.getElementById("msg1").innerHTML =
+      "Hola " + nombre.split(" ")[0] + " 👋 Tu cita en Praxis quedó confirmada:\n\n" +
+      "🦷 " + estado.trat + "\n📅 " + cuando + " a las " + estado.hora + "\n📍 Av. Reforma 512, colonia Reforma\n\n" +
+      "Llega 10 minutos antes. Si necesitas cambiarla, responde a este mensaje." +
+      '<span class="hora">' + ahora + "</span>";
+    document.getElementById("msg2").innerHTML =
+      "Buen día " + nombre.split(" ")[0] + " ☀️ Te recordamos tu cita de mañana:\n\n" +
+      "🕐 " + estado.hora + " · " + estado.trat + "\n\n" +
+      "¿Confirmas que vienes? Responde SÍ para apartarla o NO para liberar el espacio." +
+      '<span class="hora">08:00</span>';
+    document.getElementById("chat").classList.add("show");
+
     done.textContent = "Listo, " + nombre.split(" ")[0] + ". Tu cita quedó apartada: " + estado.trat.toLowerCase() +
       ", " + dias[estado.dia.getDay()] + " " + estado.dia.getDate() + " de " + meses[estado.dia.getMonth()] +
       " a las " + estado.hora + ". Te llega la confirmación por WhatsApp al " + tel + " y un recordatorio un día antes." +
-      "\n\n(Demo: abre el panel del consultorio aquí abajo y verás esta cita con tu nombre.)";
+      "\n\n(Demostración: abajo se muestra cómo llegarían los mensajes; en el sistema instalado salen solos. Abre el panel del consultorio y verás esta cita con tu nombre.)";
     done.classList.add("show");
 
     estado.hora = null;
