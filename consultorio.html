@@ -118,6 +118,18 @@
   .slot[aria-pressed="true"]{ background:var(--teal); color:#fff; border-color:var(--teal); }
   .slot[disabled]{ opacity:.32; cursor:not-allowed; text-decoration:line-through; }
 
+  .paciente{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .paciente label{ display:flex; flex-direction:column; gap:5px; }
+  .paciente label.ancho{ grid-column:1/-1; }
+  .paciente span{ font-size:.78rem; color:var(--muted); }
+  .paciente input, .paciente select{
+    border:1px solid var(--line); border-radius:10px; padding:11px 12px;
+    font-family:var(--sans); font-size:.92rem; background:var(--panel); color:var(--ink);
+  }
+  .paciente input:focus, .paciente select:focus{ outline:none; border-color:var(--teal); }
+  .paciente input.falta{ border-color:#B4553F; background:#FDF4F2; }
+  @media (max-width:480px){ .paciente{ grid-template-columns:1fr; } }
+
   .resume{
     margin-top:20px; border-top:1px solid var(--line-soft); padding-top:16px;
     display:flex; flex-direction:column; gap:8px; font-size:.9rem;
@@ -129,6 +141,7 @@
   .done{
     display:none; margin-top:16px; border:1px solid var(--teal); background:var(--teal-soft);
     border-radius:12px; padding:14px 16px; font-size:.9rem; color:var(--teal);
+    white-space:pre-line;
   }
   .done.show{ display:block; }
 
@@ -189,6 +202,9 @@
   }
   @media (max-width:640px){
     nav{ display:none; }
+  }
+  @media (max-width:760px){
+    .demo-bar{ left:8px; right:8px; transform:none; border-radius:10px; justify-content:center; flex-wrap:wrap; text-align:center; line-height:1.4; }
   }
 </style>
 </head>
@@ -257,7 +273,27 @@
         <p class="step-label" style="margin-top:22px">Horarios disponibles</p>
         <div class="slots" id="slots" role="group" aria-label="Hora"></div>
 
+        <p class="step-label" style="margin-top:22px">Tus datos</p>
+        <div class="paciente">
+          <label>
+            <span>Nombre completo</span>
+            <input type="text" id="pNombre" placeholder="Como aparece en tu identificación" autocomplete="name">
+          </label>
+          <label>
+            <span>Teléfono</span>
+            <input type="tel" id="pTel" placeholder="Para confirmarte por WhatsApp" autocomplete="tel">
+          </label>
+          <label class="ancho">
+            <span>¿Es tu primera vez aquí?</span>
+            <select id="pPrimera">
+              <option>Sí, primera vez</option>
+              <option>No, ya soy paciente</option>
+            </select>
+          </label>
+        </div>
+
         <div class="resume">
+          <div><span class="k">Paciente</span><span class="v" id="rPaciente">—</span></div>
           <div><span class="k">Tratamiento</span><span class="v" id="rTrat">Valoración y limpieza</span></div>
           <div><span class="k">Cuándo</span><span class="v" id="rCuando">Elige día y hora</span></div>
           <div><span class="k">Duración</span><span class="v" id="rDur">30 minutos</span></div>
@@ -434,6 +470,21 @@
   });
   estado.dia = fechas[0];
 
+  // Las citas agendadas aquí quedan guardadas y se ven en el panel del consultorio.
+  const CLAVE_CITAS = "praxis-citas-v1";
+  function leerCitas(){
+    try { return JSON.parse(localStorage.getItem(CLAVE_CITAS)) || []; } catch(e){ return []; }
+  }
+  function guardarCita(cita){
+    try {
+      const todas = leerCitas();
+      todas.push(cita);
+      localStorage.setItem(CLAVE_CITAS, JSON.stringify(todas));
+      return true;
+    } catch(e){ return false; }
+  }
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+
   function pintarHorarios(){
     elSlots.innerHTML = "";
     const sabado = estado.dia.getDay() === 6;
@@ -441,6 +492,8 @@
     const paso = estado.dur >= 90 ? 90 : estado.dur >= 60 ? 60 : 30;
     // horarios ya ocupados de ejemplo, varían por día
     const ocupados = [(estado.dia.getDate() * 7) % 8, (estado.dia.getDate() * 3) % 8 + 2];
+    // más los que ya se agendaron en línea ese mismo día
+    const apartados = leerCitas().filter(c => c.fecha === iso(estado.dia)).map(c => c.hora);
     let idx = 0;
     for (let m = inicio * 60; m + paso <= fin * 60; m += paso) {
       const h = String(Math.floor(m / 60)).padStart(2,"0") + ":" + String(m % 60).padStart(2,"0");
@@ -449,7 +502,7 @@
       b.className = "slot";
       b.textContent = h;
       b.setAttribute("aria-pressed","false");
-      if (ocupados.includes(idx)) b.disabled = true;
+      if (ocupados.includes(idx) || apartados.includes(h)) b.disabled = true;
       b.addEventListener("click", () => {
         [...elSlots.children].forEach(c => c.setAttribute("aria-pressed","false"));
         b.setAttribute("aria-pressed","true");
@@ -462,6 +515,8 @@
   }
 
   function resumen(){
+    const nom = document.getElementById("pNombre").value.trim();
+    document.getElementById("rPaciente").textContent = nom || "Escribe tu nombre";
     rTrat.textContent = estado.trat;
     rDur.textContent = estado.dur + " minutos";
     if (estado.dia && estado.hora) {
@@ -484,15 +539,53 @@
     resumen();
   });
 
+  const inNombre = document.getElementById("pNombre");
+  const inTel = document.getElementById("pTel");
+  inNombre.addEventListener("input", () => { inNombre.classList.remove("falta"); resumen(); });
+  inTel.addEventListener("input", () => inTel.classList.remove("falta"));
+
   document.getElementById("confirmar").addEventListener("click", () => {
+    const nombre = inNombre.value.trim();
+    const tel = inTel.value.trim();
+
     if (!estado.hora) {
       done.textContent = "Falta elegir un horario disponible.";
       done.classList.add("show");
       return;
     }
-    done.textContent = "Cita apartada: " + estado.trat.toLowerCase() + ", " + dias[estado.dia.getDay()] + " " +
-      estado.dia.getDate() + " de " + meses[estado.dia.getMonth()] + " a las " + estado.hora +
-      ". Te llega la confirmación por WhatsApp y un recordatorio un día antes.";
+    if (!nombre || !tel) {
+      if (!nombre) inNombre.classList.add("falta");
+      if (!tel) inTel.classList.add("falta");
+      done.textContent = "Necesitamos tu nombre y un teléfono para confirmarte la cita.";
+      done.classList.add("show");
+      (!nombre ? inNombre : inTel).focus();
+      return;
+    }
+
+    guardarCita({
+      id: Date.now(),
+      nombre: nombre,
+      tel: tel,
+      primera: document.getElementById("pPrimera").value,
+      trat: estado.trat,
+      dur: estado.dur,
+      fecha: iso(estado.dia),
+      hora: estado.hora,
+      creada: new Date().toISOString()
+    });
+
+    done.textContent = "Listo, " + nombre.split(" ")[0] + ". Tu cita quedó apartada: " + estado.trat.toLowerCase() +
+      ", " + dias[estado.dia.getDay()] + " " + estado.dia.getDate() + " de " + meses[estado.dia.getMonth()] +
+      " a las " + estado.hora + ". Te llega la confirmación por WhatsApp al " + tel + " y un recordatorio un día antes." +
+      "\n\n(Demo: abre el panel del consultorio aquí abajo y verás esta cita con tu nombre.)";
+    done.classList.add("show");
+
+    estado.hora = null;
+    inNombre.value = ""; inTel.value = "";
+    pintarHorarios();
+    const guardado = done.textContent;
+    resumen();
+    done.textContent = guardado;
     done.classList.add("show");
   });
 

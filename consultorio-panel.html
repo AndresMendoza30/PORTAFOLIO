@@ -87,7 +87,17 @@
   .chip.wait{ background:rgba(180,118,30,.14); color:var(--warn); }
   .chip.now{ background:var(--teal); color:#fff; }
   .chip.libre{ background:var(--line-soft); color:var(--muted); }
+  .chip.nueva{ background:rgba(200,164,107,.20); color:#8A6A2F; }
   .cita.free b{ color:var(--muted); font-weight:500; }
+
+  .dia-sep{
+    padding:10px 18px; background:var(--teal-soft); color:var(--teal);
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .vacio-panel{ padding:22px 18px; color:var(--muted); font-size:.9rem; }
+  .vacio-panel a{ color:var(--teal); font-weight:600; }
+  .pie-panel{ padding:14px 18px; border-top:1px solid var(--line-soft); }
 
   .week{ padding:18px; }
   .bars{ display:flex; align-items:flex-end; gap:10px; height:150px; margin-top:8px; }
@@ -134,6 +144,9 @@
     .who{ margin-top:0; border-top:0; border-left:1px solid rgba(255,255,255,.16); padding:0 0 0 16px; white-space:nowrap; }
     .grid{ grid-template-columns:1fr; }
   }
+  @media (max-width:760px){
+    .demo-bar{ left:8px; right:8px; transform:none; border-radius:10px; justify-content:center; flex-wrap:wrap; text-align:center; line-height:1.4; }
+  }
 </style>
 </head>
 <body>
@@ -169,16 +182,16 @@
 
     <div class="kpis">
       <div class="kpi">
-        <p class="k">Citas hoy</p><b>9</b>
-        <p class="delta up">▲ 2 vs. mismo día la semana pasada</p>
+        <p class="k">Citas hoy</p><b id="kCitas">—</b>
+        <p class="delta up" id="kCitasSub">—</p>
       </div>
       <div class="kpi">
-        <p class="k">Ocupación</p><b>82%</b>
-        <p class="delta up">▲ 6 puntos este mes</p>
+        <p class="k">Ocupación</p><b id="kOcupacion">—</b>
+        <p class="delta flat">De 9:00 a 19:00, diez horas de consultorio</p>
       </div>
       <div class="kpi">
-        <p class="k">Agendadas en línea</p><b>7 de 9</b>
-        <p class="delta flat">78% ya no pasa por teléfono</p>
+        <p class="k">Agendadas en línea</p><b id="kLinea">—</b>
+        <p class="delta flat" id="kLineaSub">—</p>
       </div>
       <div class="kpi">
         <p class="k">Por cobrar hoy</p><b>$14,350</b>
@@ -187,52 +200,23 @@
     </div>
 
     <div class="grid">
-      <section class="card">
-        <header>
-          <h2>Consultorio 1 · Dra. Elena Ruiz</h2>
-          <span class="hint">9:00 – 19:00</span>
-        </header>
-        <div class="cita">
-          <span class="h">09:00</span>
-          <span><b>Laura Jiménez</b><small>Limpieza y valoración · 30 min</small></span>
-          <span class="chip ok">Atendida</span>
-        </div>
-        <div class="cita">
-          <span class="h">09:30</span>
-          <span><b>Ricardo Santibáñez</b><small>Resina en molar superior · 60 min</small></span>
-          <span class="chip ok">Atendida</span>
-        </div>
-        <div class="cita">
-          <span class="h">11:00</span>
-          <span><b>Fernanda Ortiz</b><small>Endodoncia, sesión 2 de 2 · 90 min</small></span>
-          <span class="chip now">En curso</span>
-        </div>
-        <div class="cita free">
-          <span class="h">12:30</span>
-          <span><b>Espacio reservado para urgencias</b><small>Se libera automáticamente a las 13:00</small></span>
-          <span class="chip libre">Libre</span>
-        </div>
-        <div class="cita">
-          <span class="h">13:00</span>
-          <span><b>Tomás Aguilar</b><small>Valoración primera vez · 30 min</small></span>
-          <span class="chip wait">Sin confirmar</span>
-        </div>
-        <div class="cita">
-          <span class="h">16:00</span>
-          <span><b>Familia Rendón (2)</b><small>Limpieza niños · 60 min</small></span>
-          <span class="chip ok">Confirmada</span>
-        </div>
-        <div class="cita">
-          <span class="h">17:00</span>
-          <span><b>Marisol Pineda</b><small>Blanqueamiento · 90 min</small></span>
-          <span class="chip ok">Confirmada</span>
-        </div>
-        <div class="cita">
-          <span class="h">18:30</span>
-          <span><b>Julio Cárdenas</b><small>Revisión de brackets · 30 min</small></span>
-          <span class="chip ok">Confirmada</span>
-        </div>
-      </section>
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <section class="card">
+          <header>
+            <h2>Consultorio 1 · Dra. Elena Ruiz</h2>
+            <span class="hint">9:00 – 19:00</span>
+          </header>
+          <div id="agendaHoy"></div>
+        </section>
+
+        <section class="card">
+          <header>
+            <h2>Próximas citas en línea</h2>
+            <span class="hint" id="hintProximas">—</span>
+          </header>
+          <div id="proximas"></div>
+        </section>
+      </div>
 
       <div style="display:flex; flex-direction:column; gap:16px">
         <section class="card">
@@ -306,9 +290,113 @@
 </div>
 
 <script>
-  const f = new Date();
+  const hoy = new Date();
   document.getElementById("fecha").textContent =
-    f.toLocaleDateString("es-MX", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+    hoy.toLocaleDateString("es-MX", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+
+  const CLAVE_CITAS = "praxis-citas-v1";
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  const HOY = iso(hoy);
+
+  // Citas del día que ya venían en la agenda del consultorio
+  const base = [
+    { hora:"09:00", nombre:"Laura Jiménez", detalle:"Limpieza y valoración · 30 min", dur:30, chip:"ok", texto:"Atendida", linea:true },
+    { hora:"09:30", nombre:"Ricardo Santibáñez", detalle:"Resina en molar superior · 60 min", dur:60, chip:"ok", texto:"Atendida", linea:false },
+    { hora:"11:00", nombre:"Fernanda Ortiz", detalle:"Endodoncia, sesión 2 de 2 · 90 min", dur:90, chip:"now", texto:"En curso", linea:false },
+    { hora:"12:30", nombre:"Espacio reservado para urgencias", detalle:"Se libera automáticamente a las 13:00", dur:0, chip:"libre", texto:"Libre", libre:true },
+    { hora:"13:00", nombre:"Tomás Aguilar", detalle:"Valoración primera vez · 30 min", dur:30, chip:"wait", texto:"Sin confirmar", linea:true },
+    { hora:"16:00", nombre:"Familia Rendón (2)", detalle:"Limpieza niños · 60 min", dur:60, chip:"ok", texto:"Confirmada", linea:true },
+    { hora:"17:00", nombre:"Marisol Pineda", detalle:"Blanqueamiento · 90 min", dur:90, chip:"ok", texto:"Confirmada", linea:true },
+    { hora:"18:30", nombre:"Julio Cárdenas", detalle:"Revisión de brackets · 30 min", dur:30, chip:"ok", texto:"Confirmada", linea:true }
+  ];
+
+  function leerCitas(){
+    try { return JSON.parse(localStorage.getItem(CLAVE_CITAS)) || []; } catch(e){ return []; }
+  }
+
+  function fechaLarga(f){
+    const d = new Date(f + "T12:00:00");
+    return d.toLocaleDateString("es-MX", { weekday:"long", day:"numeric", month:"long" });
+  }
+
+  function filaCita(c){
+    return '<div class="cita' + (c.libre ? " free" : "") + '">' +
+      '<span class="h">' + c.hora + '</span>' +
+      '<span><b>' + c.nombre + '</b><small>' + c.detalle + '</small></span>' +
+      '<span class="chip ' + c.chip + '">' + c.texto + '</span>' +
+      '</div>';
+  }
+
+  function pintar(){
+    const citas = leerCitas();
+    const nuevasHoy = citas
+      .filter(c => c.fecha === HOY)
+      .map(c => ({
+        hora: c.hora,
+        nombre: c.nombre,
+        detalle: c.trat + " · " + c.dur + " min · " + c.tel,
+        dur: c.dur,
+        chip: "nueva",
+        texto: "Nueva · en línea",
+        linea: true
+      }));
+
+    const agenda = base.concat(nuevasHoy).sort((a,b) => a.hora.localeCompare(b.hora));
+    document.getElementById("agendaHoy").innerHTML = agenda.map(filaCita).join("");
+
+    // marcador del día
+    const reales = agenda.filter(c => !c.libre);
+    const enLinea = reales.filter(c => c.linea).length;
+    const minutos = reales.reduce((s,c) => s + c.dur, 0);
+    document.getElementById("kCitas").textContent = reales.length;
+    document.getElementById("kCitasSub").textContent = nuevasHoy.length
+      ? "▲ " + nuevasHoy.length + " agendada(s) en línea hace un momento"
+      : "▲ 2 vs. mismo día la semana pasada";
+    document.getElementById("kOcupacion").textContent = Math.round(minutos / 600 * 100) + "%";
+    document.getElementById("kLinea").textContent = enLinea + " de " + reales.length;
+    document.getElementById("kLineaSub").textContent =
+      Math.round(enLinea / reales.length * 100) + "% ya no pasa por teléfono";
+
+    // próximas citas agendadas desde el sitio
+    const futuras = citas.filter(c => c.fecha > HOY).sort((a,b) =>
+      (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+    const cont = document.getElementById("proximas");
+    document.getElementById("hintProximas").textContent =
+      futuras.length ? futuras.length + " por atender" : "Llegan del sitio del paciente";
+
+    if (!futuras.length) {
+      cont.innerHTML = '<p class="vacio-panel">Aquí caen las citas que los pacientes agendan en el sitio para los próximos días. ' +
+        'Agenda una en <a href="consultorio.html">el sitio del paciente</a> y aparece aquí al instante.</p>';
+      return;
+    }
+
+    let html = "";
+    let dia = "";
+    futuras.forEach(c => {
+      if (c.fecha !== dia) {
+        dia = c.fecha;
+        html += '<p class="dia-sep">' + fechaLarga(c.fecha) + '</p>';
+      }
+      html += '<div class="cita">' +
+        '<span class="h">' + c.hora + '</span>' +
+        '<span><b>' + c.nombre + '</b><small>' + c.trat + " · " + c.dur + " min · " + c.tel +
+          (c.primera && c.primera.indexOf("Sí") === 0 ? " · primera vez" : "") + '</small></span>' +
+        '<span class="chip nueva">En línea</span>' +
+        '</div>';
+    });
+    html += '<div class="pie-panel"><button class="btn soft" type="button" id="limpiar">Borrar citas de prueba</button></div>';
+    cont.innerHTML = html;
+
+    document.getElementById("limpiar").addEventListener("click", () => {
+      try { localStorage.removeItem(CLAVE_CITAS); } catch(e){}
+      pintar();
+    });
+  }
+
+  pintar();
+  // si agendas en otra pestaña, el panel se actualiza solo
+  window.addEventListener("storage", e => { if (e.key === CLAVE_CITAS) pintar(); });
+  window.addEventListener("focus", pintar);
 </script>
 </body>
 </html>
