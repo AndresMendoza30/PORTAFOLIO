@@ -367,11 +367,17 @@
 
   // El recordatorio se arma solo; la asistente nada más revisa y envía.
   const capa = document.getElementById("capa");
+  // Sin emojis a propósito: WhatsApp de escritorio los rompe cuando llegan por enlace.
+  const conMayuscula = t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+
   function abrirRecordatorio(c){
     const cuando = (c.fecha === HOY || c.fecha === "hoy") ? "hoy" : "mañana";
-    const texto = "Hola " + c.nombre.split(" ")[0] + " 👋 Le recordamos su cita en Praxis:\n\n" +
-      "🕐 " + cuando + " a las " + c.hora + "\n🦷 " + c.trat + "\n📍 Av. Reforma 512, colonia Reforma\n\n" +
-      "¿Nos confirma que viene? Si no puede, avísenos y liberamos el espacio.";
+    const texto = "Hola " + conMayuscula(c.nombre.split(" ")[0]) + ", le recordamos su cita en Praxis:\n\n" +
+      "Cuándo: " + cuando + " a las " + c.hora + "\n" +
+      "Tratamiento: " + c.trat + "\n" +
+      "Dirección: Av. Reforma 512, colonia Reforma\n\n" +
+      "Le pedimos llegar 10 minutos antes. Si no puede venir, avísenos y liberamos el espacio para otro paciente.\n\n" +
+      "Praxis · Consultorio dental";
     document.getElementById("modalSub").textContent = "Para " + c.nombre + (c.tel ? " · " + c.tel : "");
     document.getElementById("modalTexto").textContent = texto;
     const wa = document.getElementById("modalWA");
