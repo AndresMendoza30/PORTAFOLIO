@@ -45,6 +45,9 @@
   .top{ display:flex; flex-wrap:wrap; gap:14px 20px; align-items:center; justify-content:space-between; margin-bottom:24px; }
   .top h1{ font-size:1.5rem; font-weight:700; letter-spacing:-.01em; }
   .top .date{ font-family:var(--mono); font-size:.78rem; color:var(--muted); }
+  .sesion{ font-size:.78rem; color:var(--muted); margin-top:4px; }
+  .sesion b{ color:var(--ink); font-weight:600; }
+  .sesion a{ color:var(--teal); }
   .btn{
     display:inline-flex; align-items:center; gap:8px; border:0; cursor:pointer;
     background:var(--teal); color:#fff; font:inherit; font-size:.85rem; font-weight:600;
@@ -195,6 +198,7 @@
       <div>
         <h1>Agenda de hoy</h1>
         <p class="date" id="fecha">—</p>
+        <p class="sesion">Sesión iniciada como <b>Carmen Nava</b> · Recepción · <a href="#">Cerrar sesión</a></p>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap">
         <button class="btn soft" type="button">Bloquear horario</button>
@@ -320,7 +324,7 @@
 </div>
 
 <div class="demo-bar">
-  <span>Panel conceptual de Andrés Mendoza · datos de ejemplo</span>
+  <span>Demostración abierta. En el consultorio real este panel pide usuario y contraseña, y solo entra el personal.</span>
   <a href="consultorio.html">Ver el sitio del paciente →</a>
   <a href="index.html">Portafolio</a>
 </div>

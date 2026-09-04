@@ -128,6 +128,11 @@
   }
   .paciente input:focus, .paciente select:focus{ outline:none; border-color:var(--teal); }
   .paciente input.falta{ border-color:#B4553F; background:#FDF4F2; }
+  .paciente label.aviso{ flex-direction:row; align-items:flex-start; gap:9px; margin-top:2px; }
+  .paciente label.aviso input{ width:17px; height:17px; margin-top:2px; flex:none; accent-color:var(--teal); }
+  .paciente label.aviso span{ font-size:.8rem; line-height:1.45; }
+  .paciente label.aviso a{ color:var(--teal); font-weight:600; }
+  .paciente label.aviso.falta span{ color:#B4553F; }
   @media (max-width:480px){ .paciente{ grid-template-columns:1fr; } }
 
   .resume{
@@ -320,6 +325,10 @@
               <option>Sí, primera vez</option>
               <option>No, ya soy paciente</option>
             </select>
+          </label>
+          <label class="ancho aviso">
+            <input type="checkbox" id="pAviso">
+            <span>Acepto que Praxis use mis datos para agendar y confirmar mi cita, según su <a href="#dudas">aviso de privacidad</a>.</span>
           </label>
         </div>
 
@@ -606,6 +615,15 @@
       (!nombre ? inNombre : inTel).focus();
       return;
     }
+    const aviso = document.getElementById("pAviso");
+    if (!aviso.checked) {
+      aviso.closest("label").classList.add("falta");
+      done.textContent = "Para guardar tu cita necesitamos que aceptes el aviso de privacidad.";
+      done.classList.add("show");
+      aviso.focus();
+      return;
+    }
+    aviso.closest("label").classList.remove("falta");
 
     guardarCita({
       id: Date.now(),
@@ -641,7 +659,7 @@
     done.classList.add("show");
 
     estado.hora = null;
-    inNombre.value = ""; inTel.value = "";
+    inNombre.value = ""; inTel.value = ""; aviso.checked = false;
     pintarHorarios();
     const guardado = done.textContent;
     resumen();
