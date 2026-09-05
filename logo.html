@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logos para foto de perfil</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#141418">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fondo:#141418; --luz:#F4F1EC; --tenue:#9C99A3; --oro:#D7B26B;
+    --linea:rgba(244,241,236,.14);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--fondo); color:var(--luz);
+    font-family:"Jost","Segoe UI",Helvetica,sans-serif; font-weight:300;
+    line-height:1.65; padding:26px 18px 70px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:760px; margin-inline:auto; }
+  h1{ font-family:"Fraunces",Georgia,serif; font-weight:400; font-size:1.7rem; line-height:1.15; }
+  .sub{ color:var(--tenue); font-size:.94rem; margin-top:8px; }
+  .paso{
+    background:rgba(215,178,107,.09); border:1px solid rgba(215,178,107,.32);
+    padding:14px 16px; margin:20px 0 28px; font-size:.9rem; color:var(--tenue);
+  }
+  .paso b{ color:var(--oro); font-weight:500; }
+
+  .rejilla{ display:grid; gap:26px; }
+  @media (min-width:640px){ .rejilla{ grid-template-columns:1fr 1fr; } }
+
+  figure{ display:flex; flex-direction:column; gap:10px; }
+  figcaption{ font-size:.82rem; color:var(--tenue); }
+  figcaption b{ display:block; color:var(--luz); font-weight:500; font-size:.95rem; }
+
+  /* el cuadro que se captura */
+  .logo{
+    aspect-ratio:1/1; width:100%; display:grid; place-items:center; text-align:center;
+    position:relative; overflow:hidden; padding:12%;
+  }
+
+  /* 1 — monograma AM */
+  .l1{ background:#141418; }
+  .l1 .marco{
+    border:2px solid var(--oro); width:100%; aspect-ratio:1/1;
+    display:grid; place-items:center; gap:2px;
+  }
+  .l1 .am{ font-family:"Cinzel",Georgia,serif; font-weight:600; font-size:clamp(2.4rem,13vw,4.6rem); color:var(--oro); line-height:1; }
+  .l1 .pie{ font-size:clamp(.5rem,2vw,.72rem); letter-spacing:.34em; color:var(--luz); text-transform:uppercase; }
+
+  /* 2 — Invitaciones, sobre */
+  .l2{ background:#1B1B22; }
+  .l2 svg{ width:46%; height:auto; }
+  .l2 .txt{ font-family:"Cinzel",Georgia,serif; font-size:clamp(.72rem,3.4vw,1.15rem); letter-spacing:.2em; color:var(--oro); margin-top:8%; text-transform:uppercase; }
+  .l2 .txt small{ display:block; font-family:"Jost",sans-serif; font-size:.55em; letter-spacing:.3em; color:var(--tenue); margin-top:6px; }
+
+  /* 3 — Nexus Digital */
+  .l3{ background:#101014; }
+  .l3 .nx{
+    font-family:"Fraunces",Georgia,serif; font-weight:600;
+    font-size:clamp(2rem,11vw,3.8rem); color:var(--luz); line-height:.95;
+  }
+  .l3 .nx em{ font-style:normal; color:var(--oro); }
+  .l3 .pie{ font-size:clamp(.5rem,2vw,.7rem); letter-spacing:.3em; color:var(--tenue); text-transform:uppercase; margin-top:10px; }
+
+  /* 4 — claro, para fondos blancos */
+  .l4{ background:#F4F1EC; }
+  .l4 .am{ font-family:"Cinzel",Georgia,serif; font-weight:600; font-size:clamp(2.4rem,13vw,4.4rem); color:#1B1B22; line-height:1; }
+  .l4 .linea{ width:38%; height:2px; background:#D7B26B; margin:10px auto; }
+  .l4 .pie{ font-size:clamp(.5rem,2vw,.7rem); letter-spacing:.3em; color:#6E6B66; text-transform:uppercase; }
+
+  .nota{ margin-top:34px; font-size:.86rem; color:var(--tenue); border-top:1px solid var(--linea); padding-top:20px; }
+  .nota b{ color:var(--luz); font-weight:500; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Logos listos para tu foto de perfil</h1>
+  <p class="sub">Cuatro opciones, cuadradas, para WhatsApp Business, Facebook o Instagram.</p>
+
+  <p class="paso">
+    <b>Cómo usarlos:</b> abre esta página en tu celular, toma <b>captura de pantalla</b> del cuadro que te guste,
+    y en la galería <b>recórtalo en cuadrado</b> justo por las orillas del logo. Ya lo puedes poner como foto de perfil.
+  </p>
+
+  <div class="rejilla">
+
+    <figure>
+      <div class="logo l1">
+        <div class="marco">
+          <span class="am">AM</span>
+          <span class="pie">Oaxaca</span>
+        </div>
+      </div>
+      <figcaption>
+        <b>1 · Monograma AM</b>
+        Para tu marca personal: páginas web y sistemas. Combina con tu portafolio.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <div class="logo l2">
+        <svg viewBox="0 0 100 74" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="96" height="70" stroke="#D7B26B" stroke-width="3"/>
+          <path d="M2 2l48 40L98 2" stroke="#D7B26B" stroke-width="3"/>
+          <path d="M50 30c4 5 7 6 11 9-4 3-7 4-11 9-4-5-7-6-11-9 4-3 7-4 11-9Z" fill="#D7B26B"/>
+        </svg>
+        <p class="txt">Invitaciones<small>Digitales</small></p>
+      </div>
+      <figcaption>
+        <b>2 · Invitaciones Digitales</b>
+        Para el negocio de invitaciones. El sobre se entiende de inmediato.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <div class="logo l3">
+        <div>
+          <p class="nx">Ne<em>x</em>us</p>
+          <p class="pie">Digital · Oaxaca</p>
+        </div>
+      </div>
+      <figcaption>
+        <b>3 · Nexus Digital</b>
+        Para tu página de Facebook, si te quedas con ese nombre.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <div class="logo l4">
+        <div>
+          <p class="am">AM</p>
+          <div class="linea"></div>
+          <p class="pie">Web · Oaxaca</p>
+        </div>
+      </div>
+      <figcaption>
+        <b>4 · Versión clara</b>
+        El mismo monograma en claro, por si lo necesitas sobre fondo blanco.
+      </figcaption>
+    </figure>
+
+  </div>
+
+  <p class="nota">
+    <b>Recuerda:</b> para vender servicios, tu cara convierte más que un logo — el cliente te va a transferir
+    dinero y ver una persona real baja la desconfianza. Usa el logo mientras consigues una buena foto,
+    y cuando la tengas, cámbiala. Lo ideal: <b>tu cara en WhatsApp y en tu página, el logo en la portada.</b>
+  </p>
+</div>
+</body>
+</html>
