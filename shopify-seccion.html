@@ -1,0 +1,326 @@
+<!-- ==========================================================
+     BLOQUE PARA SHOPIFY — Invitaciones digitales
+     Cómo se pega:
+     Tienda online → Personalizar → Agregar sección →
+     "Liquid personalizado" → pegar TODO este archivo → Guardar
+
+     Los botones apuntan a /products/... Revisa que los identificadores
+     de tus productos coincidan (los ves en la barra de tu producto).
+     ========================================================== -->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Jost:wght@300;400;500;600&display=swap">
+
+<style>
+  .am-inv{
+    --fondo:#1B1B22; --fondo-2:#23232C; --panel:#2A2A34;
+    --luz:#F4F1EC; --tenue:#A5A2AC; --oro:#D7B26B; --rosa:#C98A93;
+    --linea:rgba(244,241,236,.13);
+    --display:"Fraunces",Georgia,serif;
+    --texto:"Jost","Segoe UI",Helvetica,Arial,sans-serif;
+
+    background:var(--fondo); color:var(--luz);
+    font-family:var(--texto); font-weight:300; font-size:16px; line-height:1.7;
+    margin:0 calc(50% - 50vw); padding:0; width:100vw; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .am-inv *{ box-sizing:border-box; }
+  .am-inv h1, .am-inv h2, .am-inv h3{
+    font-family:var(--display); font-weight:400; margin:0; line-height:1.1;
+  }
+  .am-inv p{ margin:0; }
+  .am-inv a{ color:inherit; }
+  .am-inv .am-wrap{ max-width:1080px; margin:0 auto; padding:0 clamp(20px,5vw,44px); }
+  .am-inv .am-band{ padding:clamp(48px,7vw,84px) 0; border-top:1px solid var(--linea); }
+  .am-inv .am-filete{
+    font-size:.68rem; letter-spacing:.28em; text-transform:uppercase; color:var(--oro); margin:0 0 14px;
+  }
+  .am-inv .am-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    background:var(--oro); border:1px solid var(--oro); color:#20180B;
+    font-weight:600; font-size:.92rem; padding:15px 26px; text-decoration:none;
+    transition:transform .18s ease, box-shadow .22s ease;
+  }
+  .am-inv .am-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(215,178,107,.22); color:#20180B; }
+  .am-inv .am-btn.linea{ background:transparent; color:var(--luz); border-color:var(--linea); }
+  .am-inv .am-btn.linea:hover{ border-color:var(--oro); color:var(--oro); box-shadow:none; }
+
+  /* portada */
+  .am-inv .am-hero{ padding:clamp(46px,7vw,80px) 0; }
+  .am-inv .am-hero h1{
+    font-size:clamp(2.1rem,1.2rem + 3.6vw,3.6rem); margin:14px 0 16px;
+  }
+  .am-inv .am-hero h1 em{ font-style:italic; color:var(--oro); }
+  .am-inv .am-hero .am-lede{ color:var(--tenue); font-size:1.04rem; max-width:52ch; }
+  .am-inv .am-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+  .am-inv .am-avales{ display:flex; flex-wrap:wrap; gap:8px 24px; margin-top:24px; font-size:.86rem; color:var(--tenue); }
+  .am-inv .am-avales b{ color:var(--oro); font-weight:600; }
+
+  /* dolores */
+  .am-inv .am-dolores{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:26px; }
+  .am-inv .am-dolor{ background:var(--fondo-2); border:1px solid var(--linea); padding:20px 18px; }
+  .am-inv .am-dolor b{ display:block; font-family:var(--display); font-size:1.05rem; color:var(--rosa); margin-bottom:6px; }
+  .am-inv .am-dolor span{ color:var(--tenue); font-size:.9rem; }
+
+  /* modelos */
+  .am-inv .am-modelos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px; margin-top:26px; }
+  .am-inv .am-modelo{ background:var(--fondo-2); border:1px solid var(--linea); display:flex; flex-direction:column; }
+  .am-inv .am-mock{
+    aspect-ratio:4/5; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:22px 16px; gap:8px;
+  }
+  .am-inv .am-mock.xv{ background:linear-gradient(180deg,#1B2140,#151A2E); }
+  .am-inv .am-mock.boda{ background:linear-gradient(180deg,#F1EBE0,#FAF7F1); }
+  .am-inv .am-mock.bautizo{ background:linear-gradient(180deg,#EAF1F6,#FDFAF5); }
+  .am-inv .am-mock .am-sup{ font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; }
+  .am-inv .am-mock .am-nom{ font-family:var(--display); font-size:1.9rem; line-height:1.05; }
+  .am-inv .am-mock .am-sub{ font-size:.72rem; letter-spacing:.14em; }
+  .am-inv .am-mock .am-reloj{ display:flex; gap:6px; margin-top:8px; }
+  .am-inv .am-mock .am-reloj i{
+    font-style:normal; font-family:var(--display); font-size:.9rem;
+    border:1px solid currentColor; padding:5px 8px; opacity:.85;
+  }
+  .am-inv .am-mock.xv{ color:#EFE3C8; }
+  .am-inv .am-mock.boda{ color:#3A4A38; }
+  .am-inv .am-mock.bautizo{ color:#4E7391; }
+  .am-inv .am-modelo .am-info{ padding:18px; display:flex; flex-direction:column; gap:7px; flex:1; }
+  .am-inv .am-modelo h3{ font-size:1.2rem; }
+  .am-inv .am-modelo .am-tipo{ font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--oro); }
+  .am-inv .am-modelo p{ color:var(--tenue); font-size:.88rem; }
+  .am-inv .am-modelo .am-btn{ margin-top:auto; }
+
+  /* planes */
+  .am-inv .am-planes{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; margin-top:26px; align-items:start; }
+  .am-inv .am-plan{ background:var(--fondo-2); border:1px solid var(--linea); padding:26px 22px 28px; display:flex; flex-direction:column; gap:10px; }
+  .am-inv .am-plan.am-top{ border-color:var(--oro); background:var(--panel); position:relative; }
+  .am-inv .am-plan.am-top::before{
+    content:"La más pedida"; position:absolute; top:-11px; left:22px;
+    background:var(--oro); color:#20180B; font-size:.62rem; font-weight:600;
+    letter-spacing:.14em; text-transform:uppercase; padding:3px 10px;
+  }
+  .am-inv .am-plan h3{ font-size:1.3rem; }
+  .am-inv .am-precio{ font-family:var(--display); font-size:2.3rem; color:var(--oro); line-height:1; }
+  .am-inv .am-precio small{ display:block; font-family:var(--texto); font-size:.74rem; color:var(--tenue); letter-spacing:.1em; text-transform:uppercase; margin-top:6px; }
+  .am-inv .am-plan ul{ list-style:none; padding:0; margin:6px 0 0; display:flex; flex-direction:column; gap:8px; }
+  .am-inv .am-plan li{ font-size:.9rem; color:var(--tenue); display:flex; gap:9px; }
+  .am-inv .am-plan li:before{ content:"\2713"; color:var(--oro); }
+  .am-inv .am-plan .am-btn{ margin-top:auto; }
+  .am-inv .am-extras{ margin-top:20px; font-size:.86rem; color:var(--tenue); text-align:center; }
+
+  /* pasos */
+  .am-inv .am-pasos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:var(--linea); border:1px solid var(--linea); margin-top:26px; }
+  .am-inv .am-paso{ background:var(--fondo); padding:24px 20px; }
+  .am-inv .am-paso .am-n{ font-family:var(--display); font-size:1.9rem; color:var(--oro); line-height:1; }
+  .am-inv .am-paso h3{ font-size:1.1rem; margin:8px 0 6px; }
+  .am-inv .am-paso p{ color:var(--tenue); font-size:.88rem; }
+
+  /* dudas */
+  .am-inv details{ border-bottom:1px solid var(--linea); padding:16px 0; }
+  .am-inv details:first-of-type{ border-top:1px solid var(--linea); margin-top:26px; }
+  .am-inv summary{ cursor:pointer; list-style:none; font-family:var(--display); font-size:1.08rem; }
+  .am-inv summary::-webkit-details-marker{ display:none; }
+  .am-inv details p{ color:var(--tenue); font-size:.92rem; margin-top:9px; max-width:66ch; }
+
+  /* cierre */
+  .am-inv .am-cierre{ background:var(--fondo-2); text-align:center; }
+  .am-inv .am-cierre h2{ font-size:clamp(1.7rem,1.2rem + 2vw,2.6rem); }
+  .am-inv .am-cierre p{ color:var(--tenue); max-width:46ch; margin:14px auto 0; }
+  .am-inv .am-cierre .am-btn{ margin-top:24px; }
+
+  @media (max-width:700px){
+    .am-inv .am-hero h1{ font-size:2rem; }
+  }
+</style>
+
+<div class="am-inv">
+
+  <!-- portada -->
+  <section class="am-hero">
+    <div class="am-wrap">
+      <p class="am-filete">XV años · Bodas · Bautizos</p>
+      <h1>Tus invitados confirman con <em>un botón</em>.</h1>
+      <p class="am-lede">Se acabó mandar una imagen que nadie contesta. Tu invitación es un link con cuenta regresiva, mapa, código de vestimenta, mesa de regalos y confirmación que te llega directo al WhatsApp.</p>
+      <div class="am-cta">
+        <a class="am-btn" href="#am-precios">Ver paquetes y precios</a>
+        <a class="am-btn linea" href="https://andresmendoza30.github.io/PORTAFOLIO/invitacion-xv.html" target="_blank" rel="noopener">Probar una invitación</a>
+      </div>
+      <p class="am-avales">
+        <span><b>Desde $650</b></span>
+        <span><b>2 días</b> de entrega</span>
+        <span><b>Sin apps:</b> se abre en cualquier celular</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- el problema -->
+  <section class="am-band">
+    <div class="am-wrap">
+      <p class="am-filete">Por qué duele la invitación de siempre</p>
+      <h2>La imagen que mandas por WhatsApp se pierde en el chat</h2>
+      <div class="am-dolores">
+        <div class="am-dolor"><b>Nadie confirma</b><span>Te contestan "ahí vemos" y llega el día sin saber cuántas sillas apartar.</span></div>
+        <div class="am-dolor"><b>Preguntan lo mismo 40 veces</b><span>Dónde es, a qué hora, cómo me visto, si puedo llevar a los niños.</span></div>
+        <div class="am-dolor"><b>Se pierde entre los chats</b><span>A los tres días nadie encuentra la imagen y te la vuelven a pedir.</span></div>
+        <div class="am-dolor"><b>Si algo cambia, reenvías todo</b><span>Cambió la hora y ahora tienes que avisarle a ciento veinte personas.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- modelos -->
+  <section class="am-band">
+    <div class="am-wrap">
+      <p class="am-filete">Modelos</p>
+      <h2>Ábrelas y pruébalas, funcionan de verdad</h2>
+      <div class="am-modelos">
+
+        <article class="am-modelo">
+          <div class="am-mock xv">
+            <span class="am-sup">Mis XV Años</span>
+            <span class="am-nom">Valentina</span>
+            <span class="am-sub">HACIENDA SAN FELIPE</span>
+            <span class="am-reloj"><i>70</i><i>05</i><i>49</i></span>
+          </div>
+          <div class="am-info">
+            <p class="am-tipo">XV Años</p>
+            <h3>Azul noche y champán</h3>
+            <p>Elegante y de noche. Cuenta regresiva, itinerario, pases por familia y galería.</p>
+            <a class="am-btn linea" href="https://andresmendoza30.github.io/PORTAFOLIO/invitacion-xv.html" target="_blank" rel="noopener">Abrir invitación</a>
+          </div>
+        </article>
+
+        <article class="am-modelo">
+          <div class="am-mock boda">
+            <span class="am-sup">Nos casamos</span>
+            <span class="am-nom">Ana &amp; Diego</span>
+            <span class="am-sub">HACIENDA GUADALUPE</span>
+            <span class="am-reloj"><i>183</i><i>04</i><i>28</i></span>
+          </div>
+          <div class="am-info">
+            <p class="am-tipo">Boda</p>
+            <h3>Marfil y olivo</h3>
+            <p>Sobria y clásica. Itinerario con transporte, hospedaje sugerido y menú especial.</p>
+            <a class="am-btn linea" href="https://andresmendoza30.github.io/PORTAFOLIO/invitacion-boda.html" target="_blank" rel="noopener">Abrir invitación</a>
+          </div>
+        </article>
+
+        <article class="am-modelo">
+          <div class="am-mock bautizo">
+            <span class="am-sup">Mi bautizo</span>
+            <span class="am-nom">Emiliano</span>
+            <span class="am-sub">TEMPLO DE LA SOLEDAD</span>
+            <span class="am-reloj"><i>218</i><i>02</i><i>11</i></span>
+          </div>
+          <div class="am-info">
+            <p class="am-tipo">Bautizo</p>
+            <h3>Cielo y arena</h3>
+            <p>Luminosa y tierna. Misa, comida, mesa de dulces y confirmación con número de niños.</p>
+            <a class="am-btn linea" href="https://andresmendoza30.github.io/PORTAFOLIO/invitacion-bautizo.html" target="_blank" rel="noopener">Abrir invitación</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- precios -->
+  <section class="am-band" id="am-precios">
+    <div class="am-wrap">
+      <p class="am-filete">Precios</p>
+      <h2>Se paga una vez y es tuya</h2>
+      <div class="am-planes">
+
+        <article class="am-plan">
+          <h3>Sencilla</h3>
+          <p class="am-precio">$650<small>Entrega en 2 días</small></p>
+          <ul>
+            <li>Portada con nombre y fecha</li>
+            <li>Cuenta regresiva en vivo</li>
+            <li>Ubicación con mapa</li>
+            <li>Botón de WhatsApp</li>
+          </ul>
+          <a class="am-btn linea" href="/products/invitacion-digital-sencilla">Comprar $650</a>
+        </article>
+
+        <article class="am-plan am-top">
+          <h3>Completa</h3>
+          <p class="am-precio">$1,100<small>Entrega en 2 días</small></p>
+          <ul>
+            <li>Todo lo de la sencilla</li>
+            <li>Itinerario del evento</li>
+            <li>Vestimenta y mesa de regalos</li>
+            <li>Confirmación de asistencia por WhatsApp</li>
+            <li>Colores a tu gusto</li>
+          </ul>
+          <a class="am-btn" href="/products/invitacion-digital-completa">Comprar $1,100</a>
+        </article>
+
+        <article class="am-plan">
+          <h3>Premium</h3>
+          <p class="am-precio">$1,600<small>Entrega en 2 días</small></p>
+          <ul>
+            <li>Todo lo de la completa</li>
+            <li>Galería con tus fotos</li>
+            <li>Pases personalizados por familia</li>
+            <li>Código QR para imprimir</li>
+            <li>Un cambio incluido</li>
+          </ul>
+          <a class="am-btn linea" href="/products/invitacion-digital-premium">Comprar $1,600</a>
+        </article>
+
+      </div>
+      <p class="am-extras">Cambios extra después de entregada $150 · Entrega urgente en 24 horas +$300</p>
+    </div>
+  </section>
+
+  <!-- cómo funciona -->
+  <section class="am-band">
+    <div class="am-wrap">
+      <p class="am-filete">Cómo funciona</p>
+      <h2>De que la compras a que la mandas: dos días</h2>
+      <div class="am-pasos">
+        <div class="am-paso"><p class="am-n">1</p><h3>Eliges y pagas</h3><p>Escoges tu paquete aquí mismo y pagas en línea. Sin anticipos raros.</p></div>
+        <div class="am-paso"><p class="am-n">2</p><h3>Mandas los datos</h3><p>Al terminar la compra recibes un formulario: nombres, fecha, lugares y fotos.</p></div>
+        <div class="am-paso"><p class="am-n">3</p><h3>La armo</h3><p>En dos días te mando el link para que la revises. Si algo está mal, lo corrijo sin costo.</p></div>
+        <div class="am-paso"><p class="am-n">4</p><h3>La mandas</h3><p>Copias el link y lo repartes por WhatsApp. Las confirmaciones llegan solas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- dudas -->
+  <section class="am-band">
+    <div class="am-wrap">
+      <p class="am-filete">Dudas</p>
+      <h2>Lo que todos preguntan</h2>
+      <details open>
+        <summary>¿Mis invitados necesitan instalar algo?</summary>
+        <p>No. Es un link que se abre en cualquier celular, con cualquier navegador. Ni app, ni registro, ni cuenta.</p>
+      </details>
+      <details>
+        <summary>¿Cómo me llegan las confirmaciones?</summary>
+        <p>Directo a tu WhatsApp. El invitado escribe su nombre, cuántos van y confirma; a ti te llega el mensaje ya redactado con esos datos.</p>
+      </details>
+      <details>
+        <summary>¿Puedo cambiar algo después?</summary>
+        <p>Sí. Si cambia la hora o el lugar lo corrijo y el mismo link sale actualizado, sin reenviar nada. El primer cambio va incluido en Premium; en los demás cuesta $150.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto tiempo dura en línea?</summary>
+        <p>Desde que te la entrego hasta un mes después del evento. Si la quieres conservar más tiempo como recuerdo, se puede.</p>
+      </details>
+      <details>
+        <summary>¿Trabajas fuera de Oaxaca?</summary>
+        <p>Sí. Todo es a distancia: pagas aquí, mandas los datos por el formulario y recibes el link. Da igual en qué estado estés.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- cierre -->
+  <section class="am-band am-cierre">
+    <div class="am-wrap">
+      <p class="am-filete">Aparta tu fecha</p>
+      <h2>Que tu invitación se vea tan bien como tu fiesta</h2>
+      <p>Elige tu paquete y en dos días la tienes lista para mandar. ¿Dudas antes de comprar? Escríbeme.</p>
+      <a class="am-btn" href="https://wa.me/529514418403?text=Hola%2C%20tengo%20una%20duda%20sobre%20las%20invitaciones%20digitales." target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+    </div>
+  </section>
+
+</div>
