@@ -5,23 +5,34 @@ Se graba con la **grabadora de pantalla del celular**, no con cámara.
 - **Android:** deslizo desde arriba → "Grabar pantalla". Activo el micrófono.
 - **iPhone:** Centro de control → botón de grabar. Mantengo apretado y activo el micrófono.
 
-Antes de grabar: modo avión (para que no salten notificaciones) y el demo ya abierto en el navegador.
+Antes de grabar: **No molestar** (modo avión no, porque necesito internet para que cargue la página)
+y el demo ya abierto en el navegador, con el brillo alto.
 
 ---
 
 ## VIDEO 1 — Consultorio dental (el que grabo primero)
 
 **Demo:** https://andresmendoza30.github.io/PORTAFOLIO/consultorio.html
-**Duración:** 22 segundos
+**Duración:** 28 segundos
+
+**Antes de grabar (importante):**
+1. Abro el panel y le pico a **"Borrar citas de prueba"**.
+2. Agendo 2 citas con nombres inventados (Laura Jiménez, Roberto Cruz) para que el panel no se vea vacío.
+3. Vuelvo al sitio del paciente y **dejo la pantalla en la tarjeta de la agenda**, ya scrolleada.
+4. Pongo el teléfono en **No molestar** (no en modo avión: necesito internet).
 
 | Segundo | Qué se ve en pantalla | Qué digo |
 |---|---|---|
 | 0–2 | La tarjeta de agenda, ya visible | "¿Todavía agendas las citas por teléfono?" |
 | 2–5 | Le pico a "Endodoncia" | "Mira. El paciente elige su tratamiento…" |
-| 5–9 | Se ven los horarios cambiando solos | "…y fíjate: los horarios se acomodan solos según cuánto dura el tratamiento." |
-| 9–13 | Elijo día y hora, le pico a confirmar | "Elige día, elige hora, confirma. Ya quedó su cita." |
-| 13–18 | Abro consultorio-panel.html | "Y el doctor lo ve aquí: toda su agenda del día, quién falta por confirmar y cuánto lleva cobrado." |
-| 18–22 | Me quedo en el panel | "Sin llamadas y sin WhatsApp a media noche. Así trabajo. Si tienes un negocio en Oaxaca, escríbeme." |
+| 5–9 | Se ven los horarios cambiando solos | "…y fíjate: los horarios se acomodan solos según cuánto dura. La endodoncia son 90 minutos, la limpieza 30." |
+| 9–12 | Elijo día y hora | "Elige su día, elige su hora…" |
+| 12–17 | Escribo nombre y teléfono, palomeo el aviso | "…deja su nombre, su teléfono, acepta el aviso de privacidad…" |
+| 17–19 | Le pico a "Confirmar cita" | "…y confirma. Ya quedó." |
+| 19–24 | Le pico a "Ver el panel interno" abajo | "Y el doctor lo ve aquí: su agenda del día, quién no ha confirmado y cuánto lleva cobrado." |
+| 24–28 | Bajo a "Próximas citas en línea" | "Ahí está la cita que acabamos de hacer, con nombre y teléfono. Sin llamadas y sin WhatsApp a medianoche. Si tienes un negocio en Oaxaca, escríbeme." |
+
+**Para cambiar de página**, uso la barra negra de abajo que dice **"Ver el panel interno →"**. No busco la dirección a mano ni cambio de pestaña: se ve lento en video.
 
 **Lo que NO hago:** presentarme al inicio. Nadie se queda a oír "hola, soy Andrés y me dedico a…".
 El problema va en los primeros 2 segundos o pierdo a la persona.
