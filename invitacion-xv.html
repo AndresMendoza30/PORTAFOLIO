@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis XV Años — Valentina</title>
+<meta name="description" content="Invitación digital para los XV años de Valentina. Sábado 14 de noviembre, Hacienda San Felipe, Oaxaca.">
+<meta property="og:title" content="Mis XV Años — Valentina">
+<meta property="og:description" content="Sábado 14 de noviembre · Hacienda San Felipe · Confirma tu asistencia">
+<meta name="theme-color" content="#151A2E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noche:#151A2E;
+    --noche-2:#1E2540;
+    --champan:#D9C39A;
+    --champan-claro:#EFE3C8;
+    --marfil:#F7F3EC;
+    --tenue:rgba(247,243,236,.62);
+    --linea:rgba(217,195,154,.28);
+    --display:"Cinzel",Georgia,serif;
+    --texto:"Jost","Segoe UI",Helvetica,sans-serif;
+    --max:560px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--noche); color:var(--marfil);
+    font-family:var(--texto); font-weight:300; font-size:16px; line-height:1.7;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--display); font-weight:400; letter-spacing:.04em; text-wrap:balance; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:24px; }
+  :focus-visible{ outline:2px solid var(--champan); outline-offset:3px; }
+
+  .filete{
+    font-family:var(--display); font-size:.68rem; letter-spacing:.4em; text-transform:uppercase;
+    color:var(--champan); text-align:center;
+  }
+  .adorno{ display:block; margin:22px auto; width:130px; height:auto; }
+
+  /* portada */
+  .portada{
+    position:relative; min-height:88vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:56px 24px 44px;
+    overflow:hidden;
+  }
+  .portada::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(70% 50% at 50% 0%, rgba(217,195,154,.20), transparent 60%),
+      radial-gradient(60% 40% at 50% 100%, rgba(217,195,154,.12), transparent 60%);
+    pointer-events:none;
+  }
+  .marco{
+    position:absolute; inset:16px; border:1px solid var(--linea); pointer-events:none;
+  }
+  .marco::before, .marco::after{
+    content:""; position:absolute; width:26px; height:26px; border:1px solid var(--champan);
+  }
+  .marco::before{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+  .marco::after{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+
+  .portada .contenido{ position:relative; }
+  .portada h1{
+    font-size:clamp(2.3rem,1.1rem + 7vw,4.6rem); line-height:1.05; margin-block:14px 10px;
+    color:var(--champan-claro); max-width:100%; overflow-wrap:break-word;
+  }
+  .portada .quince{
+    font-family:var(--display); font-size:clamp(1rem,.8rem + 1.2vw,1.3rem);
+    letter-spacing:.34em; text-transform:uppercase; color:var(--marfil);
+  }
+  .portada .fecha{
+    margin-top:20px; font-size:1.02rem; letter-spacing:.16em; text-transform:uppercase; color:var(--tenue);
+  }
+
+  /* cuenta regresiva */
+  .reloj{ display:flex; justify-content:center; gap:10px; margin-top:30px; }
+  .reloj div{
+    border:1px solid var(--linea); padding:12px 6px; min-width:66px;
+    background:rgba(247,243,236,.03);
+  }
+  .reloj b{
+    display:block; font-family:var(--display); font-size:1.7rem; line-height:1.1;
+    color:var(--champan-claro); font-variant-numeric:tabular-nums;
+  }
+  .reloj span{ font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; color:var(--tenue); }
+
+  section{ padding-block:clamp(48px,9vw,76px); border-top:1px solid rgba(217,195,154,.14); }
+  section h2{ font-size:clamp(1.6rem,1.2rem + 1.6vw,2.1rem); text-align:center; margin-bottom:8px; }
+  .intro{ text-align:center; color:var(--tenue); max-width:42ch; margin-inline:auto; }
+
+  .verso{
+    text-align:center; font-family:var(--display); font-size:1.12rem; line-height:1.7;
+    color:var(--champan-claro); font-style:normal;
+  }
+  .padres{ margin-top:34px; text-align:center; }
+  .padres p.rol{ font-size:.66rem; letter-spacing:.28em; text-transform:uppercase; color:var(--champan); }
+  .padres p.nombre{ font-family:var(--display); font-size:1.1rem; margin-block:6px 22px; }
+
+  /* itinerario */
+  .linea-tiempo{ display:flex; flex-direction:column; margin-top:30px; }
+  .hito{
+    display:grid; grid-template-columns:64px 1fr; gap:18px; padding-bottom:30px; position:relative;
+  }
+  .hito:last-child{ padding-bottom:0; }
+  .hito::before{
+    content:""; position:absolute; left:31px; top:26px; bottom:0; width:1px; background:var(--linea);
+  }
+  .hito:last-child::before{ display:none; }
+  .hito .hora{
+    font-family:var(--display); font-size:1rem; color:var(--champan); text-align:right;
+    position:relative; z-index:1;
+  }
+  .hito .hora::after{
+    content:""; position:absolute; right:-22px; top:8px; width:7px; height:7px;
+    background:var(--champan); transform:rotate(45deg);
+  }
+  .hito h3{ font-size:1.15rem; }
+  .hito p{ color:var(--tenue); font-size:.94rem; }
+  .hito a.mapa{
+    display:inline-block; margin-top:8px; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--champan); border-bottom:1px solid var(--linea); text-decoration:none; padding-bottom:3px;
+  }
+  .hito a.mapa:hover{ border-color:var(--champan); }
+
+  /* detalles */
+  .tarjetas{ display:grid; gap:14px; margin-top:28px; }
+  .tarjeta{
+    border:1px solid var(--linea); padding:22px 20px; text-align:center;
+    background:rgba(247,243,236,.025);
+  }
+  .tarjeta .icono{ display:block; margin:0 auto 12px; }
+  .tarjeta h3{ font-size:1.05rem; margin-bottom:6px; }
+  .tarjeta p{ color:var(--tenue); font-size:.9rem; }
+  .tarjeta b{ color:var(--champan-claro); font-weight:400; }
+
+  /* galería */
+  .galeria{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:26px; }
+  .galeria div{ aspect-ratio:3/4; overflow:hidden; }
+  .galeria svg{ width:100%; height:100%; display:block; }
+
+  /* confirmar */
+  .confirmar{ background:var(--noche-2); }
+  form{ display:grid; gap:14px; margin-top:26px; }
+  label{ display:flex; flex-direction:column; gap:6px; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--tenue); }
+  input, select{
+    background:var(--noche); border:1px solid var(--linea); color:var(--marfil);
+    font-family:var(--texto); font-weight:300; font-size:1rem; padding:13px 14px;
+    letter-spacing:normal; text-transform:none;
+  }
+  input:focus, select:focus{ outline:none; border-color:var(--champan); }
+  .btn{
+    background:var(--champan); border:1px solid var(--champan); color:var(--noche);
+    font-family:var(--display); font-size:.82rem; letter-spacing:.2em; text-transform:uppercase;
+    padding:16px; margin-top:4px;
+    transition:transform .18s ease, background .2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); background:var(--champan-claro); }
+  .pases{
+    text-align:center; border:1px dashed var(--linea); padding:16px; margin-top:8px;
+    font-size:.86rem; color:var(--tenue);
+  }
+  .pases b{ display:block; font-family:var(--display); font-size:1.5rem; color:var(--champan-claro); }
+
+  footer{
+    text-align:center; padding-block:44px 60px; border-top:1px solid rgba(217,195,154,.14);
+  }
+  footer .nombre{ font-family:var(--display); font-size:1.9rem; color:var(--champan-claro); }
+  footer p{ color:var(--tenue); font-size:.82rem; margin-top:8px; }
+
+  .demo-bar{
+    position:fixed; left:12px; right:12px; bottom:12px; z-index:60;
+    background:rgba(21,26,46,.94); border:1px solid var(--linea); backdrop-filter:blur(6px);
+    padding:9px 14px; font-size:.7rem; color:var(--tenue);
+    display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center;
+  }
+  .demo-bar a{ color:var(--champan); text-decoration:none; font-weight:400; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  .rise{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: no-preference){
+    .js .rise{ opacity:0; transform:translateY(16px); transition:opacity .8s ease, transform .8s ease; }
+    .js .rise.on{ opacity:1; transform:none; }
+  }
+  @media (min-width:600px){
+    .tarjetas{ grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <div class="marco"></div>
+  <div class="contenido">
+    <p class="filete">Sábado 14 de noviembre de 2026</p>
+    <svg class="adorno" viewBox="0 0 200 34" aria-hidden="true">
+      <path d="M10 17h60M130 17h60" stroke="#D9C39A" stroke-width="1"/>
+      <path d="M100 6c6 6 10 8 16 11-6 3-10 5-16 11-6-6-10-8-16-11 6-3 10-5 16-11Z" fill="#D9C39A"/>
+      <circle cx="78" cy="17" r="2" fill="#D9C39A"/>
+      <circle cx="122" cy="17" r="2" fill="#D9C39A"/>
+    </svg>
+    <p class="quince">Mis XV Años</p>
+    <h1>Valentina</h1>
+    <p class="fecha">Hacienda San Felipe · Oaxaca</p>
+
+    <div class="reloj" id="reloj" aria-label="Cuenta regresiva">
+      <div><b id="d">--</b><span>días</span></div>
+      <div><b id="h">--</b><span>horas</span></div>
+      <div><b id="m">--</b><span>min</span></div>
+      <div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap rise">
+      <p class="verso">«Hoy dejo de ser niña<br>y comienzo a escribir mi propia historia.<br>Me encantaría que estuvieras ahí<br>para verlo comenzar.»</p>
+      <div class="padres">
+        <p class="rol">Con la bendición de mis padres</p>
+        <p class="nombre">Ricardo Herrera Luna<br>Adriana Solís Márquez</p>
+        <p class="rol">Mis padrinos</p>
+        <p class="nombre">Jorge Solís Márquez<br>Beatriz Ramírez Cruz</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">El gran día</p>
+      <h2>Itinerario</h2>
+      <p class="intro">Te esperamos puntual, para que no te pierdas nada.</p>
+
+      <div class="linea-tiempo">
+        <article class="hito">
+          <span class="hora">17:00</span>
+          <div>
+            <h3>Misa de acción de gracias</h3>
+            <p>Templo de Santo Domingo de Guzmán · Centro, Oaxaca</p>
+            <a class="mapa" href="https://maps.google.com/?q=Templo+de+Santo+Domingo+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">19:00</span>
+          <div>
+            <h3>Recepción</h3>
+            <p>Hacienda San Felipe · Carretera a San Felipe del Agua km 2</p>
+            <a class="mapa" href="https://maps.google.com/?q=San+Felipe+del+Agua+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">20:30</span>
+          <div>
+            <h3>Vals y presentación</h3>
+            <p>El momento que llevamos meses ensayando.</p>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">21:00</span>
+          <div>
+            <h3>Cena y baile</h3>
+            <p>Hasta que el cuerpo aguante.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">Para que lo tengas presente</p>
+      <h2>Detalles</h2>
+      <div class="tarjetas">
+        <article class="tarjeta">
+          <svg class="icono" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D9C39A" stroke-width="1.2" aria-hidden="true">
+            <path d="M6 21V9l6-5 6 5v12"></path><path d="M10 21v-6h4v6"></path>
+          </svg>
+          <h3>Código de vestimenta</h3>
+          <p><b>Formal</b><br>Se reserva el color rosa palo para la festejada.</p>
+        </article>
+        <article class="tarjeta">
+          <svg class="icono" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D9C39A" stroke-width="1.2" aria-hidden="true">
+            <rect x="3" y="8" width="18" height="13"></rect><path d="M12 8v13M3 12h18"></path>
+            <path d="M12 8c-3 0-5-4-1-4 2 0 1 4 1 4Zm0 0c3 0 5-4 1-4-2 0-1 4-1 4Z"></path>
+          </svg>
+          <h3>Mesa de regalos</h3>
+          <p>Lluvia de sobres.<br><b>Liverpool · evento 51204873</b></p>
+        </article>
+        <article class="tarjeta">
+          <svg class="icono" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D9C39A" stroke-width="1.2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>
+          </svg>
+          <h3>Confirmación</h3>
+          <p>Te agradecemos confirmar<br><b>antes del 30 de octubre</b></p>
+        </article>
+        <article class="tarjeta">
+          <svg class="icono" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D9C39A" stroke-width="1.2" aria-hidden="true">
+            <path d="M4 20V6a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path>
+            <path d="M15 4v5h5"></path>
+          </svg>
+          <h3>Estacionamiento</h3>
+          <p>La hacienda cuenta con<br><b>estacionamiento sin costo</b></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">Momentos</p>
+      <h2>Camino a mis XV</h2>
+      <div class="galeria">
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#1E2540"/><circle cx="45" cy="46" r="17" fill="#D9C39A" opacity=".38"/><path d="M12 120c6-26 16-38 33-38s27 12 33 38Z" fill="#D9C39A" opacity=".26"/></svg></div>
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#232B4A"/><circle cx="45" cy="40" r="14" fill="#EFE3C8" opacity=".3"/><path d="M16 120c5-24 14-36 29-36s24 12 29 36Z" fill="#EFE3C8" opacity=".2"/></svg></div>
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#1A2138"/><circle cx="45" cy="50" r="19" fill="#D9C39A" opacity=".32"/><path d="M10 120c7-28 18-40 35-40s28 12 35 40Z" fill="#D9C39A" opacity=".2"/></svg></div>
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#232B4A"/><path d="M45 30l8 16 18 3-13 13 3 18-16-9-16 9 3-18-13-13 18-3Z" fill="#D9C39A" opacity=".35"/></svg></div>
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#1E2540"/><circle cx="45" cy="44" r="15" fill="#EFE3C8" opacity=".28"/><path d="M14 120c6-25 15-37 31-37s25 12 31 37Z" fill="#EFE3C8" opacity=".18"/></svg></div>
+        <div><svg viewBox="0 0 90 120" role="img" aria-label="Fotografía de la sesión"><rect width="90" height="120" fill="#1A2138"/><path d="M45 34c7 8 12 11 19 14-7 3-12 6-19 14-7-8-12-11-19-14 7-3 12-6 19-14Z" fill="#D9C39A" opacity=".4"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirmar" id="confirmar">
+    <div class="wrap rise">
+      <p class="filete">No faltes</p>
+      <h2>Confirma tu asistencia</h2>
+      <p class="intro">Tu confirmación nos ayuda a apartar tu lugar en la mesa.</p>
+
+      <div class="pases">
+        <b>2 pases</b>
+        Reservados a nombre de: Familia Martínez Ruiz
+      </div>
+
+      <form id="form">
+        <label>Tu nombre
+          <input type="text" id="nombre" required placeholder="Como te vamos a poner en la mesa">
+        </label>
+        <label>¿Cuántos asisten?
+          <select id="cuantos">
+            <option value="1">1 persona</option>
+            <option value="2" selected>2 personas</option>
+            <option value="0">No podré asistir</option>
+          </select>
+        </label>
+        <label>¿Alguna alergia o algo que debamos saber?
+          <input type="text" id="nota" placeholder="Opcional">
+        </label>
+        <button class="btn" type="submit">Confirmar por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="nombre">Valentina</p>
+  <p>14 · 11 · 2026 · Oaxaca</p>
+</footer>
+
+<div class="demo-bar">
+  <span>Invitación digital de ejemplo · Andrés Mendoza</span>
+  <a href="index.html">Ver portafolio</a>
+  <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20quiero%20una%20invitaci%C3%B3n%20digital%20como%20esta." target="_blank" rel="noopener">Quiero una así ↗</a>
+</div>
+
+<script>
+  document.documentElement.classList.add("js");
+
+  // cuenta regresiva al evento
+  const evento = new Date("2026-11-14T17:00:00").getTime();
+  function tic(){
+    const falta = evento - Date.now();
+    if (falta <= 0) {
+      document.getElementById("reloj").innerHTML =
+        '<div style="min-width:auto; padding:14px 22px"><b style="font-size:1.2rem">¡Hoy es el día!</b></div>';
+      return;
+    }
+    const d = Math.floor(falta / 86400000);
+    const h = Math.floor(falta % 86400000 / 3600000);
+    const m = Math.floor(falta % 3600000 / 60000);
+    const s = Math.floor(falta % 60000 / 1000);
+    document.getElementById("d").textContent = d;
+    document.getElementById("h").textContent = String(h).padStart(2,"0");
+    document.getElementById("m").textContent = String(m).padStart(2,"0");
+    document.getElementById("s").textContent = String(s).padStart(2,"0");
+  }
+  tic();
+  setInterval(tic, 1000);
+
+  // la confirmación llega al WhatsApp de la familia
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const cuantos = document.getElementById("cuantos").value;
+    const nota = document.getElementById("nota").value.trim();
+    if (!nombre) { document.getElementById("nombre").focus(); return; }
+    const texto = cuantos === "0"
+      ? "Hola, soy " + nombre + ". Lamento avisar que no podré asistir a los XV de Valentina." + (nota ? " " + nota : "")
+      : "Hola, soy " + nombre + " y confirmo asistencia a los XV de Valentina. Vamos " + cuantos +
+        (cuantos === "1" ? " persona." : " personas.") + (nota ? " Nota: " + nota : "");
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); }
+    }), { rootMargin:"0px 0px -8% 0px" });
+    document.querySelectorAll(".rise").forEach(el => io.observe(el));
+  } else {
+    document.documentElement.classList.remove("js");
+  }
+</script>
+</body>
+</html>
