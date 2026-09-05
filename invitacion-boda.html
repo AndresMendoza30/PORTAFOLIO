@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestra Boda — Ana &amp; Diego</title>
+<meta name="description" content="Invitación digital de boda. Sábado 6 de marzo, Hacienda Guadalupe, Oaxaca. Confirma tu asistencia.">
+<meta property="og:title" content="Nos casamos — Ana & Diego">
+<meta property="og:description" content="Sábado 6 de marzo · Hacienda Guadalupe · Confirma tu asistencia">
+<meta name="theme-color" content="#FAF7F1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#FAF7F1;
+    --papel-2:#F1EBE0;
+    --olivo:#3A4A38;
+    --olivo-claro:#6E7F69;
+    --dorado:#A98B4E;
+    --tinta:#2A2A26;
+    --tenue:#7A776F;
+    --linea:rgba(42,42,38,.16);
+    --display:"Italiana",Georgia,serif;
+    --texto:"Jost","Segoe UI",Helvetica,sans-serif;
+    --max:580px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--papel); color:var(--tinta);
+    font-family:var(--texto); font-weight:300; font-size:16px; line-height:1.75;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--display); font-weight:400; letter-spacing:.03em; text-wrap:balance; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:26px; }
+  :focus-visible{ outline:2px solid var(--dorado); outline-offset:3px; }
+
+  .filete{
+    font-size:.66rem; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--dorado); text-align:center;
+  }
+  .hoja{ display:block; margin:20px auto; }
+
+  /* portada */
+  .portada{
+    min-height:90vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:60px 26px 46px; position:relative; background:var(--papel-2);
+  }
+  .portada::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(60% 50% at 50% 40%, rgba(250,247,241,.9), transparent 70%);
+  }
+  .portada .contenido{ position:relative; z-index:1; }
+  .portada h1{
+    font-size:clamp(2.8rem,1.6rem + 8vw,5rem); line-height:1.05; margin-block:10px;
+    color:var(--olivo);
+  }
+  .portada .y{ font-family:var(--display); font-size:1.6rem; color:var(--dorado); display:block; margin-block:2px; }
+  .portada .frase{ font-size:.9rem; letter-spacing:.22em; text-transform:uppercase; color:var(--tenue); }
+  .portada .fecha{
+    margin-top:24px; padding-top:20px; border-top:1px solid var(--linea);
+    display:inline-flex; gap:18px; align-items:center;
+    font-family:var(--display); font-size:1.15rem; color:var(--olivo);
+  }
+  .portada .fecha span{ font-size:2.1rem; }
+
+  .reloj{ display:flex; justify-content:center; gap:12px; margin-top:28px; }
+  .reloj div{ text-align:center; }
+  .reloj b{
+    display:block; font-family:var(--display); font-size:1.9rem; color:var(--olivo); line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .reloj span{ font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--tenue); }
+
+  section{ padding-block:clamp(50px,9vw,80px); }
+  section + section{ border-top:1px solid var(--linea); }
+  section h2{ font-size:clamp(1.7rem,1.2rem + 1.8vw,2.3rem); text-align:center; margin-bottom:10px; color:var(--olivo); }
+  .intro{ text-align:center; color:var(--tenue); max-width:44ch; margin-inline:auto; }
+
+  .verso{
+    text-align:center; font-family:var(--display); font-size:1.3rem; line-height:1.6; color:var(--olivo);
+  }
+  .familias{ display:grid; gap:26px; margin-top:34px; text-align:center; }
+  .familias .rol{ font-size:.62rem; letter-spacing:.26em; text-transform:uppercase; color:var(--dorado); }
+  .familias .nombre{ font-family:var(--display); font-size:1.12rem; margin-top:6px; color:var(--olivo); }
+
+  /* itinerario */
+  .linea-tiempo{ display:flex; flex-direction:column; gap:0; margin-top:32px; }
+  .hito{ display:grid; grid-template-columns:62px 1fr; gap:20px; padding-bottom:32px; position:relative; }
+  .hito:last-child{ padding-bottom:0; }
+  .hito::before{ content:""; position:absolute; left:30px; top:24px; bottom:0; width:1px; background:var(--linea); }
+  .hito:last-child::before{ display:none; }
+  .hito .hora{ font-family:var(--display); font-size:1.05rem; color:var(--dorado); text-align:right; position:relative; }
+  .hito .hora::after{
+    content:""; position:absolute; right:-24px; top:9px; width:9px; height:9px; border-radius:50%;
+    background:var(--papel); border:1px solid var(--dorado);
+  }
+  .hito h3{ font-size:1.2rem; color:var(--olivo); }
+  .hito p{ color:var(--tenue); font-size:.94rem; }
+  .hito a.mapa{
+    display:inline-block; margin-top:8px; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--dorado); text-decoration:none; border-bottom:1px solid var(--linea); padding-bottom:3px;
+  }
+
+  /* detalles */
+  .tarjetas{ display:grid; gap:1px; margin-top:30px; background:var(--linea); border:1px solid var(--linea); }
+  .tarjeta{ background:var(--papel); padding:24px 20px; text-align:center; }
+  .tarjeta h3{ font-size:1.1rem; color:var(--olivo); margin-bottom:6px; }
+  .tarjeta p{ color:var(--tenue); font-size:.9rem; }
+  .tarjeta b{ color:var(--tinta); font-weight:400; }
+
+  /* confirmar */
+  .confirmar{ background:var(--olivo); color:var(--papel); }
+  .confirmar h2{ color:var(--papel); }
+  .confirmar .filete{ color:#D8C79B; }
+  .confirmar .intro{ color:rgba(250,247,241,.72); }
+  form{ display:grid; gap:15px; margin-top:28px; }
+  label{ display:flex; flex-direction:column; gap:6px; font-size:.64rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(250,247,241,.7); }
+  input, select{
+    background:rgba(250,247,241,.06); border:1px solid rgba(250,247,241,.24); color:var(--papel);
+    font-family:var(--texto); font-weight:300; font-size:1rem; padding:13px 14px;
+    letter-spacing:normal; text-transform:none;
+  }
+  input::placeholder{ color:rgba(250,247,241,.42); }
+  input:focus, select:focus{ outline:none; border-color:#D8C79B; }
+  .btn{
+    background:#D8C79B; border:0; color:var(--olivo);
+    font-family:var(--display); font-size:1rem; letter-spacing:.18em; text-transform:uppercase;
+    padding:16px; margin-top:6px;
+    transition:transform .18s ease, background .2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); background:#E6D9B6; }
+  .pases{
+    text-align:center; border:1px solid rgba(250,247,241,.24); padding:16px; margin-top:10px;
+    font-size:.86rem; color:rgba(250,247,241,.72);
+  }
+  .pases b{ display:block; font-family:var(--display); font-size:1.6rem; color:#D8C79B; }
+
+  footer{ text-align:center; padding-block:46px 64px; }
+  footer .nombres{ font-family:var(--display); font-size:2rem; color:var(--olivo); }
+  footer p{ color:var(--tenue); font-size:.82rem; margin-top:8px; letter-spacing:.16em; }
+
+  .demo-bar{
+    position:fixed; left:12px; right:12px; bottom:12px; z-index:60;
+    background:rgba(58,74,56,.95); color:var(--papel); padding:9px 14px; font-size:.7rem;
+    display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center;
+  }
+  .demo-bar a{ color:#D8C79B; text-decoration:none; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  .rise{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: no-preference){
+    .js .rise{ opacity:0; transform:translateY(16px); transition:opacity .8s ease, transform .8s ease; }
+    .js .rise.on{ opacity:1; transform:none; }
+  }
+  @media (min-width:560px){
+    .familias{ grid-template-columns:1fr 1fr; }
+    .tarjetas{ grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <div class="contenido">
+    <p class="filete">Nos casamos</p>
+    <svg class="hoja" width="120" height="26" viewBox="0 0 120 26" aria-hidden="true">
+      <path d="M4 13h38M78 13h38" stroke="#A98B4E" stroke-width="1"/>
+      <path d="M60 3c5 5 8 7 12 10-4 3-7 5-12 10-5-5-8-7-12-10 4-3 7-5 12-10Z" fill="none" stroke="#A98B4E" stroke-width="1"/>
+      <circle cx="60" cy="13" r="2" fill="#A98B4E"/>
+    </svg>
+    <h1>Ana<span class="y">&amp;</span>Diego</h1>
+    <p class="frase">Hacienda Guadalupe · Oaxaca</p>
+    <p class="fecha">Sábado <span>06</span> Marzo 2027</p>
+
+    <div class="reloj" aria-label="Cuenta regresiva">
+      <div><b id="d">--</b><span>días</span></div>
+      <div><b id="h">--</b><span>horas</span></div>
+      <div><b id="m">--</b><span>min</span></div>
+      <div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap rise">
+      <p class="verso">«Después de once años juntos,<br>de mudanzas, de perros y de viajes,<br>por fin nos vamos a casar.<br>Nos haría muy felices que estuvieras ahí.»</p>
+      <div class="familias">
+        <div>
+          <p class="rol">Padres de la novia</p>
+          <p class="nombre">Alfredo Rentería Cruz<br>Guadalupe Ibáñez Soto</p>
+        </div>
+        <div>
+          <p class="rol">Padres del novio</p>
+          <p class="nombre">Ernesto Villalobos Paz<br>Carmen Aguilar Ríos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">El día</p>
+      <h2>Itinerario</h2>
+      <p class="intro">Habrá transporte del centro a la hacienda a las 15:30, frente al Llano.</p>
+
+      <div class="linea-tiempo">
+        <article class="hito">
+          <span class="hora">16:00</span>
+          <div>
+            <h3>Ceremonia religiosa</h3>
+            <p>Templo de la Preciosa Sangre de Cristo · Centro</p>
+            <a class="mapa" href="https://maps.google.com/?q=Templo+Preciosa+Sangre+de+Cristo+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">18:00</span>
+          <div>
+            <h3>Cóctel de bienvenida</h3>
+            <p>En el jardín de la hacienda. Mezcal de la casa y botana oaxaqueña.</p>
+            <a class="mapa" href="https://maps.google.com/?q=Hacienda+Guadalupe+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">20:00</span>
+          <div>
+            <h3>Cena</h3>
+            <p>Menú de tres tiempos. Avísanos si eres vegetariano o tienes alguna alergia.</p>
+          </div>
+        </article>
+        <article class="hito">
+          <span class="hora">22:00</span>
+          <div>
+            <h3>Fiesta</h3>
+            <p>Banda en vivo, tornaboda y calenda. Cierra cuando cierre.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">Lo que necesitas saber</p>
+      <h2>Detalles</h2>
+      <div class="tarjetas">
+        <article class="tarjeta">
+          <h3>Vestimenta</h3>
+          <p><b>Formal de jardín</b><br>Evita tacón de aguja, el piso es de piedra.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Mesa de regalos</h3>
+          <p><b>Amazon · código 4471-AD</b><br>También hay lluvia de sobres.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Sin niños</h3>
+          <p>Los queremos, pero esta noche es<br><b>solo para adultos</b>. Gracias por entender.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Hospedaje</h3>
+          <p>Tarifa especial en<br><b>Hotel Casa Tule</b>, menciona la boda.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirmar" id="confirmar">
+    <div class="wrap rise">
+      <p class="filete">Te esperamos</p>
+      <h2>Confirma tu asistencia</h2>
+      <p class="intro">Por favor confirma antes del 10 de febrero, para apartar tu lugar en la mesa.</p>
+
+      <div class="pases">
+        <b>2 pases</b>
+        Reservados a nombre de: Familia López Bautista
+      </div>
+
+      <form id="form">
+        <label>Tu nombre
+          <input type="text" id="nombre" required placeholder="Como aparece en tu invitación">
+        </label>
+        <label>¿Cuántos asisten?
+          <select id="cuantos">
+            <option value="1">1 persona</option>
+            <option value="2" selected>2 personas</option>
+            <option value="0">No podré asistir</option>
+          </select>
+        </label>
+        <label>Menú especial o alergias
+          <input type="text" id="nota" placeholder="Opcional">
+        </label>
+        <button class="btn" type="submit">Confirmar</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="nombres">Ana &amp; Diego</p>
+  <p>06 · 03 · 2027</p>
+</footer>
+
+<div class="demo-bar">
+  <span>Invitación digital de ejemplo · Andrés Mendoza</span>
+  <a href="invitaciones.html">Ver precios</a>
+  <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20quiero%20una%20invitaci%C3%B3n%20digital%20de%20boda." target="_blank" rel="noopener">Quiero una así ↗</a>
+</div>
+
+<script>
+  document.documentElement.classList.add("js");
+
+  const evento = new Date("2027-03-06T16:00:00").getTime();
+  function tic(){
+    const falta = evento - Date.now();
+    if (falta <= 0) return;
+    document.getElementById("d").textContent = Math.floor(falta / 86400000);
+    document.getElementById("h").textContent = String(Math.floor(falta % 86400000 / 3600000)).padStart(2,"0");
+    document.getElementById("m").textContent = String(Math.floor(falta % 3600000 / 60000)).padStart(2,"0");
+    document.getElementById("s").textContent = String(Math.floor(falta % 60000 / 1000)).padStart(2,"0");
+  }
+  tic(); setInterval(tic, 1000);
+
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const cuantos = document.getElementById("cuantos").value;
+    const nota = document.getElementById("nota").value.trim();
+    if (!nombre) { document.getElementById("nombre").focus(); return; }
+    const texto = cuantos === "0"
+      ? "Hola, soy " + nombre + ". Lamento avisar que no podré asistir a la boda de Ana y Diego." + (nota ? " " + nota : "")
+      : "Hola, soy " + nombre + " y confirmo asistencia a la boda de Ana y Diego. Vamos " + cuantos +
+        (cuantos === "1" ? " persona." : " personas.") + (nota ? " Nota: " + nota : "");
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); }
+    }), { rootMargin:"0px 0px -8% 0px" });
+    document.querySelectorAll(".rise").forEach(el => io.observe(el));
+  } else {
+    document.documentElement.classList.remove("js");
+  }
+</script>
+</body>
+</html>

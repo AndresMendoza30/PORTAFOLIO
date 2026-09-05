@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Bautizo — Emiliano</title>
+<meta name="description" content="Invitación digital para el bautizo de Emiliano. Domingo 11 de abril de 2027, Templo de la Soledad, Oaxaca.">
+<meta property="og:title" content="Mi Bautizo — Emiliano">
+<meta property="og:description" content="Domingo 11 de abril · Templo de la Soledad · Acompáñanos">
+<meta name="theme-color" content="#FDFAF5">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crema:#FDFAF5;
+    --crema-2:#F3EFE6;
+    --cielo:#8FB0C9;
+    --cielo-hondo:#4E7391;
+    --arena:#C9A96A;
+    --tinta:#37403F;
+    --tenue:#7C8887;
+    --linea:rgba(55,64,63,.14);
+    --display:"Gilda Display",Georgia,serif;
+    --texto:"Quicksand","Segoe UI",Helvetica,sans-serif;
+    --max:560px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--crema); color:var(--tinta);
+    font-family:var(--texto); font-weight:400; font-size:16px; line-height:1.75;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:var(--display); font-weight:400; text-wrap:balance; }
+  a{ color:inherit; }
+  button{ font:inherit; cursor:pointer; }
+  .wrap{ max-width:var(--max); margin-inline:auto; padding-inline:26px; }
+  :focus-visible{ outline:2px solid var(--cielo-hondo); outline-offset:3px; }
+
+  .filete{
+    font-size:.66rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--arena); text-align:center; font-weight:600;
+  }
+
+  /* portada */
+  .portada{
+    min-height:86vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:58px 26px 44px; position:relative; overflow:hidden;
+    background:linear-gradient(180deg, #EAF1F6 0%, var(--crema) 78%);
+  }
+  .nubes{ position:absolute; inset:0; pointer-events:none; opacity:.7; }
+  .portada .contenido{ position:relative; z-index:1; }
+  .portada h1{
+    font-size:clamp(2.6rem,1.4rem + 7.6vw,4.6rem); line-height:1.06; margin-block:12px 8px;
+    color:var(--cielo-hondo); overflow-wrap:break-word;
+  }
+  .portada .quien{ font-size:.86rem; letter-spacing:.26em; text-transform:uppercase; color:var(--tenue); }
+  .portada .fecha{ margin-top:18px; font-family:var(--display); font-size:1.2rem; color:var(--tinta); }
+
+  .reloj{ display:flex; justify-content:center; gap:10px; margin-top:26px; }
+  .reloj div{
+    background:rgba(255,255,255,.7); border:1px solid rgba(143,176,201,.4);
+    border-radius:14px; padding:11px 8px; min-width:64px;
+  }
+  .reloj b{
+    display:block; font-family:var(--display); font-size:1.6rem; color:var(--cielo-hondo); line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .reloj span{ font-size:.58rem; letter-spacing:.16em; text-transform:uppercase; color:var(--tenue); }
+
+  section{ padding-block:clamp(46px,8vw,72px); }
+  section + section{ border-top:1px solid var(--linea); }
+  section h2{ font-size:clamp(1.6rem,1.2rem + 1.6vw,2.1rem); text-align:center; margin-bottom:10px; color:var(--cielo-hondo); }
+  .intro{ text-align:center; color:var(--tenue); max-width:44ch; margin-inline:auto; font-size:.96rem; }
+
+  .verso{
+    text-align:center; font-family:var(--display); font-size:1.2rem; line-height:1.65; color:var(--cielo-hondo);
+  }
+  .personas{ display:grid; gap:22px; margin-top:32px; text-align:center; }
+  .personas .rol{ font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--arena); font-weight:600; }
+  .personas .nombre{ font-family:var(--display); font-size:1.1rem; margin-top:5px; color:var(--tinta); }
+
+  /* momentos */
+  .momentos{ display:flex; flex-direction:column; gap:14px; margin-top:30px; }
+  .momento{
+    display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start;
+    background:var(--crema-2); border-radius:16px; padding:18px 20px;
+  }
+  .momento .hora{
+    background:var(--cielo); color:#fff; border-radius:10px; padding:8px 11px;
+    font-family:var(--display); font-size:.95rem; white-space:nowrap;
+  }
+  .momento h3{ font-size:1.1rem; color:var(--tinta); }
+  .momento p{ color:var(--tenue); font-size:.92rem; }
+  .momento a.mapa{
+    display:inline-block; margin-top:6px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--cielo-hondo); font-weight:600; text-decoration:none;
+  }
+  .momento a.mapa:hover{ text-decoration:underline; }
+
+  /* detalles */
+  .tarjetas{ display:grid; gap:12px; margin-top:28px; }
+  .tarjeta{
+    border:1px solid var(--linea); border-radius:16px; padding:20px; text-align:center; background:#fff;
+  }
+  .tarjeta h3{ font-size:1.05rem; color:var(--cielo-hondo); margin-bottom:5px; }
+  .tarjeta p{ color:var(--tenue); font-size:.9rem; }
+  .tarjeta b{ color:var(--tinta); font-weight:600; }
+
+  /* confirmar */
+  .confirmar{ background:var(--crema-2); }
+  form{ display:grid; gap:14px; margin-top:26px; }
+  label{ display:flex; flex-direction:column; gap:6px; font-size:.64rem; letter-spacing:.2em; text-transform:uppercase; color:var(--tenue); font-weight:600; }
+  input, select{
+    background:#fff; border:1px solid var(--linea); border-radius:12px; color:var(--tinta);
+    font-family:var(--texto); font-size:1rem; padding:13px 14px; letter-spacing:normal; text-transform:none;
+  }
+  input:focus, select:focus{ outline:none; border-color:var(--cielo); }
+  .btn{
+    background:var(--cielo-hondo); border:0; border-radius:12px; color:#fff;
+    font-family:var(--texto); font-weight:600; font-size:.9rem; letter-spacing:.12em; text-transform:uppercase;
+    padding:16px; margin-top:4px; transition:transform .18s ease, background .2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); background:#3E5F7A; }
+
+  footer{ text-align:center; padding-block:44px 62px; }
+  footer .nombre{ font-family:var(--display); font-size:1.9rem; color:var(--cielo-hondo); }
+  footer p{ color:var(--tenue); font-size:.82rem; margin-top:6px; letter-spacing:.14em; }
+
+  .demo-bar{
+    position:fixed; left:12px; right:12px; bottom:12px; z-index:60;
+    background:rgba(55,64,63,.94); color:var(--crema); border-radius:14px;
+    padding:9px 14px; font-size:.7rem;
+    display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center;
+  }
+  .demo-bar a{ color:#E4C98C; text-decoration:none; white-space:nowrap; }
+  .demo-bar a:hover{ text-decoration:underline; }
+
+  .rise{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: no-preference){
+    .js .rise{ opacity:0; transform:translateY(16px); transition:opacity .8s ease, transform .8s ease; }
+    .js .rise.on{ opacity:1; transform:none; }
+  }
+  @media (min-width:560px){
+    .personas{ grid-template-columns:1fr 1fr; }
+    .tarjetas{ grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <svg class="nubes" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <circle cx="60" cy="52" r="30" fill="#fff" opacity=".55"/>
+    <circle cx="92" cy="52" r="22" fill="#fff" opacity=".55"/>
+    <circle cx="330" cy="90" r="26" fill="#fff" opacity=".45"/>
+    <circle cx="358" cy="90" r="18" fill="#fff" opacity=".45"/>
+    <circle cx="200" cy="26" r="20" fill="#fff" opacity=".35"/>
+  </svg>
+  <div class="contenido">
+    <p class="filete">Domingo 11 de abril de 2027</p>
+    <p class="quien">Mi bautizo</p>
+    <h1>Emiliano</h1>
+    <p class="fecha">Templo de la Soledad · Oaxaca</p>
+
+    <div class="reloj" aria-label="Cuenta regresiva">
+      <div><b id="d">--</b><span>días</span></div>
+      <div><b id="h">--</b><span>horas</span></div>
+      <div><b id="m">--</b><span>min</span></div>
+      <div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap rise">
+      <p class="verso">«Hoy recibo el primer regalo<br>que me hacen mis papás:<br>la fe.<br>Y quiero compartirlo contigo.»</p>
+      <div class="personas">
+        <div>
+          <p class="rol">Mis papás</p>
+          <p class="nombre">Luis Ángel Ramos<br>Karina Bautista Cruz</p>
+        </div>
+        <div>
+          <p class="rol">Mis padrinos</p>
+          <p class="nombre">Sergio Bautista Cruz<br>Alejandra Nolasco Pérez</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">El domingo</p>
+      <h2>Cómo estará el día</h2>
+      <p class="intro">Nos encantaría verte desde la misa, pero si solo alcanzas la comida, también estás invitado.</p>
+
+      <div class="momentos">
+        <article class="momento">
+          <span class="hora">12:00</span>
+          <div>
+            <h3>Misa de bautizo</h3>
+            <p>Basílica de Nuestra Señora de la Soledad · Centro</p>
+            <a class="mapa" href="https://maps.google.com/?q=Basilica+de+la+Soledad+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="momento">
+          <span class="hora">14:00</span>
+          <div>
+            <h3>Comida</h3>
+            <p>Casa de la familia Ramos Bautista · Privada de los Laureles 18, San Felipe</p>
+            <a class="mapa" href="https://maps.google.com/?q=San+Felipe+del+Agua+Oaxaca" target="_blank" rel="noopener">Cómo llegar ↗</a>
+          </div>
+        </article>
+        <article class="momento">
+          <span class="hora">16:00</span>
+          <div>
+            <h3>Partida del pastel</h3>
+            <p>Y sesión de fotos con Emiliano, mientras aguante despierto.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap rise">
+      <p class="filete">Detalles</p>
+      <h2>Lo que hay que saber</h2>
+      <div class="tarjetas">
+        <article class="tarjeta">
+          <h3>Vestimenta</h3>
+          <p><b>Casual elegante</b><br>Colores claros, si se puede.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Niños</h3>
+          <p><b>¡Bienvenidos!</b><br>Habrá juegos y mesa de dulces en el jardín.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Regalos</h3>
+          <p>Tu presencia es suficiente.<br>Si insistes: <b>lluvia de sobres</b>.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>Estacionamiento</h3>
+          <p>Hay lugar sobre la privada.<br><b>Entrada por Los Laureles</b>.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirmar" id="confirmar">
+    <div class="wrap rise">
+      <p class="filete">Acompáñanos</p>
+      <h2>Confirma tu asistencia</h2>
+      <p class="intro">Con esto sabemos cuántos lugares apartar en la comida. Gracias.</p>
+
+      <form id="form">
+        <label>Tu nombre
+          <input type="text" id="nombre" required placeholder="Tu nombre o el de tu familia">
+        </label>
+        <label>¿Cuántos vienen?
+          <select id="cuantos">
+            <option value="1">1 persona</option>
+            <option value="2" selected>2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="0">No podré asistir</option>
+          </select>
+        </label>
+        <label>¿Vienen niños? ¿Cuántos?
+          <input type="text" id="nota" placeholder="Opcional, para la mesa de dulces">
+        </label>
+        <button class="btn" type="submit">Confirmar por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="nombre">Emiliano</p>
+  <p>11 · 04 · 2027</p>
+</footer>
+
+<div class="demo-bar">
+  <span>Invitación digital de ejemplo · Andrés Mendoza</span>
+  <a href="invitaciones.html">Ver precios</a>
+  <a href="https://wa.me/529514418403?text=Hola%20Andr%C3%A9s%2C%20quiero%20una%20invitaci%C3%B3n%20digital%20de%20bautizo." target="_blank" rel="noopener">Quiero una así ↗</a>
+</div>
+
+<script>
+  document.documentElement.classList.add("js");
+
+  const evento = new Date("2027-04-11T12:00:00").getTime();
+  function tic(){
+    const falta = evento - Date.now();
+    if (falta <= 0) return;
+    document.getElementById("d").textContent = Math.floor(falta / 86400000);
+    document.getElementById("h").textContent = String(Math.floor(falta % 86400000 / 3600000)).padStart(2,"0");
+    document.getElementById("m").textContent = String(Math.floor(falta % 3600000 / 60000)).padStart(2,"0");
+    document.getElementById("s").textContent = String(Math.floor(falta % 60000 / 1000)).padStart(2,"0");
+  }
+  tic(); setInterval(tic, 1000);
+
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const cuantos = document.getElementById("cuantos").value;
+    const nota = document.getElementById("nota").value.trim();
+    if (!nombre) { document.getElementById("nombre").focus(); return; }
+    const texto = cuantos === "0"
+      ? "Hola, soy " + nombre + ". Lamento avisar que no podremos acompañarlos en el bautizo de Emiliano."
+      : "Hola, soy " + nombre + " y confirmamos asistencia al bautizo de Emiliano. Vamos " + cuantos +
+        (cuantos === "1" ? " persona." : " personas.") + (nota ? " " + nota : "");
+    window.open("https://wa.me/529514418403?text=" + encodeURIComponent(texto), "_blank", "noopener");
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); }
+    }), { rootMargin:"0px 0px -8% 0px" });
+    document.querySelectorAll(".rise").forEach(el => io.observe(el));
+  } else {
+    document.documentElement.classList.remove("js");
+  }
+</script>
+</body>
+</html>
