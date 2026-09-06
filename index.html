@@ -248,6 +248,21 @@
   .credits .v{ text-align:right; color:var(--light); font-weight:300; }
 
   /* ---------- servicios ---------- */
+  .arranque{
+    display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between;
+    border:1px solid var(--beam); background:var(--beam-soft);
+    padding:20px 24px; margin-bottom:clamp(28px,4vw,40px);
+  }
+  .arranque .txt{ max-width:62ch; }
+  .arranque b{
+    display:block; font-family:var(--display); font-size:1.25rem; color:var(--beam); margin-bottom:6px;
+  }
+  .arranque p{ color:var(--dim); font-size:.93rem; }
+  .arranque .cupo{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--beam); border:1px solid var(--beam); padding:8px 14px; white-space:nowrap;
+  }
+
   .svc{ border-top:1px solid var(--edge); }
   .svc-row{
     display:grid; grid-template-columns:64px minmax(0,1fr) minmax(0,1.15fr) auto;
@@ -575,6 +590,15 @@
         <h2>Lo que puedo construir para tu negocio</h2>
         <p class="lede">Precios de referencia en pesos mexicanos. La cotización final depende del alcance y siempre se cierra antes de empezar.</p>
       </div>
+
+      <div class="arranque rise">
+        <div class="txt">
+          <b>Precio de arranque: landing desde $3,000</b>
+          <p>Estoy armando mi cartera aquí en Oaxaca y busco tres negocios para hacerlos mis casos de éxito. A cambio del descuento, me dejas usar tu sitio en este portafolio y me das un testimonio cuando veas resultados. Aplica al paquete de una página; los proyectos con agenda, inventario o tienda mantienen su precio.</p>
+        </div>
+        <span class="cupo">Quedan 3 lugares</span>
+      </div>
+
       <div class="svc rise">
         <div class="svc-row">
           <span class="n">01</span>
