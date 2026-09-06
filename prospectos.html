@@ -38,7 +38,6 @@
   header h1{ font-size:1.6rem; line-height:1.1; }
   header p{ color:var(--dim); font-size:.86rem; margin-top:4px; }
 
-  /* marcador */
   .marcador{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:18px; }
   .m{ background:var(--card); border:1px solid var(--edge); padding:10px 10px 12px; }
   .m b{ display:block; font-family:var(--display); font-size:1.7rem; line-height:1.1; font-variant-numeric:tabular-nums; }
@@ -48,7 +47,6 @@
   section{ margin-top:26px; }
   h2{ font-size:1.25rem; margin-bottom:12px; }
 
-  /* alta */
   form{ background:var(--card); border:1px solid var(--edge); padding:16px; display:grid; gap:12px; }
   .fila{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   label{ display:flex; flex-direction:column; gap:5px; }
@@ -63,6 +61,18 @@
     padding:10px 12px; font-size:.85rem; color:var(--dim);
   }
   .pista b{ color:var(--beam); font-weight:500; }
+
+  /* hallazgos */
+  .hallazgos{ border:1px solid var(--edge); padding:12px 14px 14px; }
+  .hallazgos > .mono{ display:block; margin-bottom:10px; }
+  .hallazgos .lista{ display:grid; gap:8px; }
+  @media (min-width:620px){ .hallazgos .lista{ grid-template-columns:1fr 1fr; } }
+  .hallazgos label{
+    flex-direction:row; align-items:flex-start; gap:9px; font-size:.88rem; color:var(--dim);
+    cursor:pointer; line-height:1.35;
+  }
+  .hallazgos input{ width:16px; height:16px; margin-top:2px; flex:none; accent-color:var(--beam); padding:0; }
+
   .btn{
     background:var(--beam); border:1px solid var(--beam); color:#14100A; padding:12px 18px;
     font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
@@ -73,7 +83,6 @@
   .btn.line:hover{ border-color:var(--beam); color:var(--beam); filter:none; }
   .btn.mini{ padding:7px 11px; font-size:.62rem; }
 
-  /* filtros */
   .filtros{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:12px; }
   .chip{
     background:transparent; border:1px solid var(--edge); padding:7px 13px;
@@ -81,7 +90,6 @@
   }
   .chip[aria-pressed="true"]{ background:var(--light); color:var(--film); border-color:var(--light); }
 
-  /* tarjetas */
   .lista{ display:flex; flex-direction:column; gap:10px; }
   .p{
     background:var(--card); border:1px solid var(--edge); border-left:3px solid var(--dimmer);
@@ -91,9 +99,12 @@
   .p[data-estado="Cotizado"]{ border-left-color:var(--beam); }
   .p[data-estado="CLIENTE"]{ border-left-color:var(--ok); background:rgba(111,174,125,.07); }
   .p[data-estado="No le interesó"]{ border-left-color:var(--no); opacity:.6; }
-  .p .top{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
   .p b{ font-weight:500; font-size:1.02rem; }
   .p .meta{ font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; color:var(--dimmer); margin-top:2px; }
+  .p .fallas{ display:flex; flex-wrap:wrap; gap:6px; }
+  .p .fallas span{
+    font-size:.68rem; border:1px solid rgba(168,87,74,.5); color:#D08A7C; padding:3px 8px;
+  }
   .p .nota{ font-size:.86rem; color:var(--dim); }
   .p .acciones{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
   .p select{ padding:7px 9px; font-size:.78rem; }
@@ -101,10 +112,14 @@
   .borrar:hover{ color:var(--no); }
   .vacio{ color:var(--dimmer); font-size:.9rem; padding:22px 0; text-align:center; border:1px dashed var(--edge); }
 
-  /* guion */
   .guion{ background:var(--film-2); border:1px solid var(--edge); padding:16px; margin-top:10px; }
   .guion p{ font-size:.92rem; color:var(--dim); }
+  .guion p.dolor{
+    color:var(--light); font-size:1.02rem; border-left:2px solid var(--no); padding-left:14px; margin-block:10px 14px;
+  }
   .guion p.dice{ color:var(--light); border-left:2px solid var(--beam); padding-left:14px; margin-block:10px; }
+  .guion .senales{ display:flex; flex-wrap:wrap; gap:6px; margin-block:10px 14px; }
+  .guion .senales span{ font-size:.72rem; border:1px solid var(--edge); padding:4px 9px; color:var(--dim); }
   .wa{
     background:var(--film); border:1px solid var(--edge); padding:13px 14px; margin-block:8px 12px;
     font-family:var(--body); font-weight:300; font-size:.88rem; line-height:1.5; color:var(--dim);
@@ -121,13 +136,13 @@
     font-family:var(--mono); font-size:.66rem; padding:6px 10px; text-align:left;
   }
   .busquedas button:hover{ border-color:var(--beam); color:var(--beam); }
+  .aviso{ font-size:.78rem; color:var(--dimmer); margin-top:10px; }
 
   .barra{
     position:fixed; left:0; right:0; bottom:0; background:var(--film-2); border-top:1px solid var(--edge);
     padding:10px 16px; display:flex; gap:10px; align-items:center; justify-content:space-between;
   }
   .barra .mono{ color:var(--dim); }
-  .aviso{ font-size:.78rem; color:var(--dimmer); margin-top:10px; }
 
   @media (max-width:620px){
     .marcador{ grid-template-columns:repeat(2,1fr); }
@@ -141,10 +156,10 @@
   <div class="wrap">
     <p class="mono">Herramienta interna · no se comparte con clientes</p>
     <h1>Cazador de clientes</h1>
-    <p>Todo se guarda en este teléfono o computadora, en este navegador. Nadie más lo ve, ni siquiera se sube a internet. Para pasar la lista a otro dispositivo usa <b>Copiar respaldo</b> abajo y <b>Pegar respaldo</b> en el otro.</p>
+    <p>Todo se guarda en este navegador. Nadie más lo ve. Para pasar la lista a otro dispositivo usa <b>Copiar respaldo</b> abajo y <b>Pegar respaldo</b> en el otro.</p>
     <div class="marcador">
       <div class="m"><b id="mTotal">0</b><span>en la lista</span></div>
-      <div class="m wait"><b id="mVisitados">0</b><span>visitados</span></div>
+      <div class="m wait"><b id="mVisitados">0</b><span>contactados</span></div>
       <div class="m beam"><b id="mNumeros">0</b><span>dieron WhatsApp</span></div>
       <div class="m ok"><b id="mClientes">0</b><span>clientes</span></div>
     </div>
@@ -155,21 +170,16 @@
 
   <section>
     <h2>Cómo encontrarlos en Google Maps</h2>
-    <details open>
-      <summary>La receta (2 minutos de lectura, léela una vez)</summary>
+    <details>
+      <summary>La receta (léela una vez y ya)</summary>
       <ol>
-        <li>Abre <b>Google Maps</b> y escribe una de las búsquedas de abajo. Se copia sola al picarle.</li>
-        <li>Maps te muestra una <b>lista a la izquierda</b> (en compu) o tarjetas abajo (en celular). Ve una por una.</li>
-        <li><b>Pícale al negocio para abrir su ficha.</b> Ahí está la señal que importa:
-          si ves un botón que dice <b>"Sitio web"</b>, sáltatelo — ya tiene página.
-          Si solo ves <b>"Cómo llegar", "Llamar" y "Guardar"</b>, ese es tu cliente.</li>
-        <li>Si el botón de sitio web lo manda a <b>Facebook o Instagram</b>, es todavía mejor prospecto:
-          cree que ya tiene página y no tiene.</li>
-        <li>Checa las reseñas: <b>más de 30 reseñas y 4.3 estrellas o más</b> = el negocio ya gana dinero.
-          Menos de 10 reseñas, sáltatelo por ahora.</li>
-        <li>Anótalo aquí abajo con su teléfono. <b>Meta de hoy: 25 negocios en la lista.</b></li>
+        <li>Abre <b>Google Maps</b> y pega una de las búsquedas de abajo.</li>
+        <li>En la <b>lista de la izquierda</b>, pasa el cursor sobre el botón "Sitio web" sin picarle: abajo se ve a dónde lleva. Si va a <b>Facebook o Instagram</b>, es tuyo. Si no tiene botón, también.</li>
+        <li>Abre la ficha de los buenos y busca <b>"Agregar sitio web"</b> o <b>"Agregar número de teléfono"</b>. Eso es Google diciéndote que les falta.</li>
+        <li>Filtro: <b>más de 30 reseñas y 4.3 estrellas o más</b> = negocio que ya gana dinero.</li>
+        <li>Anótalo aquí abajo y <b>palomea todo lo que le falte</b>. Con eso el mensaje se arma solo.</li>
       </ol>
-      <p class="aviso">Truco: en la compu se ve mucho más rápido que en el celular, porque la lista y el mapa salen juntos.</p>
+      <p class="aviso">En la computadora se revisa el triple de rápido que en el celular.</p>
       <p class="mono" style="margin-top:14px">Búsquedas listas — pícale a una y se copia</p>
       <div class="busquedas" id="busquedas"></div>
     </details>
@@ -178,39 +188,34 @@
   <section>
     <h2>Anotar un negocio</h2>
     <form id="form">
-      <p class="pista">El texto gris en cursiva de cada recuadro es <b>solo un ejemplo</b>. Pícale al recuadro y escribe encima los datos del negocio que encontraste. Al final, el botón amarillo.</p>
+      <p class="pista">El texto gris en cursiva es <b>solo un ejemplo</b>. Escribe encima los datos del negocio que encontraste.</p>
+
       <div class="fila">
         <label><span class="mono">Nombre del negocio</span>
           <input type="text" id="nombre" required placeholder="ej. Hotel Casa Verde"></label>
         <label><span class="mono">Giro</span>
-          <select id="giro">
-            <option value="hotel">Hotel / hostal</option>
-            <option value="comedor">Comedor / fonda</option>
-            <option value="restaurante">Restaurante / bar</option>
-            <option value="dental">Dentista / clínica</option>
-            <option value="ferreteria">Ferretería / abarrotes</option>
-            <option value="boutique">Boutique / artesanías</option>
-            <option value="otro">Otro</option>
-          </select></label>
+          <select id="giro"></select></label>
       </div>
+
       <div class="fila">
         <label><span class="mono">Localidad</span>
-          <input type="text" id="lugar" placeholder="ej. Centro, Tlacolula, Etla…"></label>
+          <input type="text" id="lugar" placeholder="ej. Centro, Jalatlaco, Etla…"></label>
         <label><span class="mono">Teléfono (10 dígitos)</span>
           <input type="tel" id="tel" placeholder="ej. 9511234567"></label>
       </div>
+
+      <div class="hallazgos">
+        <span class="mono">Qué le falta · palomea todo lo que veas</span>
+        <div class="lista" id="hallazgos"></div>
+      </div>
+
       <div class="fila">
-        <label><span class="mono">Qué tiene hoy</span>
-          <select id="web">
-            <option>Nada, solo teléfono</option>
-            <option>Solo Facebook o Instagram</option>
-            <option>Página vieja o rota</option>
-          </select></label>
         <label><span class="mono">Reseñas en Google</span>
           <input type="text" id="resenas" placeholder="ej. 86 reseñas · 4.6"></label>
+        <label><span class="mono">Nota</span>
+          <input type="text" id="nota" placeholder="ej. Preguntar por la dueña después de las 4"></label>
       </div>
-      <label><span class="mono">Nota</span>
-        <input type="text" id="nota" placeholder="ej. Preguntar por la dueña después de las 4"></label>
+
       <button class="btn" type="submit">Agregar a la lista</button>
     </form>
   </section>
@@ -222,7 +227,7 @@
   </section>
 
   <section>
-    <h2>Qué digo cuando entro</h2>
+    <h2>El dolor de este giro</h2>
     <div class="guion" id="guion"></div>
   </section>
 
@@ -239,70 +244,130 @@
 
 <script>
   const CLAVE = "prospectos-am-v1";
+  const LINK = "https://andresmendoza30.github.io/PORTAFOLIO/";
   const ESTADOS = ["Por visitar","Visitado","Dio WhatsApp","Cotizado","CLIENTE","No le interesó"];
 
   const BUSQUEDAS = [
-    "hotel Oaxaca de Juárez centro","hostal Oaxaca","hotel Tlacolula de Matamoros",
-    "hotel Ocotlán de Morelos","cabañas San José del Pacífico","hotel Zaachila",
-    "comedor Oaxaca centro","fonda Tlacolula","cocina económica Oaxaca",
-    "marisquería Oaxaca","taquería Santa Lucía del Camino","restaurante Etla",
+    "hotel Oaxaca de Juárez centro","hostal Oaxaca","posada Oaxaca centro","hotel Jalatlaco",
+    "restaurante Oaxaca centro","cafetería Oaxaca","bar Oaxaca centro","mezcalería Oaxaca",
+    "comedor Oaxaca centro","fonda Tlacolula","cocina económica Oaxaca","marisquería Oaxaca",
     "dentista Oaxaca de Juárez","consultorio dental Xoxocotlán","veterinaria Oaxaca",
-    "ferretería Zaachila","ferretería Etla","abarrotes mayoreo Ocotlán",
-    "boutique ropa Oaxaca centro","artesanías San Bartolo Coyotepec","joyería Oaxaca",
-    "gimnasio Santa Cruz Xoxocotlán","estética Oaxaca","taller mecánico Oaxaca",
-    "mueblería Ocotlán","farmacia Zimatlán","papelería Oaxaca centro"
+    "estética Oaxaca","barbería Oaxaca","spa Oaxaca","gimnasio Oaxaca",
+    "ferretería Zaachila","ferretería Etla","abarrotes mayoreo Ocotlán","refaccionaria Oaxaca",
+    "boutique ropa Oaxaca centro","artesanías San Bartolo Coyotepec","librería Oaxaca",
+    "taller mecánico Oaxaca","papelería Oaxaca centro","mueblería Ocotlán"
   ];
 
-  const LINK = "https://andresmendoza30.github.io/PORTAFOLIO/";
-
-  // Cada giro ataca su dolor real, no "vi que no tiene página".
-  const GUIONES = {
-    hotel: {
-      abre: "Cada reserva que le entra por plataforma le cuesta como el 17%. Un cuarto de $1,800 se le va en $306 de comisión. Si el huésped reserva directo en su página, ese dinero se queda con usted. Con seis reservas directas al mes ya pagó el sitio.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Le hago una pregunta rápida: de cada reserva que les entra por Booking o las plataformas, se les va como el 17% en comisión. En un cuarto de $1,800 son $306 que no se quedan con ustedes.\n\nLo que hago es que el huésped pueda reservar directo con ustedes. Aquí puede verlo funcionando, cambie las fechas y ahí mismo aparece cuánto se ahorra el huésped:",
-      demo: "hotel.html", precio: "$15,000 a $18,000"
-    },
-    comedor: {
-      abre: "¿Cuántos pedidos pierde en la hora pico porque nadie alcanza a contestar el teléfono? Con esto el cliente arma su pedido solo y a usted le llega ya escrito al WhatsApp, con dirección y total.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: en plena hora de la comida, ¿cuántos pedidos se les pierden porque nadie alcanza a contestar el teléfono?\n\nLo que hago es que el cliente arme su pedido solo y a ustedes les llegue ya escrito al WhatsApp, con dirección y total. Aquí lo puede probar, el menú cambia según el día:",
-      demo: "comedor.html", precio: "$5,000 a $6,500"
-    },
-    restaurante: {
-      abre: "Su carta está en fotos de Instagram de hace meses. Aquí la gente ve la carta actual y reserva mesa sin que usted conteste nada.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: ¿cuántas veces al día les preguntan por mensaje la carta, los precios o si hay lugar?\n\nLo que hago es que la gente vea la carta actualizada y aparte su mesa sin que ustedes contesten nada. Así se ve funcionando:",
-      demo: "copal.html", precio: "$8,000 a $14,000"
-    },
-    dental: {
-      abre: "Sus pacientes agendarían solos, a la hora que sea, hasta a las once de la noche. Y usted ve toda la agenda del día en un panel.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta rápida: ¿cuánto tiempo del día se les va agendando citas por teléfono y WhatsApp, y cuántos pacientes se pierden cuando escriben en la noche y nadie contesta?\n\nLo que hago es que el paciente agende solo, a cualquier hora, y ustedes vean la agenda del día en un panel. Aquí puede probar cómo agendaría un paciente:",
-      demo: "consultorio.html", precio: "$14,000 a $18,000"
-    },
-    ferreteria: {
-      abre: "¿Cómo sabe hoy qué se le está acabando? Con esto lo ve en la pantalla y le llega aviso al WhatsApp cuando algo baja del mínimo.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago sistemas y páginas web aquí en Oaxaca. Una pregunta: ¿cómo saben hoy qué producto se les está acabando, antes de que llegue el cliente y ya no haya?\n\nLo que hago es un tablero donde ven las existencias en vivo y les llega aviso al WhatsApp cuando algo baja del mínimo. Aquí lo puede ver funcionando con datos de ejemplo:",
-      demo: "inventario.html", precio: "$22,000 en adelante"
-    },
-    boutique: {
-      abre: "¿Cuánto tiempo se le va contestando 'cuánto cuesta' y '¿todavía la tienes?' por Instagram? Le hago un aparador de lo que hay hoy: la clienta ve talla y precio, y llega sabiendo qué quiere.",
-      wa: "Buenas tardes, ¿hablo con la encargada de {N}? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca. Una pregunta: ¿cuánto tiempo se le va al día contestando \"cuánto cuesta\", \"qué tallas hay\" y \"¿todavía la tienes?\" por mensaje?\n\nLo que hago es un aparador de lo que hay hoy: la clienta ve la prenda con su talla y su precio, y le escribe ya sabiendo qué quiere. Lo que se vende usted lo marca desde su celular en dos toques. Aquí lo puede probar:",
-      demo: "boutique.html", precio: "$8,000 a $12,000"
-    },
-    otro: {
-      abre: "¿Qué es lo que más tiempo le quita en el día? Casi siempre es contestar lo mismo una y otra vez por mensaje. Eso es justo lo que le quito.",
-      wa: "Buenas tardes, ¿hablo con el encargado de {N}? Soy Andrés Mendoza, hago páginas web y automatizaciones aquí en Oaxaca. Una pregunta: ¿qué es lo que más tiempo les quita en el día? Casi siempre es contestar lo mismo una y otra vez por mensaje o por teléfono.\n\nEso es justo lo que les quito. Aquí puede ver trabajos que he hecho para otros negocios:",
-      demo: "index.html", precio: "desde $6,500"
-    }
+  // Lo que le falta al negocio, y cómo se dice en el mensaje
+  const HALLAZGOS = {
+    sinweb:     { label:"No tiene sitio web",              frase:"No aparece con página propia, así que quien los busca no ve servicios ni precios." },
+    redes:      { label:"Su enlace lleva a Facebook o IG", frase:"Su enlace de sitio web lleva a redes sociales, donde el cliente no encuentra precios ni horarios claros." },
+    sintel:     { label:"No tiene teléfono en Google",     frase:"No aparece un teléfono en su ficha, así que quien los encuentra no tiene cómo preguntar." },
+    horario:    { label:"Horario incompleto o mal puesto", frase:"El horario de su ficha se ve incompleto o equivocado, y eso confunde a quien quiere ir." },
+    fotos:      { label:"Fotos viejas o muy pocas",        frase:"Las fotos de su ficha se ven viejas o son muy pocas." },
+    resenas:    { label:"Muy pocas reseñas",               frase:"Tienen pocas reseñas comparados con otros negocios del mismo giro aquí en Oaxaca." },
+    noresponde: { label:"No responde las reseñas",         frase:"No responden las reseñas, y Google le da preferencia a quien sí contesta." },
+    escondido:  { label:"Local escondido o en un interior",frase:"Su local está en un interior o piso alto, así que quien no los conoce batalla para llegar." }
   };
 
-  function mensajeWA(d){
-    const g = GUIONES[d.giro] || GUIONES.otro;
-    return g.wa.replace(/\{N\}/g, d.nombre) + "\n" + LINK + g.demo +
-      "\n\nÁbralo y pruébelo, todo funciona. Si le interesa, le hago sin costo una revisión de cómo se está viendo su negocio en internet hoy. ¿Se la mando?";
-  }
-
-  const NOMBRE_GIRO = {
-    hotel:"Hotel/hostal", comedor:"Comedor/fonda", restaurante:"Restaurante",
-    dental:"Dentista/clínica", ferreteria:"Ferretería/abarrotes", boutique:"Boutique", otro:"Otro"
+  // Cada giro con su dolor real, su frase de apertura y su demo
+  const GIROS = {
+    hotel: {
+      nombre:"Hotel / hostal",
+      dolor:"Cada reserva por plataforma se les va en 17% de comisión. En un cuarto de $1,800 son $306 que no se quedan con ellos.",
+      apertura:"¿De cada reserva que les entra por Booking, sabe cuánto se les va en comisión? Anda por el 17%.",
+      senales:["Aparece en Booking o Airbnb","Sin sitio propio","Recepción atendida siempre"],
+      waIntro:"Le comento por qué le escribo: de cada reserva que les entra por Booking o las plataformas, se les va como el 17% en comisión. En un cuarto de $1,800 son $306 por noche que no se quedan con ustedes.\n\nLo que hago es que el huésped reserve directo. Aquí lo puede probar, cambie las fechas y verá el ahorro:",
+      demo:"hotel.html", precio:"$9,900 a $18,000"
+    },
+    restaurante: {
+      nombre:"Restaurante / café / bar",
+      dolor:"Contestan todo el día por mensaje la carta, los precios y si hay lugar. Y su carta vive en fotos de hace meses.",
+      apertura:"¿Cuántas veces al día les preguntan por mensaje la carta, los precios o si hay lugar?",
+      senales:["Solo Instagram","Carta en fotos viejas","Reservan por DM"],
+      waIntro:"Una pregunta: ¿cuántas veces al día les preguntan por mensaje la carta, los precios o si hay lugar?\n\nLo que hago es que la gente vea la carta actualizada y aparte su mesa sin que ustedes contesten nada. Así se ve funcionando:",
+      demo:"copal.html", precio:"$6,500 a $14,000"
+    },
+    comedor: {
+      nombre:"Comedor / fonda",
+      dolor:"En plena hora de la comida nadie alcanza a contestar el teléfono, y ahí se pierden los pedidos.",
+      apertura:"En la hora de la comida, ¿cuántos pedidos se les pierden porque nadie alcanza a contestar?",
+      senales:["Toman pedidos por teléfono","Sin menú publicado","Reparten a domicilio"],
+      waIntro:"Una pregunta: en plena hora de la comida, ¿cuántos pedidos se les pierden porque nadie alcanza a contestar el teléfono?\n\nLo que hago es que el cliente arme su pedido solo y a ustedes les llegue ya escrito al WhatsApp, con dirección y total. Aquí lo puede probar:",
+      demo:"comedor.html", precio:"$3,000 a $6,500"
+    },
+    dental: {
+      nombre:"Dentista / clínica",
+      dolor:"Los pacientes escriben en la noche o el domingo, cuando no hay quién conteste. Ese paciente se va con otro.",
+      apertura:"¿Cuántos pacientes le escriben en la noche o en domingo, cuando no hay quién conteste?",
+      senales:["Agenda por teléfono","Sin precios publicados","Competencia con sitio"],
+      waIntro:"Una pregunta rápida: ¿cuánto tiempo del día se les va agendando citas por teléfono, y cuántos pacientes se pierden cuando escriben en la noche y nadie contesta?\n\nLo que hago es que el paciente agende solo, a cualquier hora, y ustedes vean la agenda del día en un panel. Aquí puede probar cómo agendaría:",
+      demo:"consultorio.html", precio:"$9,900 a $18,000"
+    },
+    veterinaria: {
+      nombre:"Veterinaria",
+      dolor:"Agendan consultas y baños por teléfono, y las urgencias les llegan a deshoras sin forma de filtrarlas.",
+      apertura:"¿Cuántas citas de baño y consulta agendan al día por teléfono?",
+      senales:["Agenda por teléfono","Sin precios de servicios","Urgencias a deshoras"],
+      waIntro:"Una pregunta: ¿cuántas citas de consulta y baño agendan al día por teléfono?\n\nLo que hago es que el dueño de la mascota agende solo, vea sus servicios y precios, y ustedes tengan la agenda del día en una pantalla. Aquí lo puede probar (lo hice para un consultorio, pero funciona igual):",
+      demo:"consultorio.html", precio:"$6,500 a $14,000"
+    },
+    estetica: {
+      nombre:"Estética / barbería / spa",
+      dolor:"Agendan por WhatsApp una por una, y cuando alguien no llega el espacio se queda muerto.",
+      apertura:"¿Cuántas citas agendan por WhatsApp al día, y cuántas se les caen sin avisar?",
+      senales:["Agenda por DM","Sin lista de precios","Muchas cancelaciones"],
+      waIntro:"Una pregunta: ¿cuántas citas agendan por WhatsApp al día, y cuántas se les caen sin que avisen?\n\nLo que hago es que la clienta agende sola, vea los precios de cada servicio, y a ustedes les quede la agenda del día en una pantalla, con recordatorio listo para mandar. Aquí lo puede probar:",
+      demo:"consultorio.html", precio:"$6,500 a $12,000"
+    },
+    gimnasio: {
+      nombre:"Gimnasio",
+      dolor:"Llevan las mensualidades en cuaderno y no saben quién ya venció hasta que el socio deja de venir.",
+      apertura:"¿Cómo llevan hoy el control de quién ya pagó la mensualidad y a quién se le venció?",
+      senales:["Control en cuaderno","Sin precios publicados","Horarios de clases en fotos"],
+      waIntro:"Una pregunta: ¿cómo llevan hoy el control de quién pagó la mensualidad y a quién se le venció?\n\nLo que hago es un panel donde ven los socios activos, los vencidos y los ingresos del mes, más la página con sus planes y horarios. Aquí puede ver el panel funcionando:",
+      demo:"inventario.html", precio:"$9,900 a $18,000"
+    },
+    ferreteria: {
+      nombre:"Ferretería / abarrotes",
+      dolor:"Se enteran de que faltó producto cuando el cliente ya se fue con la competencia.",
+      apertura:"¿Cómo saben hoy qué se les está acabando, antes de que llegue el cliente y ya no haya?",
+      senales:["Inventario en cuaderno","Sin catálogo","Pierden ventas por faltantes"],
+      waIntro:"Una pregunta: ¿cómo saben hoy qué producto se les está acabando, antes de que llegue el cliente y ya no haya?\n\nLo que hago es un tablero donde ven las existencias en vivo y les llega aviso al WhatsApp cuando algo baja del mínimo. Aquí lo puede ver funcionando con datos de ejemplo:",
+      demo:"inventario.html", precio:"$14,000 a $22,000"
+    },
+    boutique: {
+      nombre:"Boutique / artesanías",
+      dolor:"Se les va el día contestando \"cuánto cuesta\", \"qué tallas hay\" y \"¿todavía la tienes?\".",
+      apertura:"¿Cuánto tiempo se le va al día contestando cuánto cuesta y qué tallas hay?",
+      senales:["Solo Instagram","Venden por DM","Piezas únicas sin catálogo"],
+      waIntro:"Una pregunta: ¿cuánto tiempo se le va al día contestando \"cuánto cuesta\", \"qué tallas hay\" y \"¿todavía la tienes?\" por mensaje?\n\nLo que hago es un aparador de lo que hay hoy: la clienta ve la prenda con su talla y su precio, y le escribe ya sabiendo qué quiere. Lo que se vende se marca en dos toques desde el celular. Aquí lo puede probar:",
+      demo:"boutique.html", precio:"$3,000 a $12,000"
+    },
+    libreria: {
+      nombre:"Librería",
+      dolor:"Les preguntan por títulos uno por uno, y quien busca un libro en Google nunca sabe si lo tienen.",
+      apertura:"¿Cuánta gente les pregunta por mensaje si tienen tal libro?",
+      senales:["Sin catálogo en línea","Solo Instagram","Apartan por mensaje"],
+      waIntro:"Una pregunta: ¿cuánta gente les escribe para preguntar si tienen tal o cual libro?\n\nLo que hago es un catálogo donde ven los títulos que manejan, con precio, y apartan directo por WhatsApp. Aquí lo puede probar:",
+      demo:"boutique.html", precio:"$3,000 a $6,500"
+    },
+    taller: {
+      nombre:"Taller mecánico",
+      dolor:"Cotizan por teléfono todo el día y el cliente no tiene cómo comparar ni confiar antes de llegar.",
+      apertura:"¿Cuántas cotizaciones da por teléfono al día que nunca regresan?",
+      senales:["Sin precios de servicios","Solo teléfono","Sin fotos del taller"],
+      waIntro:"Una pregunta: ¿cuántas cotizaciones da por teléfono al día de gente que ya no regresa?\n\nLo que hago es que el cliente vea sus servicios con precios de referencia, las fotos del taller y aparte su cita, para que llegue ya decidido. Aquí lo puede probar:",
+      demo:"consultorio.html", precio:"$6,500 a $12,000"
+    },
+    otro: {
+      nombre:"Otro",
+      dolor:"Casi siempre es lo mismo: contestar una y otra vez lo que podría estar publicado.",
+      apertura:"¿Qué es lo que más tiempo le quita en el día?",
+      senales:["Sin sitio web","Solo redes","Contestan lo mismo a diario"],
+      waIntro:"Una pregunta: ¿qué es lo que más tiempo les quita en el día? Casi siempre es contestar lo mismo una y otra vez por mensaje.\n\nEso es justo lo que les quito. Aquí puede ver trabajos que he hecho para otros negocios de Oaxaca:",
+      demo:"index.html", precio:"desde $3,000"
+    }
   };
 
   let datos = [];
@@ -310,21 +375,54 @@
   let filtro = "Todos";
 
   const $ = id => document.getElementById(id);
-  const guardar = () => { try { localStorage.setItem(CLAVE, JSON.stringify(datos)); } catch(e){
-    $("pie").textContent = "No se pudo guardar (modo privado)"; } };
+  const guardar = () => {
+    try { localStorage.setItem(CLAVE, JSON.stringify(datos)); }
+    catch(e){ $("pie").textContent = "No se pudo guardar (modo privado)"; }
+  };
+  const aviso = txt => {
+    $("pie").textContent = txt;
+    setTimeout(() => $("pie").textContent = "Guardado en este dispositivo", 3000);
+  };
+
+  // arma el mensaje juntando el dolor del giro con lo que le falta al negocio
+  function mensajeWA(d){
+    const g = GIROS[d.giro] || GIROS.otro;
+    const nombre = d.nombre || "su negocio";
+    let t = "Buenas tardes, ¿hablo con el encargado de " + nombre + "? Soy Andrés Mendoza, hago páginas web aquí en Oaxaca.\n\n";
+    const fallas = (d.hallazgos || []).map(h => HALLAZGOS[h] && "• " + HALLAZGOS[h].frase).filter(Boolean);
+    if (fallas.length) {
+      t += "Antes de escribirle revisé su ficha de Google y noté esto:\n" + fallas.join("\n") + "\n\n";
+    }
+    t += g.waIntro + "\n" + LINK + g.demo +
+      "\n\nÁbralo y pruébelo, todo funciona. Si le interesa, le hago sin costo la revisión completa de cómo se está viendo su negocio en internet. ¿Se la mando?";
+    return t;
+  }
+
+  // giros en el selector
+  Object.keys(GIROS).forEach(k => {
+    const o = document.createElement("option");
+    o.value = k; o.textContent = GIROS[k].nombre;
+    $("giro").appendChild(o);
+  });
+  $("giro").value = "dental";
+
+  // casillas de hallazgos
+  Object.keys(HALLAZGOS).forEach(k => {
+    const l = document.createElement("label");
+    l.innerHTML = '<input type="checkbox" value="' + k + '"><span>' + HALLAZGOS[k].label + '</span>';
+    $("hallazgos").appendChild(l);
+  });
 
   // búsquedas copiables
-  const cajaBus = $("busquedas");
   BUSQUEDAS.forEach(b => {
     const bt = document.createElement("button");
-    bt.type = "button";
-    bt.textContent = b;
+    bt.type = "button"; bt.textContent = b;
     bt.addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(b); bt.textContent = "copiado ✓";
-        setTimeout(() => bt.textContent = b, 1200); } catch(e){
-        window.open("https://www.google.com/maps/search/" + encodeURIComponent(b), "_blank", "noopener"); }
+        setTimeout(() => bt.textContent = b, 1200); }
+      catch(e){ window.open("https://www.google.com/maps/search/" + encodeURIComponent(b), "_blank", "noopener"); }
     });
-    cajaBus.appendChild(bt);
+    $("busquedas").appendChild(bt);
   });
 
   // filtros
@@ -343,51 +441,58 @@
 
   $("form").addEventListener("submit", e => {
     e.preventDefault();
+    const marcados = [...document.querySelectorAll('#hallazgos input:checked')].map(i => i.value);
     datos.unshift({
       id: Date.now(),
       nombre: $("nombre").value.trim(),
       giro: $("giro").value,
       lugar: $("lugar").value.trim(),
       tel: $("tel").value.replace(/\D/g,""),
-      web: $("web").value,
+      hallazgos: marcados,
       resenas: $("resenas").value.trim(),
       nota: $("nota").value.trim(),
       estado: "Por visitar"
     });
     guardar(); pintar();
+    const giro = $("giro").value;
     e.target.reset();
+    $("giro").value = giro;
+    document.querySelectorAll('#hallazgos input').forEach(i => i.checked = false);
     $("nombre").focus();
   });
 
   function pintar(){
-    const lista = $("lista");
-    lista.innerHTML = "";
+    const cont = $("lista");
+    cont.innerHTML = "";
     const ver = datos.filter(d => filtro === "Todos" || d.estado === filtro);
 
     if (!ver.length) {
-      lista.innerHTML = '<p class="vacio">' +
+      cont.innerHTML = '<p class="vacio">' +
         (datos.length ? "Ninguno en este estado." : "Todavía no anotas ninguno. Abre Maps, busca una de las frases de arriba y empieza.") +
         '</p>';
     }
 
     ver.forEach(d => {
-      const g = GUIONES[d.giro] || GUIONES.otro;
+      const g = GIROS[d.giro] || GIROS.otro;
+      const msg = mensajeWA(d);
       const art = document.createElement("article");
       art.className = "p";
       art.dataset.estado = d.estado;
 
-      const msg = mensajeWA(d);
+      const fallas = (d.hallazgos || []).map(h => HALLAZGOS[h] && '<span>' + HALLAZGOS[h].label + '</span>').filter(Boolean).join("");
 
       art.innerHTML =
-        '<div class="top"><div><b>' + d.nombre + '</b>' +
-        '<p class="meta">' + NOMBRE_GIRO[d.giro] + (d.lugar ? " · " + d.lugar : "") +
-        (d.resenas ? " · " + d.resenas : "") + " · " + d.web + '</p></div></div>' +
+        '<div><b>' + d.nombre + '</b>' +
+        '<p class="meta">' + g.nombre + (d.lugar ? " · " + d.lugar : "") +
+        (d.resenas ? " · " + d.resenas : "") + '</p></div>' +
+        (fallas ? '<div class="fallas">' + fallas + '</div>' : "") +
         (d.nota ? '<p class="nota">' + d.nota + '</p>' : "") +
         '<div class="acciones">' +
           '<select aria-label="Estado"></select>' +
           '<a class="btn mini line" href="' + g.demo + '" target="_blank" rel="noopener">Ver su demo</a>' +
           (d.tel ? '<a class="btn mini" href="https://wa.me/52' + d.tel + '?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">WhatsApp</a>' : "") +
           (d.tel ? '<a class="btn mini line" href="tel:+52' + d.tel + '">Llamar</a>' : "") +
+          '<button class="btn mini line copiar" type="button">Copiar mensaje</button>' +
           '<button class="borrar" type="button">Borrar</button>' +
         '</div>';
 
@@ -400,11 +505,17 @@
       });
       sel.addEventListener("change", () => { d.estado = sel.value; guardar(); pintar(); });
 
+      art.querySelector(".copiar").addEventListener("click", async ev => {
+        try { await navigator.clipboard.writeText(msg); ev.target.textContent = "Copiado ✓";
+          setTimeout(() => ev.target.textContent = "Copiar mensaje", 1500); }
+        catch(e){ window.prompt("Copia el mensaje:", msg); }
+      });
+
       art.querySelector(".borrar").addEventListener("click", () => {
         datos = datos.filter(x => x.id !== d.id); guardar(); pintar();
       });
 
-      lista.appendChild(art);
+      cont.appendChild(art);
     });
 
     $("mTotal").textContent = datos.length;
@@ -416,56 +527,52 @@
   }
 
   function pintarGuion(){
-    const giro = $("giro").value;
-    const g = GUIONES[giro] || GUIONES.otro;
+    const k = $("giro").value;
+    const g = GIROS[k] || GIROS.otro;
+    const marcados = [...document.querySelectorAll('#hallazgos input:checked')].map(i => i.value);
+    const ejemplo = mensajeWA({ giro:k, nombre:"[nombre del negocio]", hallazgos:marcados });
+
     $("guion").innerHTML =
-      '<p class="mono">Giro seleccionado arriba: ' + NOMBRE_GIRO[giro] + '</p>' +
-      '<p class="dice">"Buenas tardes, ¿es usted el dueño? Soy Andrés, hago páginas web aquí en Oaxaca. Le robo dos minutos. Busqué su negocio en Google y vi que no tiene página, ¿verdad?"</p>' +
-      '<p class="dice">"' + g.abre + '"</p>' +
+      '<p class="mono">Giro seleccionado: ' + g.nombre + '</p>' +
+      '<p class="dolor">' + g.dolor + '</p>' +
+      '<p class="mono">Señales de que es buen prospecto</p>' +
+      '<div class="senales">' + g.senales.map(s => "<span>" + s + "</span>").join("") + '</div>' +
+      '<p class="mono">Lo que le digo al entrar</p>' +
+      '<p class="dice">"Buenas tardes, ¿es usted el dueño? Soy Andrés, hago páginas web aquí en Oaxaca. Le robo dos minutos."</p>' +
+      '<p class="dice">"' + g.apertura + '"</p>' +
       '<p class="dice">"Mire, esto es lo que hago —" (le pasas el celular con el demo abierto) "— pruébelo usted mismo."</p>' +
-      '<p class="dice">Cierre: "¿Me pasa su WhatsApp y mañana le mando la revisión sin costo?"</p>' +
-      '<p>Rango de precio para este giro: <b>' + g.precio + '</b>. Descuento de primer cliente solo a cambio de testimonio. Siempre 50% de anticipo.</p>' +
+      '<p class="dice">Cierre: "¿Me pasa su WhatsApp y le mando lo que le haría a su negocio?"</p>' +
+      '<p>Rango para este giro: <b style="color:var(--beam)">' + g.precio + '</b>. Precio de arranque $3,000 solo para landing de una página, a cambio de testimonio. Siempre 50% de anticipo.</p>' +
       '<p style="margin-top:10px"><a href="' + g.demo + '" target="_blank" rel="noopener">Abrir el demo de este giro ↗</a></p>' +
-      '<p class="mono" style="margin-top:20px">Mensaje que se manda por WhatsApp en este giro</p>' +
-      '<pre class="wa" id="waPreview">' + mensajeWA({ giro: giro, nombre: "[nombre del negocio]" }) + '</pre>' +
+      '<p class="mono" style="margin-top:20px">Mensaje de WhatsApp con lo que llevas palomeado</p>' +
+      '<pre class="wa" id="waPreview">' + ejemplo + '</pre>' +
       '<button class="btn line mini" type="button" id="copiarWA">Copiar este mensaje</button>';
 
     const cop = $("copiarWA");
     if (cop) cop.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText($("waPreview").textContent);
-        cop.textContent = "Copiado ✓";
-        setTimeout(() => cop.textContent = "Copiar este mensaje", 1500);
-      } catch(e){ window.prompt("Copia el mensaje:", $("waPreview").textContent); }
+      try { await navigator.clipboard.writeText($("waPreview").textContent);
+        cop.textContent = "Copiado ✓"; setTimeout(() => cop.textContent = "Copiar este mensaje", 1500); }
+      catch(e){ window.prompt("Copia el mensaje:", $("waPreview").textContent); }
     });
   }
+
   $("giro").addEventListener("change", pintarGuion);
+  $("hallazgos").addEventListener("change", pintarGuion);
 
   $("hoy").addEventListener("click", () => {
     filtro = "Por visitar";
     [...cajaFil.children].forEach(c => c.setAttribute("aria-pressed", c.textContent === "Por visitar" ? "true" : "false"));
     pintar();
-    document.getElementById("lista").scrollIntoView({ behavior:"smooth" });
+    $("lista").scrollIntoView({ behavior:"smooth" });
   });
 
-  function aviso(txt){
-    $("pie").textContent = txt;
-    setTimeout(() => $("pie").textContent = "Guardado en este dispositivo", 3000);
-  }
-
-  // Respaldo: copia toda la lista como texto para pasarla a otro teléfono o computadora
   $("respaldar").addEventListener("click", async () => {
     if (!datos.length) { aviso("No hay nada que respaldar todavía"); return; }
     const codigo = JSON.stringify(datos);
-    try {
-      await navigator.clipboard.writeText(codigo);
-      aviso("Respaldo copiado — mándatelo por WhatsApp");
-    } catch(e){
-      window.prompt("Copia todo este texto y guárdalo:", codigo);
-    }
+    try { await navigator.clipboard.writeText(codigo); aviso("Respaldo copiado — mándatelo por WhatsApp"); }
+    catch(e){ window.prompt("Copia todo este texto y guárdalo:", codigo); }
   });
 
-  // Restaurar: pega el respaldo hecho en el otro dispositivo. No borra lo que ya hay.
   $("restaurar").addEventListener("click", () => {
     const pegado = window.prompt("Pega aquí el respaldo que copiaste en el otro dispositivo:");
     if (!pegado) return;
