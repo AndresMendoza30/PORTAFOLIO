@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guion de llamada</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#12121A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fondo:#12121A;
+    --panel:#1B1B26;
+    --luz:#F2F0EC;
+    --tenue:#9B98A6;
+    --oro:#E0B872;
+    --verde:#4ADE80;
+    --rojo:#F87171;
+    --linea:rgba(242,240,236,.12);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Inter","Segoe UI",Helvetica,sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--fondo); color:var(--luz);
+    font-family:var(--sans); font-size:17px; line-height:1.6; font-weight:300;
+    -webkit-font-smoothing:antialiased; padding:22px 16px 90px;
+  }
+  .wrap{ max-width:640px; margin-inline:auto; }
+
+  header{ margin-bottom:26px; }
+  h1{ font-family:var(--serif); font-weight:600; font-size:1.9rem; line-height:1.1; }
+  header p{ color:var(--tenue); font-size:.95rem; margin-top:8px; }
+  .cuando{
+    display:inline-block; margin-top:14px; background:rgba(224,184,114,.14);
+    border:1px solid rgba(224,184,114,.4); color:var(--oro);
+    padding:7px 14px; border-radius:999px; font-size:.85rem; font-weight:500;
+  }
+
+  .paso{
+    background:var(--panel); border:1px solid var(--linea); border-radius:16px;
+    padding:20px 18px; margin-bottom:16px;
+  }
+  .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--oro); color:#12121A;
+    font-weight:700; font-size:.85rem; margin-right:9px; flex:none;
+  }
+  .paso h2{
+    font-family:var(--sans); font-weight:600; font-size:1.05rem;
+    display:flex; align-items:center; margin-bottom:12px;
+  }
+  .paso .nota{ color:var(--tenue); font-size:.88rem; margin-top:10px; }
+
+  .decir{
+    background:rgba(74,222,128,.09); border-left:3px solid var(--verde);
+    padding:14px 15px; border-radius:0 10px 10px 0; margin:12px 0;
+    font-size:1.02rem; line-height:1.55; font-weight:400;
+  }
+  .decir + .decir{ margin-top:10px; }
+
+  ol.preg{ list-style:none; counter-reset:p; }
+  ol.preg li{
+    counter-increment:p; padding:11px 0 11px 34px; position:relative;
+    border-bottom:1px solid var(--linea); font-size:1.02rem; font-weight:400;
+  }
+  ol.preg li:last-child{ border-bottom:none; }
+  ol.preg li::before{
+    content:counter(p); position:absolute; left:0; top:11px;
+    width:22px; height:22px; border-radius:50%; border:1px solid var(--oro);
+    color:var(--oro); font-size:.72rem; font-weight:600;
+    display:grid; place-items:center;
+  }
+
+  .precio{
+    text-align:center; padding:22px 18px;
+    background:linear-gradient(180deg, rgba(224,184,114,.16), rgba(224,184,114,.05));
+    border:1px solid rgba(224,184,114,.42); border-radius:16px; margin-bottom:16px;
+  }
+  .precio b{ display:block; font-family:var(--serif); font-size:3rem; font-weight:600; color:var(--oro); line-height:1; }
+  .precio span{ display:block; color:var(--tenue); font-size:.9rem; margin-top:8px; }
+  .precio .alto{
+    margin-top:14px; padding-top:14px; border-top:1px solid rgba(224,184,114,.3);
+    color:var(--luz); font-size:.95rem; font-weight:500;
+  }
+
+  details{ border-bottom:1px solid var(--linea); }
+  details:last-of-type{ border-bottom:none; }
+  summary{
+    cursor:pointer; padding:14px 0; font-weight:500; font-size:1rem;
+    display:flex; justify-content:space-between; align-items:center; gap:12px; list-style:none;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::after{ content:"+"; color:var(--oro); font-size:1.35rem; line-height:1; flex:none; }
+  details[open] summary::after{ content:"\2013"; }
+  details .decir{ margin-bottom:14px; }
+
+  .reglas{ display:grid; gap:10px; }
+  .regla{
+    display:flex; gap:11px; align-items:flex-start;
+    background:var(--panel); border:1px solid var(--linea); border-radius:12px; padding:14px 15px;
+  }
+  .regla i{ font-style:normal; font-size:1.2rem; flex:none; line-height:1.3; }
+  .regla b{ display:block; font-weight:600; font-size:.98rem; margin-bottom:2px; }
+  .regla p{ color:var(--tenue); font-size:.88rem; }
+
+  .cierre-nota{
+    margin-top:26px; padding:18px 16px; border:1px solid var(--linea);
+    border-radius:14px; background:var(--panel); font-size:.95rem; color:var(--tenue);
+  }
+  .cierre-nota b{ color:var(--luz); font-weight:600; }
+
+  h3.sep{
+    font-family:var(--serif); font-weight:600; font-size:1.3rem;
+    margin:30px 0 14px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Guion de llamada</h1>
+    <p>Uniformes deportivos y publicidad impresa · 951 649 0739</p>
+    <span class="cuando">Él te marca · 11:00 a.m.</span>
+  </header>
+
+  <div class="paso">
+    <h2><span class="num">1</span>Cómo contestas</h2>
+    <div class="decir">Buenos días, habla Andrés. ¿Cómo está?</div>
+    <p class="nota">Eso es todo. No expliques nada todavía. Él llamó, él va a decir para qué.</p>
+  </div>
+
+  <div class="paso">
+    <h2><span class="num">2</span>Lo que le preguntas</h2>
+    <p class="nota" style="margin-top:0;margin-bottom:12px">Que hable él. Tú anota. Entre más hable, más fácil se cierra.</p>
+    <ol class="preg">
+      <li>¿Quiénes son sus clientes hoy — equipos, escuelas, empresas, partidos?</li>
+      <li>¿Cómo le llegan los pedidos ahorita, todo por WhatsApp?</li>
+      <li>¿Qué es lo que más batalla al cotizar?</li>
+      <li>¿Tiene fotos de trabajos que ya haya hecho?</li>
+      <li>¿Qué le gustaría que pasara con la página?</li>
+    </ol>
+  </div>
+
+  <div class="paso">
+    <h2><span class="num">3</span>Lo que le explicas</h2>
+    <div class="decir">Le hago una página con sus dos líneas separadas: uniformes por un lado, y banderas, wallbanners y campañas por el otro. Cada una con fotos de sus trabajos.</div>
+    <div class="decir">Y lleva un formulario de cotización. El cliente pone qué necesita, cuántas piezas, tallas o medidas, si trae diseño y para cuándo lo quiere. Eso le llega a su WhatsApp ya armado, listo para que usted cotice.</div>
+    <div class="decir">Se acaba el andar preguntando lo mismo en cada pedido.</div>
+    <p class="nota">Corto. No te extiendas. Si quiere más detalle, te lo va a preguntar.</p>
+  </div>
+
+  <div class="paso">
+    <h2><span class="num">4</span>El precio</h2>
+    <div class="precio">
+      <b>$5,500</b>
+      <span>Página completa con cotizador · sin mensualidad</span>
+      <p class="alto">Lo dices y te callas.</p>
+    </div>
+    <p class="nota">El silencio después del número se siente eterno pero dura 4 segundos. <b style="color:var(--luz)">No lo llenes.</b> El que habla primero después del precio, pierde.</p>
+  </div>
+
+  <div class="paso">
+    <h2><span class="num">5</span>El cierre</h2>
+    <div class="decir">Es 50% para arrancar y 50% al entregar. Se la tengo lista en 7 días desde que me pase sus fotos y su información.</div>
+    <div class="decir">¿Le parece si arrancamos esta semana?</div>
+  </div>
+
+  <h3 class="sep">Si te dice…</h3>
+
+  <div class="paso" style="padding-top:6px;padding-bottom:6px">
+    <details>
+      <summary>"Está caro"</summary>
+      <div class="decir">Lo entiendo. Pero piénselo así: con un solo pedido de banderas de campaña que le entre por ahí, ya se pagó. Y no hay mensualidad, es de una sola vez.</div>
+    </details>
+    <details>
+      <summary>"Déjame pensarlo"</summary>
+      <div class="decir">Claro, tómese su tiempo. ¿Le parece si le marco el jueves para saber qué decidió?</div>
+      <p class="nota" style="padding-bottom:14px">Y sí márcale el jueves. Sin eso, "lo pienso" es un no.</p>
+    </details>
+    <details>
+      <summary>"¿Cuánto me cobras al mes?"</summary>
+      <div class="decir">Nada. No tiene costo mensual. Si después quiere dominio propio, eso son como $300 al año que paga usted directo, pero es opcional.</div>
+    </details>
+    <details>
+      <summary>"¿Y si no me gusta?"</summary>
+      <div class="decir">Van dos rondas de cambios incluidas. Le muestro cómo va antes de terminarla, y ahí me dice qué le movemos.</div>
+    </details>
+    <details>
+      <summary>"¿Puedes hacer también [algo raro]?"</summary>
+      <div class="decir">Déjeme revisarlo bien y hoy mismo le confirmo, para no decirle que sí a la ligera.</div>
+      <p class="nota" style="padding-bottom:14px">Nunca prometas en el momento algo que no sepas hacer. Esta frase te salva de todo.</p>
+    </details>
+    <details>
+      <summary>Si presiona por bajar el precio</summary>
+      <div class="decir">Si prefiere empezar más ligero, le hago solo la página con sus trabajos y su contacto en $3,000, y le agregamos el cotizador después.</div>
+      <p class="nota" style="padding-bottom:14px">Bajas el alcance, nunca el precio a secas.</p>
+    </details>
+  </div>
+
+  <h3 class="sep">Si ya aceptó, pídele esto</h3>
+
+  <div class="paso">
+    <ol class="preg">
+      <li>Nombre del negocio y cómo quiere aparecer</li>
+      <li>Fotos de uniformes y de banderas que ya haya hecho</li>
+      <li>Qué servicios van en cada sección</li>
+      <li>Dirección, horarios y el WhatsApp al que llegan las cotizaciones</li>
+      <li>Logo, si tiene</li>
+    </ol>
+    <div class="decir" style="margin-top:14px">Los 7 días corren desde que tenga eso.</div>
+  </div>
+
+  <h3 class="sep">Cinco reglas</h3>
+
+  <div class="reglas">
+    <div class="regla"><i>🔇</i><div><b>Busca un lugar sin ruido</b><p>Si estás en la uni, sal al pasillo antes de contestar.</p></div></div>
+    <div class="regla"><i>🐢</i><div><b>Habla despacio</b><p>El nervio hace hablar rápido, y rápido suena inseguro. Baja el ritmo a propósito.</p></div></div>
+    <div class="regla"><i>👂</i><div><b>Él habla más que tú</b><p>Si hablaste más de la mitad de la llamada, la hiciste mal.</p></div></div>
+    <div class="regla"><i>✍️</i><div><b>Ten papel y pluma</b><p>Anota lo que pida. Y decirle "déjeme anotarlo" te da segundos para pensar.</p></div></div>
+    <div class="regla"><i>🤷</i><div><b>"No sé" es respuesta válida</b><p>"Déjeme revisarlo y le confirmo hoy mismo" suena más profesional que inventar.</p></div></div>
+  </div>
+
+  <div class="cierre-nota">
+    <b>Acuérdate de una cosa:</b> este señor ya te dijo <b>"sí me interesa"</b> después de que le dijiste que no tienes oficina y que trabajas desde tu casa. Ya sabe exactamente con quién está hablando y aun así te está marcando.
+    <br><br>
+    No vas a convencer a nadie. Vas a contestar las preguntas de alguien que ya quiere. Lo peor que puede pasar es que diga "lo pienso" — y eso no te deja peor de como estabas ayer.
+  </div>
+
+</div>
+</body>
+</html>
